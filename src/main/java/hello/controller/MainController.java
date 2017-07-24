@@ -17,7 +17,7 @@ import java.io.IOException;
 public class MainController {
 	@Autowired
 	private UserService userService;
-    
+
 
     // Data as payload
     @RequestMapping(value="/add", method = RequestMethod.POST)
