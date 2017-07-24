@@ -1,0 +1,8 @@
+.target/*
+.target/classes/*
+.target/maven-status/*
+.idea/*
+*.class
+target/classes/
+
+target/maven-status/maven-compiler-plugin/compile/default-compile/
