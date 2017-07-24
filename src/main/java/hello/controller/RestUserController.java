@@ -1,19 +1,17 @@
 package hello.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import hello.service.UserService;
-import net.sf.json.JSONArray;
+import hello.utils.JsonWrapper;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import hello.model.User;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,21 +22,14 @@ public class RestUserController {
     @GetMapping("user/{id}")
     public JSONObject getUserById(@PathVariable("id") Integer id) {
         User user = userService.getUserById(id);
-        JSONArray userJsonArray = new JSONArray();
-        userJsonArray.element(user);
-        JSONObject response = new JSONObject();
-        response.put("success",true);
-        response.element("data",userJsonArray);
-        return response;
+        return JsonWrapper.wrapObject(user);
     }
 
     @GetMapping("users")
     public JSONObject getAllUsers() {
         List<User> allUsers = userService.getAllUsers();
-        JSONObject response = new JSONObject();
-        response.put("success",true);
-        response.element("data",allUsers);
-        return response;
+        List<Object> objectList = new ArrayList<Object>(allUsers);
+        return JsonWrapper.wrapList(objectList);
     }
     @PostMapping("user")
     public String addUser(@RequestBody User user, UriComponentsBuilder builder) {
