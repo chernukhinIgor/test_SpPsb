@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public synchronized boolean addUser(User user) {
-        if (userDAO.userExists(user.getName(), user.getSurname())) {
+        if (userDAO.userExists(user.getUserId())) {
             return false;
         } else {
             userDAO.addUser(user);
@@ -32,12 +32,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User user) {
-        if (userDAO.userExists(user.getName(), user.getSurname()))
-            return false;
-        else {
+        if (userDAO.userExists(user.getUserId())) {
             userDAO.updateUser(user);
             return true;
-        }
+        } else
+            return false;
     }
 
     @Override

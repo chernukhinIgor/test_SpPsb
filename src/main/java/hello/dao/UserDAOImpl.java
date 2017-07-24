@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
 
 @Transactional
 @Repository
@@ -53,10 +52,10 @@ public class UserDAOImpl implements UserDAO  {
     }
 
     @Override
-    public boolean userExists(String name, String surname) {
-        String hql = "FROM User as usr WHERE usr.name = ? and usr.surname = ?";
-        int count = entityManager.createQuery(hql).setParameter(1, name)
-                .setParameter(2, surname).getResultList().size();
+    public boolean userExists(int userId) {
+        String hql = "FROM User as usr WHERE usr.userId = ?";
+        //String hql = "FROM User as usr WHERE usr.name = ? and usr.surname = ?";
+        int count = entityManager.createQuery(hql).setParameter(1, userId).getResultList().size();
         return count > 0 ? true : false;
     }
 }
