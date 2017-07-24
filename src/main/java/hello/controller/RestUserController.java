@@ -33,6 +33,7 @@ public class RestUserController {
         dataSet.put("success", "True") ;
         dataSet.element("data", user);
 
+
         return dataSet;
         //return value;
     }
@@ -40,6 +41,7 @@ public class RestUserController {
     @GetMapping("users")
     public JSONObject getAllUsers() {
         Iterable<User> allUsers = userService.getAllUsers();
+
 
         JSONObject dataSet = new JSONObject();
         dataSet.put("success", true) ;

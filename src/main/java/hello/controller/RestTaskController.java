@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @RestController
 public class RestTaskController {
     @Autowired
@@ -23,8 +25,8 @@ public class RestTaskController {
     }
 
     @GetMapping("tasks")
-    public ResponseEntity<Iterable<Task>> getAllTasks() {
-        Iterable<Task> allTasks = taskService.getAllTasks();
+    public ResponseEntity<List<Task>> getAllTasks() {
+        List<Task> allTasks = taskService.getAllTasks();
         return new ResponseEntity<>(allTasks, HttpStatus.OK);
     }
 
