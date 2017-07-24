@@ -3,14 +3,14 @@ package hello.controller;
 import hello.model.Task;
 import hello.model.User;
 import hello.service.TaskService;
-import hello.service.UserService;
+import hello.utils.JsonWrapper;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,15 +19,16 @@ public class RestTaskController {
     private TaskService taskService;
 
     @GetMapping("task/{id}")
-    public ResponseEntity<Task> getTaskByID(@PathVariable("id") Integer id) {
+    public JSONObject getTaskByID(@PathVariable("id") Integer id) {
         Task task = taskService.getTaskById(id);
-        return new ResponseEntity<>(task, HttpStatus.OK);
+        return JsonWrapper.wrapObject(task);
     }
 
     @GetMapping("tasks")
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public JSONObject getAllTasks() {
         List<Task> allTasks = taskService.getAllTasks();
-        return new ResponseEntity<>(allTasks, HttpStatus.OK);
+        List<Object> objectList = new ArrayList<Object>(allTasks);
+        return JsonWrapper.wrapList(objectList);
     }
 
     @PostMapping("task")
