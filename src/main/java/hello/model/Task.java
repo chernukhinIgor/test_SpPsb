@@ -1,5 +1,6 @@
 package hello.model;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,35 +11,40 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int task_id;
+    @Column(name="task_id")
+    private int taskId;
 
     @NotNull
-    private int creator_user_id;
+    @Column(name="creator_user_id")
+    private int creatorUserId;
 
     @NotNull
     @Size(max=45)
+    @Column(name="name")
     private String name;
 
     @NotNull
-    private int responsible_user_id;
+    @Column(name="responsible_user_id")
+    private int responsibleUserId;
 
     @Size(max=145)
+    @Column(name="description")
     private String description;
 
-    public int getTask_id() {
-        return task_id;
+    public int getTaskId() {
+        return taskId;
     }
 
-    public void setTask_id(int task_id) {
-        this.task_id = task_id;
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
-    public int getCreator_user_id() {
-        return creator_user_id;
+    public int getCreatorUserId() {
+        return creatorUserId;
     }
 
-    public void setCreator_user_id(int creator_user_id) {
-        this.creator_user_id = creator_user_id;
+    public void setCreatorUserId(int creatorUserId) {
+        this.creatorUserId = creatorUserId;
     }
 
     public String getName() {
@@ -49,12 +55,12 @@ public class Task {
         this.name = name;
     }
 
-    public int getResponsible_user_id() {
-        return responsible_user_id;
+    public int getResponsibleUserId() {
+        return responsibleUserId;
     }
 
-    public void setResponsible_user_id(int responsible_user_id) {
-        this.responsible_user_id = responsible_user_id;
+    public void setResponsibleUserId(int responsibleUserId) {
+        this.responsibleUserId = responsibleUserId;
     }
 
     public String getDescription() {
@@ -64,5 +70,4 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
