@@ -2,6 +2,8 @@ package hello.controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import hello.service.UserService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,35 +26,28 @@ public class RestUserController {
 	private UserService userService;
 
     @GetMapping("user/{id}")
-    public JsonObject getUserById(@PathVariable("id") Integer id) {
+    public JSONObject getUserById(@PathVariable("id") Integer id) {
         User user = userService.getUserById(id);
 
-        JsonObject value = Json.createObjectBuilder()
-//                .add("firstName", "John")
-//                .add("lastName", "Smith")
-//                .add("age", 25)
-                .add("data", Json.createObjectBuilder()
-                        .add("userName", user.getName())
-                        .add("city", "New York")
-                        .add("state", "NY")
-                        .add("postalCode", "10021"))
-//                .add("phoneNumber", Json.createArrayBuilder()
-//                        .add(Json.createObjectBuilder()
-//                                .add("type", "home")
-//                                .add("number", "212 555-1234"))
-//                        .add(Json.createObjectBuilder()
-//                                .add("type", "fax")
-//                                .add("number", "646 555-4567")))
-                .build();
+        JSONObject dataSet = new JSONObject();
+        dataSet.put("success", "True") ;
+        dataSet.element("data", user);
 
-        // new ResponseEntity<>(user, HttpStatus.OK);
-        return value;
+        return dataSet;
+        //return value;
     }
 
     @GetMapping("users")
-    public ResponseEntity<Iterable<User>> getAllUsers() {
+    public JSONObject getAllUsers() {
         Iterable<User> allUsers = userService.getAllUsers();
-        return new ResponseEntity<>(allUsers, HttpStatus.OK);
+
+        JSONObject dataSet = new JSONObject();
+        dataSet.put("success", true) ;
+        dataSet.element("data", allUsers);
+
+        return dataSet;
+
+        //return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
     @PostMapping("user")
     public String addUser(@RequestBody User user, UriComponentsBuilder builder) {

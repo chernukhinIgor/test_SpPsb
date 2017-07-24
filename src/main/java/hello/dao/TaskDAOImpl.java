@@ -31,6 +31,7 @@ public class TaskDAOImpl implements TaskDAO {
         entityManager.persist(task);
     }
 
+
     @Override
     public void updateTask(Task task) {
         Task tsk = getTaskById(task.getTaskId());
