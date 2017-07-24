@@ -21,7 +21,14 @@ public class RestTaskController {
     @GetMapping("task/{id}")
     public JSONObject getTaskByID(@PathVariable("id") Integer id) {
         Task task = taskService.getTaskById(id);
-        return JsonWrapper.wrapObject(task);
+        if(task!=null){
+            return JsonWrapper.wrapObject(task);
+        }else{
+            JSONObject jsonError=new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "Task not found");
+            return jsonError;
+        }
     }
 
     @GetMapping("tasks")
@@ -32,28 +39,64 @@ public class RestTaskController {
     }
 
     @PostMapping("task")
-    public String addTask(@RequestBody Task task, UriComponentsBuilder builder) {
-        boolean flag = taskService.addTask(task);
-        if (!flag) {
-            return "Error in POST";
+    public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {
+        int id = taskService.addTask(task);
+        if (id == -1) {
+            JSONObject jsonError=new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "ERROR. Creating task failed. Id already exists");
+
+            return jsonError;
+        }else{
+            JSONObject jsonSuccess=new JSONObject();
+            jsonSuccess.put("success", true);
+
+            JSONObject data=new JSONObject();
+            data.put("taskId", id);
+            jsonSuccess.put("data", data);
+
+            return jsonSuccess;
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/task/{id}").buildAndExpand(task.getTaskId()).toUri());
-        return "Posted";
     }
 
     @PutMapping("task")
-    public String updateTask (@RequestBody Task task) {
-        if (taskService.updateTask(task))
-            return "Task updated";
-        else
-            return "Task not found";
+    public JSONObject updateTask (@RequestBody Task task) {
+        if (taskService.updateTask(task)) {
+            JSONObject jsonSuccess=new JSONObject();
+            jsonSuccess.put("success", true);
+            jsonSuccess.put("message", "Task updated succesfully");
+
+            return jsonSuccess;
+        }else {
+            JSONObject jsonError=new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "ERROR. Task not found");
+
+            return jsonError;
+        }
     }
 
     @DeleteMapping("task/{id}")
-    public String deleteTask(@PathVariable("id") Integer id) {
-        taskService.deleteTaskById(id);
-        return "Task deleted";
-    }
+    public JSONObject deleteTask(@PathVariable("id") Integer id) {
+        int i = taskService.deleteTaskById(id);
+        JSONObject response=new JSONObject();
+        switch (i){
+            case -1:
+                response.put("success", false);
+                response.put("message", "ERROR");
+                break;
+            case -2:
+                response.put("success", false);
+                response.put("message", "ERROR");
+                break;
+            case 1:
+                response.put("success", true);
+                response.put("message", "Task deleted succesfully");
+                break;
+            default:
+                break;
+        }
 
+        return response;
+    }
 }

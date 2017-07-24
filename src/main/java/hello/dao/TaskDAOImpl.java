@@ -28,8 +28,11 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public void addTask(Task task) {
+    public int addTask(Task task) {
         entityManager.persist(task);
+        entityManager.flush();
+        return task.getTaskId();
+
     }
 
 
@@ -44,8 +47,17 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public void deleteTask(int taskId) {
-        entityManager.remove(getTaskById(taskId));
+    public int deleteTask(int taskId) {
+        if(taskExists(taskId)){
+            entityManager.remove(getTaskById(taskId));
+            if(taskExists(taskId)){
+                return -2;
+            }
+            return 1;
+        }else{
+            return -1;
+        }
+
     }
 
     @Override
