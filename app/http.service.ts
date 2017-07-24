@@ -6,6 +6,24 @@ export class HttpService{
 
     constructor(private http: Http){ }
     getData(url: string){
-        return this.http.get(url);
+        this.http.get(url).subscribe(data => {
+            if(data['success']) {
+                return data['result']
+            } else {
+                alert(data['false']['mesage']);
+                return null;
+            }
+        });
+    }
+
+    postData(url: string, params: any) {
+        return {id: 2};
+        //return this.http.post(url, params);
+    }
+
+
+    putData(url: string, params: any) {
+    return true;
+        //return this.http.post(url, params);
     }
 }
