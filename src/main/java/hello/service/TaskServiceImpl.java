@@ -24,12 +24,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public synchronized boolean addTask(Task task) {
+    public int addTask(Task task) {
         if (taskDAO.taskExists(task.getTaskId())) {
-            return false;
+            return -1;
         } else {
-            taskDAO.addTask(task);
-            return true;
+            return taskDAO.addTask(task);
         }
     }
 

@@ -28,8 +28,11 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public void addTask(Task task) {
+    public int addTask(Task task) {
         entityManager.persist(task);
+        entityManager.flush();
+        return task.getTaskId();
+
     }
 
 

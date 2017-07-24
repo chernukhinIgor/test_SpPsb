@@ -10,7 +10,7 @@ public interface TaskService {
 
     List<Task> getAllTasks();
     Task getTaskById(int id);
-    boolean addTask(@Valid Task task);
+    int addTask(@Valid Task task);
     boolean updateTask(@Valid Task task);
     void deleteTaskById(int id);
 
