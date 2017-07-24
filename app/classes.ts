@@ -5,3 +5,13 @@ export class Task{
     responsible_user_id: number;
     description: string;
 }
+
+export class User{
+    user_id: number;
+    name: string;
+    surname: string;
+    telephone: string;
+    email: string;
+    gender: string;
+    datebirth: string;
+}

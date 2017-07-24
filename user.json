@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "data": [{
+    "user_id":1,
+    "name":"someName",
+    "surname":"someSurname",
+    "telephone":"someTelephone",
+    "email":"someEmail",
+    "sex":"someSex",
+    "datebirth":"someDatebirth"
+  }]
+}

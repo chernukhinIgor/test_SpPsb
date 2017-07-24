@@ -1,0 +1,30 @@
+<br/>
+<div *ngIf="condition">
+    <div *ngFor="let user of users" class="col-lg-3 panel panel-default">
+        <dt>ID пользователя: </dt>
+        <dd>{{user?.user_id}}</dd>
+
+        <dt>Имя:</dt>
+        <dd>{{user?.name}}</dd>
+
+        <dt>Фамилия:</dt>
+        <dd>{{user?.surname}}</dd>
+
+        <dt>Телефон:</dt>
+        <dd>{{user?.telephone}}</dd>
+
+        <dt>Email:</dt>
+        <dd>{{user?.email}}</dd>
+
+        <dt>Пол:</dt>
+        <dd>{{user?.gender}}</dd>
+
+        <dt>Дата рождения:</dt>
+        <dd>{{user?.datebirth}}</dd>
+    </div>
+</div>
+<div *ngIf="!condition">
+    <button (click)="toggle()" class="btn btn-primary">Загрузка</button>
+</div>
+
+

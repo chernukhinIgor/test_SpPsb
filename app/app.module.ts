@@ -8,6 +8,8 @@ import { HomeComponent }   from './home/home.component';
 import { NotFoundComponent }   from './not-found.component';
 import { TaskComponent }   from './task/task';
 import { TasksComponent }   from './tasks/tasks';
+import { UserComponent }   from './user/user';
+import { UsersComponent }   from './users/users';
 
 
 
@@ -16,12 +18,14 @@ const appRoutes: Routes =[
     { path: '', component: HomeComponent },
     { path: 'task/get/:id', component: TaskComponent },
     { path: 'tasks', component: TasksComponent },
+    { path: 'user/get/:id', component: UserComponent },
+    { path: 'users', component: UsersComponent },
     { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes), HttpModule],
-    declarations: [ AppComponent, HomeComponent, TasksComponent, TaskComponent, NotFoundComponent],
+    declarations: [ AppComponent, HomeComponent, UsersComponent, UserComponent, TasksComponent, TaskComponent, NotFoundComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
