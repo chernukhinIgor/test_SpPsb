@@ -7,8 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require("@angular/core");
 var route = './app/home/';
-//const styles = require('./home.css');
-//const template = require('./home.html');
 var HomeComponent = (function () {
     function HomeComponent() {
     }

@@ -1,0 +1,40 @@
+
+<div *ngIf="task" class="col-lg-3 panel panel-default">
+    <dt>ID</dt>
+    <dd>{{task?.task_id}}</dd>
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" [(ngModel)]="task.name"/>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Description</label>
+        <input type="text" [(ngModel)]="task.description"/>
+    </div>
+
+    <div class="form-group">
+        <label for="name">responsible user id</label>
+        <select [(ngModel)]="task.responsible_user_id">
+            <option value="1">one</option>
+            <option value="2">two</option>
+            <option value="3">tre</option>
+            <option value="4">four</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="name">creator user id</label>
+        <select [(ngModel)]="task.creator_user_id">
+            <option value="1">one</option>
+            <option value="2">two</option>
+            <option value="3">tre</option>
+            <option value="4">four</option>
+        </select>
+    </div>
+
+
+</div>
+<div *ngIf="task">
+    <button type="submit"  (click)="onSubmit()" class="btn btn-primary">Submit</button>
+</div>

@@ -5,12 +5,37 @@ import {Http} from '@angular/http';
 export class HttpService{
 
     constructor(private http: Http){ }
-    getData(url: string, params: URLSearchParams){
+    getData(url: string, params: URLSearchParams) {
+
+        if(url == '/api/get/2') {
+
+            return [
+                {
+                    "task_id":1,
+                    "creator_user_id":1,
+                    "name":"someName",
+                    "responsible_user_id":1,
+                    "description":"someDescription"
+                }
+            ];
+        }
+
         var jsonObject = this.http.get(url, params);
         if (jsonObject['success'] = "true") {
-            return jsonObject;
+            return jsonObject['data'];
         } else {
-            alert('Request success false');
+            return jsonObject['error'];
         }
+    }
+
+    postData(url: string, params: any) {
+        return {id: 2};
+        //return this.http.post(url, params);
+    }
+
+
+    putData(url: string, params: any) {
+    return true;
+        //return this.http.post(url, params);
     }
 }
