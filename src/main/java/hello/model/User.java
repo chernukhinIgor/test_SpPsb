@@ -24,8 +24,16 @@ public class User {
 	@Column(name="email")
 	private String email;
 
-	@Column(name="sex")
-	private String sex;
+	@Column(name="gender")
+	private String gender;
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
 	@Column(name="datebirth")
 	private String birth;
@@ -70,13 +78,6 @@ public class User {
 		this.email = email;
 	}
 
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
 
 	public String getBirth() {
 		return birth;

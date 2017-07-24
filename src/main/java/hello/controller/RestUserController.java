@@ -16,42 +16,79 @@ import java.util.List;
 
 @RestController
 public class RestUserController {
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("user/{id}")
     public JSONObject getUserById(@PathVariable("id") Integer id) {
         User user = userService.getUserById(id);
-        return JsonWrapper.wrapObject(user);
+        if (user != null)
+            return JsonWrapper.wrapObject(user);
+        else {
+            JSONObject jsonError = new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "user not found");
+            return jsonError;
+        }
     }
 
     @GetMapping("users")
     public JSONObject getAllUsers() {
         List<User> allUsers = userService.getAllUsers();
-        List<Object> objectList = new ArrayList<Object>(allUsers);
+        List<Object> objectList = new ArrayList<>(allUsers);
         return JsonWrapper.wrapList(objectList);
     }
+
     @PostMapping("user")
-    public String addUser(@RequestBody User user, UriComponentsBuilder builder) {
-        boolean flag = userService.addUser(user);
-        if (!flag) {
-            return "Error in POST";
+    public JSONObject addUser(@RequestBody User user, UriComponentsBuilder builder) {
+        int id = userService.addUser(user);
+        if (id == -1) {
+            JSONObject error = new JSONObject();
+            error.put("success", false);
+            error.put("message", "ERROR. Adding user failed. ID already exist");
+            return error;
         }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/user/{id}").buildAndExpand(user.getUserId()).toUri());
-        return "Posted";
+        JSONObject data = new JSONObject();
+        data.put("userId", id);
+        JSONObject response = new JSONObject();
+        response.put("success", true);
+        response.put("data", data);
+        return response;
     }
+
     @PutMapping("user")
-    public String updateUser (@RequestBody User user) {
-        if (userService.updateUser(user))
-            return "User updated";
-        else
-            return "User not found";
+    public JSONObject updateUser(@RequestBody User user) {
+        if (userService.updateUser(user)) {
+            JSONObject response = new JSONObject();
+            response.put("success", true);
+            return response;
+        } else {
+            JSONObject error = new JSONObject();
+            error.put("success", false);
+            error.put("message", "ERROR. Adding user failed. ID already exist");
+            return error;
+        }
     }
+
     @DeleteMapping("user/{id}")
-    public String deleteUser(@PathVariable("id") Integer id) {
-        userService.deleteUserById(id);
-        return "User deleted";
+    public JSONObject deleteUser(@PathVariable("id") Integer id) {
+        int i = userService.deleteUserById(id);
+        JSONObject response = new JSONObject();
+        switch (i) {
+            case -1:
+                response.put("success", false);
+                response.put("message", "ERROR. User not exist");
+                break;
+            case -2:
+                response.put("success", false);
+                response.put("message", "ERROR. ???");
+                break;
+            case 1:
+                response.put("success", true);
+                break;
+            default:
+        }
+        return response;
     }
 
 }

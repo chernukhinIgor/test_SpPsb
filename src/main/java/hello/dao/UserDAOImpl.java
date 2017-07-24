@@ -14,9 +14,10 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class UserDAOImpl implements UserDAO  {
+public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
+
     @SuppressWarnings("unchecked")
 
     @Override
@@ -31,8 +32,10 @@ public class UserDAOImpl implements UserDAO  {
     }
 
     @Override
-    public void addUser(User user) {
+    public int addUser(User user) {
         entityManager.persist(user);
+        entityManager.flush();
+        return user.getUserId();
     }
 
     @Override
@@ -42,14 +45,22 @@ public class UserDAOImpl implements UserDAO  {
         usr.setSurname(user.getSurname());
         usr.setBirth(user.getBirth());
         usr.setEmail(user.getEmail());
-        usr.setSex(user.getSex());
+        usr.setGender(user.getGender());
         usr.setTelephone(user.getTelephone());
         entityManager.flush();
     }
 
     @Override
-    public void deleteUser(int userId) {
-        entityManager.remove(getUserById(userId));
+    public int deleteUser(int userId) {
+        if (userExists(userId)) {
+            entityManager.remove(getUserById(userId));
+            if (userExists(userId)) {
+                return -2;
+            }
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
     @Override

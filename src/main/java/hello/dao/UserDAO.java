@@ -10,8 +10,8 @@ import java.util.List;
 public interface UserDAO {
     List<User> getAllUsers();
     User getUserById(int userId);
-    void addUser(User user);
+    int addUser(User user);
     void updateUser(User user);
-    void deleteUser(int userId);
+    int deleteUser(int userId);
     boolean userExists(int userId);
 }

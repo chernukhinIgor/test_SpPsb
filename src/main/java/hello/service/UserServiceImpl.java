@@ -23,12 +23,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public synchronized boolean addUser(User user) {
+    public synchronized int addUser(User user) {
         if (userDAO.userExists(user.getUserId())) {
-            return false;
+            return -1;
         } else {
-            userDAO.addUser(user);
-            return true;
+            return userDAO.addUser(user);
         }
     }
 
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(int id) {
-        userDAO.deleteUser(id);
+    public int deleteUserById(int id) {
+        return userDAO.deleteUser(id);
     }
 }
