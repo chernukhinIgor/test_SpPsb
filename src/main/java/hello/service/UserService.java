@@ -10,6 +10,6 @@ public interface UserService {
     Iterable<User> getAllUsers();
     User getUserById(int id);
     boolean addUser(@Valid User user);
+    boolean updateUser(User user);
     void deleteUserById(int id);
-
 }

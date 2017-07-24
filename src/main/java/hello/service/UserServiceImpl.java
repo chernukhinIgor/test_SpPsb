@@ -31,6 +31,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean updateUser(User user) {
+        if (userDAO.userExists(user.getName(), user.getSurname()))
+            return false;
+        else {
+            userDAO.updateUser(user);
+            return true;
+        }
+    }
+
+    @Override
     public void deleteUserById(int id) {
         userDAO.deleteUser(id);
     }
