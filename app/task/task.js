@@ -9,30 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
-var route = './app/tasks/';
-var TasksComponent = (function () {
-    function TasksComponent(httpService) {
+var route = './app/task/';
+var TaskComponent = (function () {
+    function TaskComponent(activatedRoute, httpService) {
+        this.activatedRoute = activatedRoute;
         this.httpService = httpService;
         this.condition = false;
     }
-    TasksComponent.prototype.ngOnInit = function () {
+    TaskComponent.prototype.ngOnInit = function () {
         var _this = this;
         var options = new URLSearchParams();
-        this.httpService.getData('localhost/task.json', options).subscribe(function (data) { return _this.tasks = data.json().data; });
+        this.activatedRoute.params.subscribe(function (params) {
+            options.set('id', params['id']);
+        });
+        this.httpService.getData('task.json', options).subscribe(function (data) { return _this.task = data.json().data[0]; });
     };
-    TasksComponent.prototype.toggle = function () {
+    TaskComponent.prototype.toggle = function () {
         this.condition = true;
     };
-    return TasksComponent;
+    return TaskComponent;
 }());
-TasksComponent = __decorate([
+TaskComponent = __decorate([
     core_1.Component({
-        selector: 'tasks-comp',
-        templateUrl: route + 'tasks.html',
+        selector: 'task-comp',
+        templateUrl: route + 'task.html',
         providers: [http_service_1.HttpService]
     }),
-    __metadata("design:paramtypes", [http_service_1.HttpService])
-], TasksComponent);
-exports.TasksComponent = TasksComponent;
-//# sourceMappingURL=tasks.js.map
+    __metadata("design:paramtypes", [router_1.ActivatedRoute, http_service_1.HttpService])
+], TaskComponent);
+exports.TaskComponent = TaskComponent;
+//# sourceMappingURL=task.js.map

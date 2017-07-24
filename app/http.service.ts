@@ -6,6 +6,20 @@ export class HttpService{
 
     constructor(private http: Http){ }
     getData(url: string, params: URLSearchParams) {
+
+        if(url == '/api/get/2') {
+
+            return [
+                {
+                    "task_id":1,
+                    "creator_user_id":1,
+                    "name":"someName",
+                    "responsible_user_id":1,
+                    "description":"someDescription"
+                }
+            ];
+        }
+
         var jsonObject = this.http.get(url, params);
         if (jsonObject['success'] = "true") {
             return jsonObject['data'];

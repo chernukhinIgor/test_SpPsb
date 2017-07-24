@@ -14,24 +14,25 @@ var HttpService = (function () {
     function HttpService(http) {
         this.http = http;
     }
-    HttpService.prototype.getData = function (url) {
-        return [
-            {
-                "task_id": 1,
-                "creator_user_id": 1,
-                "name": "someName",
-                "responsible_user_id": 1,
-                "description": "someDescription"
-            }
-        ];
-        /*this.http.get(url).subscribe(data => {
-            if(data['success']) {
-                return data['result']
-            } else {
-                alert(data['false']['mesage']);
-                return null;
-            }
-        });*/
+    HttpService.prototype.getData = function (url, params) {
+        if (url == '/api/get/2') {
+            return [
+                {
+                    "task_id": 1,
+                    "creator_user_id": 1,
+                    "name": "someName",
+                    "responsible_user_id": 1,
+                    "description": "someDescription"
+                }
+            ];
+        }
+        var jsonObject = this.http.get(url, params);
+        if (jsonObject['success'] = "true") {
+            return jsonObject['data'];
+        }
+        else {
+            return jsonObject['error'];
+        }
     };
     HttpService.prototype.postData = function (url, params) {
         return { id: 2 };

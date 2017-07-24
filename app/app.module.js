@@ -13,6 +13,7 @@ var app_component_1 = require("./app.component");
 var home_component_1 = require("./home/home.component");
 var edit_1 = require("./edit/edit");
 var not_found_component_1 = require("./not-found.component");
+var task_1 = require("./task/task");
 var tasks_1 = require("./tasks/tasks");
 var forms_1 = require("@angular/forms");
 // определение маршрутов
@@ -20,6 +21,7 @@ var appRoutes = [
     { path: '', component: home_component_1.HomeComponent },
     { path: 'task/edit/:id', component: edit_1.Edit },
     { path: 'task/edit', component: edit_1.Edit },
+    { path: 'task/get/:id', component: task_1.TaskComponent },
     { path: 'tasks', component: tasks_1.TasksComponent },
     { path: '**', component: not_found_component_1.NotFoundComponent }
 ];
@@ -31,7 +33,7 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, router_1.RouterModule.forRoot(appRoutes), http_1.HttpModule, forms_1.FormsModule],
-        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, edit_1.Edit, tasks_1.TasksComponent, not_found_component_1.NotFoundComponent],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, edit_1.Edit, tasks_1.TasksComponent, task_1.TaskComponent, not_found_component_1.NotFoundComponent],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
