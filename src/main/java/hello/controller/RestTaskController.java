@@ -78,12 +78,25 @@ public class RestTaskController {
 
     @DeleteMapping("task/{id}")
     public JSONObject deleteTask(@PathVariable("id") Integer id) {
-        taskService.deleteTaskById(id);
+        int i = taskService.deleteTaskById(id);
+        JSONObject response=new JSONObject();
+        switch (i){
+            case -1:
+                response.put("success", false);
+                response.put("message", "ERROR");
+                break;
+            case -2:
+                response.put("success", false);
+                response.put("message", "ERROR");
+                break;
+            case 1:
+                response.put("success", true);
+                response.put("message", "Task deleted succesfully");
+                break;
+            default:
+                break;
+        }
 
-        JSONObject jsonSuccess=new JSONObject();
-        jsonSuccess.put("success", true);
-        jsonSuccess.put("message", "Task deleted succesfully");
-
-        return jsonSuccess;
+        return response;
     }
 }

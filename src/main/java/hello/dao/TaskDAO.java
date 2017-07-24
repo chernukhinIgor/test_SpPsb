@@ -9,6 +9,6 @@ public interface TaskDAO {
     Task getTaskById(int taskId);
     int addTask(Task task);
     void updateTask(Task task);
-    void deleteTask(int taskId);
+    int deleteTask(int taskId);
     boolean taskExists(int taskId);
 }

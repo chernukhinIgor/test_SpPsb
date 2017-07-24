@@ -12,6 +12,6 @@ public interface TaskService {
     Task getTaskById(int id);
     int addTask(@Valid Task task);
     boolean updateTask(@Valid Task task);
-    void deleteTaskById(int id);
+    int deleteTaskById(int id);
 
 }
