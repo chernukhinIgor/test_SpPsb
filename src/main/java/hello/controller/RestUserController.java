@@ -33,14 +33,12 @@ public class RestUserController {
     }
 
     @GetMapping("users")
-    public /*ResponseEntity<Iterable<User>>*/JSONObject getAllUsers() {
+    public JSONObject getAllUsers() {
         List<User> allUsers = userService.getAllUsers();
-
         JSONObject response = new JSONObject();
         response.put("success",true);
         response.element("data",allUsers);
         return response;
-        //return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
     @PostMapping("user")
     public String addUser(@RequestBody User user, UriComponentsBuilder builder) {
