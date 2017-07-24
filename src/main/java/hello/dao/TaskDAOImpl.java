@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Transactional
 @Repository
@@ -16,9 +17,9 @@ public class TaskDAOImpl implements TaskDAO {
     @SuppressWarnings("unchecked")
 
     @Override
-    public Iterable<Task> getAllTasks() {
+    public List<Task> getAllTasks() {
         String hql = "FROM Task as tsk ORDER BY tsk.taskId";
-        return (Iterable<Task>) entityManager.createQuery(hql).getResultList();
+        return (List<Task>) entityManager.createQuery(hql).getResultList();
     }
 
     @Override
@@ -30,6 +31,7 @@ public class TaskDAOImpl implements TaskDAO {
     public void addTask(Task task) {
         entityManager.persist(task);
     }
+
 
     @Override
     public void updateTask(Task task) {
