@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserService {
 
-    public Iterable<User> getAllUsers();
-    public User getUserById(long id);
-    public void addUser(@Valid User user);
-    public void deleteUserById(long id);
+    Iterable<User> getAllUsers();
+    User getUserById(int id);
+    boolean addUser(@Valid User user);
+    void deleteUserById(int id);
 
 }

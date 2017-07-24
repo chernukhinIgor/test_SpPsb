@@ -1,34 +1,37 @@
 package hello.service;
 
+import hello.dao.UserDAO;
 import hello.model.User;
-import hello.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserRepository userRepository;
+    UserDAO userDAO;
 
     @Override
     public Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+        return userDAO.getAllUsers();
     }
 
     @Override
-    public User getUserById(long id) {
-        return userRepository.findOne(id);
+    public User getUserById(int id) {
+        return userDAO.getUserById(id);
     }
 
     @Override
-    public void addUser(User user) {
-        userRepository.save(user);
+    public synchronized boolean addUser(User user) {
+        if (userDAO.userExists(user.getName(), user.getSurname())) {
+            return false;
+        } else {
+            userDAO.addUser(user);
+            return true;
+        }
     }
 
     @Override
-    public void deleteUserById(long id) {
-        userRepository.delete(id);
+    public void deleteUserById(int id) {
+        userDAO.deleteUser(id);
     }
 }

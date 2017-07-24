@@ -11,6 +11,7 @@ public class User {
 	@Column(name="user_id")
 	private int userId;
 
+	@NotNull
 	@Column(name="name")
 	private String name;
 
