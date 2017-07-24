@@ -18,6 +18,18 @@ export class HttpService{
                     "description":"someDescription"
                 }
             ];
+        } else if (url == '/api/user/2') {
+            return [
+                {
+                    "user_id":1,
+                    "name":"someName",
+                    "surname":"someSurname",
+                    "telephone":"someTelephone",
+                    "email":"someEmail",
+                    "gender":"male",
+                    "datebirth":"1991-02-22"
+                }
+            ];
         }
 
         var jsonObject = this.http.get(url, params);

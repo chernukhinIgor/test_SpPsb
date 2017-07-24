@@ -3,15 +3,17 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpService} from '../http.service';
 import { FormsModule }   from '@angular/forms';
 
-const element = 'edit';
+const element = 'user_edit';
 const route = './app/' + element + '/';
 
-export class Task{
-    task_id: number;
-    creator_user_id: number;
-    name: string;
-    responsible_user_id: number;
-    description: string;
+export class User{
+    user_id:number;
+    name:string;
+    surname:string;
+    telephone:string;
+    email:string;
+    gender:string;
+    datebirth:string;
 }
 
 @Component({
@@ -19,9 +21,9 @@ export class Task{
     templateUrl: route + element + '.html',
     providers: [HttpService]
 })
-export class Edit {
+export class UserEdit {
     id: string;
-    task: Task;
+    user: User;
     myModel: any;
     constructor(public router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService) {}
 
@@ -30,22 +32,22 @@ export class Edit {
         this.activatedRoute.params.subscribe((params: Params) => {
             this.id = params['id'];
             if(this.id) {
-                let res = this.httpService.getData('/api/get/' + this.id, null);
-                this.task = res[0];
+                let res = this.httpService.getData('/api/user/' + this.id, null);
+                this.user = res[0];
             } else {
-                this.task = new Task;
+                this.user = new User;
             }
         });
     }
 
     onSubmit(f: FormsModule) {
         if(this.id) {
-            let res = this.httpService.putData('/api/get/' + this.id, this.task);
+            let res = this.httpService.putData('/api/get/' + this.id, this.user);
         } else {
-            let res = this.httpService.postData('/api/get/', this.task );
+            let res = this.httpService.postData('/api/get/', this.user );
             location.href = '/task/edit/' + res.id
         }
-        console.log(this.task);
+        console.log(this.user);
     }
 
 }
