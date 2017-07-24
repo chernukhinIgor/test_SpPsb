@@ -6,6 +6,7 @@ import { HttpModule }   from '@angular/http';
 import { AppComponent }   from './app.component';
 import { HomeComponent }   from './home/home.component';
 import { Edit }   from './edit/edit';
+import { UserEdit }   from './user_edit/user_edit';
 import { NotFoundComponent }   from './not-found.component';
 import { TaskComponent }   from './task/task';
 import { TasksComponent }   from './tasks/tasks';
@@ -22,6 +23,8 @@ const appRoutes: Routes =[
     { path: 'task/edit', component: Edit },
     { path: 'task/get/:id', component: TaskComponent },
     { path: 'tasks', component: TasksComponent },
+    { path: 'user/edit/:id', component: UserEdit },
+    { path: 'user/edit', component: UserEdit },
     { path: 'user/get/:id', component: UserComponent },
     { path: 'users', component: UsersComponent },
     { path: '**', component: NotFoundComponent }
@@ -29,7 +32,7 @@ const appRoutes: Routes =[
 
 @NgModule({
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes), HttpModule, FormsModule],
-    declarations: [ AppComponent, HomeComponent, Edit, UsersComponent, UserComponent, TasksComponent, TaskComponent, NotFoundComponent],
+    declarations: [ AppComponent, HomeComponent, Edit, UserEdit, UsersComponent, UserComponent, TasksComponent, TaskComponent, NotFoundComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

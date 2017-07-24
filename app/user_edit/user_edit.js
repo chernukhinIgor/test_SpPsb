@@ -11,53 +11,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
-var element = 'edit';
+var element = 'user_edit';
 var route = './app/' + element + '/';
-var Task = (function () {
-    function Task() {
+var User = (function () {
+    function User() {
     }
-    return Task;
+    return User;
 }());
-exports.Task = Task;
-var Edit = (function () {
-    function Edit(router, activatedRoute, httpService) {
+exports.User = User;
+var UserEdit = (function () {
+    function UserEdit(router, activatedRoute, httpService) {
         this.router = router;
         this.activatedRoute = activatedRoute;
         this.httpService = httpService;
     }
-    Edit.prototype.ngOnInit = function () {
+    UserEdit.prototype.ngOnInit = function () {
         var _this = this;
         // subscribe to router event
         this.activatedRoute.params.subscribe(function (params) {
             _this.id = params['id'];
             if (_this.id) {
-                var res = _this.httpService.getData('/api/get/' + _this.id, null);
-                _this.task = res[0];
+                var res = _this.httpService.getData('/api/user/' + _this.id, null);
+                _this.user = res[0];
             }
             else {
-                _this.task = new Task;
+                _this.user = new User;
             }
         });
     };
-    Edit.prototype.onSubmit = function (f) {
+    UserEdit.prototype.onSubmit = function (f) {
         if (this.id) {
-            var res = this.httpService.putData('/api/get/' + this.id, this.task);
+            var res = this.httpService.putData('/api/get/' + this.id, this.user);
         }
         else {
-            var res = this.httpService.postData('/api/get/', this.task);
+            var res = this.httpService.postData('/api/get/', this.user);
             location.href = '/task/edit/' + res.id;
         }
-        console.log(this.task);
+        console.log(this.user);
     };
-    return Edit;
+    return UserEdit;
 }());
-Edit = __decorate([
+UserEdit = __decorate([
     core_1.Component({
         selector: 'home-app',
         templateUrl: route + element + '.html',
         providers: [http_service_1.HttpService]
     }),
     __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, http_service_1.HttpService])
-], Edit);
-exports.Edit = Edit;
-//# sourceMappingURL=edit.js.map
+], UserEdit);
+exports.UserEdit = UserEdit;
+//# sourceMappingURL=user_edit.js.map
