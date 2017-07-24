@@ -34,15 +34,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public boolean updateTask(Task task) {
         if (taskDAO.taskExists(task.getTaskId())) {
-            return false;
-        } else {
             taskDAO.updateTask(task);
             return true;
+        } else {
+            return false;
         }
     }
 
     @Override
-    public void deleteTaskById(Integer id) {
+    public void deleteTaskById(int id) {
         taskDAO.deleteTask(id);
     }
 }
