@@ -5,15 +5,13 @@ import {Http} from '@angular/http';
 export class HttpService{
 
     constructor(private http: Http){ }
-    getData(url: string){
-        this.http.get(url).subscribe(data => {
-            if(data['success']) {
-                return data['result']
-            } else {
-                alert(data['false']['mesage']);
-                return null;
-            }
-        });
+    getData(url: string, params: URLSearchParams) {
+        var jsonObject = this.http.get(url, params);
+        if (jsonObject['success'] = "true") {
+            return jsonObject['data'];
+        } else {
+            return jsonObject['error'];
+        }
     }
 
     postData(url: string, params: any) {

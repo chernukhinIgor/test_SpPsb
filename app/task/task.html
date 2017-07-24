@@ -1,0 +1,24 @@
+<br/>
+<div *ngIf="condition">
+    <div class="col-lg-3 panel panel-default">
+        <dt>ID задачи: </dt>
+        <dd>{{task?.task_id}}</dd>
+
+        <dt>ID создавшего пользователя:</dt>
+        <dd>{{task?.creator_user_id}}</dd>
+
+        <dt>Название задачи:</dt>
+        <dd>{{task?.name}}</dd>
+
+        <dt>ID ответственного пользователя:</dt>
+        <dd>{{task?.responsible_user_id}}</dd>
+
+        <dt>Описание задачи:</dt>
+        <dd>{{task?.description}}</dd>
+    </div>
+</div>
+<div *ngIf="!condition">
+    <button (click)="toggle()" class="btn btn-primary">Загрузка</button>
+</div>
+
+
