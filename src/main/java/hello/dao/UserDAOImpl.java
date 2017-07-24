@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Transactional
 @Repository
@@ -19,9 +20,9 @@ public class UserDAOImpl implements UserDAO  {
     @SuppressWarnings("unchecked")
 
     @Override
-    public Iterable<User> getAllUsers() {
+    public List<User> getAllUsers() {
         String hql = "FROM User as usr ORDER BY usr.userId";
-        return (Iterable<User>) entityManager.createQuery(hql).getResultList();
+        return entityManager.createQuery(hql).getResultList();
     }
 
     @Override
