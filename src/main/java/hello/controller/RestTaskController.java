@@ -45,7 +45,7 @@ public class RestTaskController {
     ){
         try{
             List<Task> paginationTasks = taskService.getPaginationTasks(orderBy, sortBy,page,pageLimit);
-            List<Object> objectList = new ArrayList<Object>(paginationTasks);
+            List<Object> objectList = new ArrayList<>(paginationTasks);
             return JsonWrapper.wrapList(objectList);
         }catch (Exception ex){
             JSONObject jsonError=new JSONObject();
@@ -85,13 +85,24 @@ public class RestTaskController {
         if (requestStringParams != null) {
             JSONArray array = new JSONArray();
             List<Object[]> allTasksAsObjects = taskService.getParametricTasks(requestStringParams);
-            for (Object[] row : allTasksAsObjects) {
-                JSONObject data = new JSONObject();
-                for (int i=0;i<parameters.size();i++){
-                    data.element(parameters.get(i),row[i]);
+            if (parameters.size() == 1) {
+                for (Object row : allTasksAsObjects) {
+                    JSONObject data = new JSONObject();
+                    for (int i = 0; i < parameters.size(); i++) {
+                        data.element(parameters.get(i), row);
+                    }
+                    array.add(data);
                 }
-                array.add(data);
+            }else{
+                for (Object[] row : allTasksAsObjects) {
+                    JSONObject data = new JSONObject();
+                    for (int i=0;i<parameters.size();i++){
+                        data.element(parameters.get(i),row[i]);
+                    }
+                    array.add(data);
+                }
             }
+
             return JsonWrapper.wrapList(array);
         } else {
             List<Task> allTasks = taskService.getAllTasks();
