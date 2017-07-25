@@ -13,6 +13,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
+import static hello.service.UserService.USER_NOT_DELETED_ERROR;
+import static hello.service.UserService.USER_NOT_EXIST_ERROR;
+import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
 
 @RestController
 public class RestUserController {
@@ -41,19 +45,19 @@ public class RestUserController {
 
     @PostMapping("user")
     public JSONObject addUser(@RequestBody User user, UriComponentsBuilder builder) {
-        int id = userService.addUser(user);
-        if (id == -1) {
-            JSONObject error = new JSONObject();
-            error.put("success", false);
-            error.put("message", "ERROR. Adding user failed. ID already exist");
-            return error;
+        int returnedValue = userService.addUser(user);
+        if (returnedValue == USER_ALREADY_EXIST_ERROR) {
+            JSONObject jsonError = new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "ERROR. Adding user failed. ID already exist");
+            return jsonError;
         }
         JSONObject data = new JSONObject();
-        data.put("userId", id);
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("data", data);
-        return response;
+        data.put("userId", returnedValue);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("success", true);
+        jsonResponse.put("data", data);
+        return jsonResponse;
     }
 
     @PutMapping("user")
@@ -72,23 +76,24 @@ public class RestUserController {
 
     @DeleteMapping("user/{id}")
     public JSONObject deleteUser(@PathVariable("id") Integer id) {
-        int i = userService.deleteUserById(id);
-        JSONObject response = new JSONObject();
-        switch (i) {
-            case -1:
-                response.put("success", false);
-                response.put("message", "ERROR. User not exist");
+        int deleteResult = userService.deleteUserById(id);
+        JSONObject jsonResponse = new JSONObject();
+        switch (deleteResult) {
+            case USER_NOT_EXIST_ERROR:
+                jsonResponse.put("success", false);
+                jsonResponse.put("message", "ERROR. User not exist");
                 break;
-            case -2:
-                response.put("success", false);
-                response.put("message", "ERROR. ???");
+            case USER_NOT_DELETED_ERROR:
+                jsonResponse.put("success", false);
+                jsonResponse.put("message", "ERROR. ???");
                 break;
-            case 1:
-                response.put("success", true);
+            case USER_DELETED_SUCCESSFULLY:
+                jsonResponse.put("success", true);
                 break;
             default:
+                break;
         }
-        return response;
+        return jsonResponse;
     }
 
 }
