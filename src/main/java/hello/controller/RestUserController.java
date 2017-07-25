@@ -39,6 +39,35 @@ public class RestUserController {
         }
     }
 
+    @GetMapping("userCount")
+    public JSONObject getUserCount() {
+        int userCount=userService.getUserCount();
+        JSONObject response = new JSONObject();
+        response.put("success", true);
+        response.put("data",userCount);
+        return response;
+    }
+
+    @GetMapping("userPagination")
+    public JSONObject getPaginationUsers(
+            // default value or error
+            @RequestParam(required = true) String orderBy,
+            @RequestParam(required = true) String sortBy,
+            @RequestParam(required = true) int page,
+            @RequestParam(required = true) int pageLimit
+    ){
+        try{
+            List<User> paginationTasks = userService.getPaginationUsers(orderBy, sortBy,page,pageLimit);
+            List<Object> objectList = new ArrayList<Object>(paginationTasks);
+            return JsonWrapper.wrapList(objectList);
+        }catch (Exception ex){
+            JSONObject jsonError=new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "ERROR. Not valid params");
+            return jsonError;
+        }
+    }
+
     @GetMapping("users")
     public JSONObject getAllUsers(
             @RequestParam(required = false) boolean userId,
@@ -50,31 +79,10 @@ public class RestUserController {
             @RequestParam(required = false) boolean birth
     ) throws IllegalAccessException {
         String requestStringParams = requestHasParams(userId, name, surname, telephone, email, gender, birth);
-        List<String> parameters = new ArrayList<>();
-        if (userId)
-            parameters.add("userId");
-        if (name)
-            parameters.add("name");
-        if (surname)
-            parameters.add("surname");
-        if (telephone)
-            parameters.add("telephone");
-        if (email)
-            parameters.add("email");
-        if (gender)
-            parameters.add("gender");
-        if (birth)
-            parameters.add("birth");
 
         if (requestStringParams != null) {
             List<User> allUsers = userService.getParametricUsers(requestStringParams);
 
-            for (int i=0;i<allUsers.size();i++) {
-                for (int j=0;i<parameters.size();j++){
-                    Object user = allUsers.get(i);
-                    System.out.print(user);
-                }
-            }
             List<Object> objectList = new ArrayList<>(allUsers);
             return JsonWrapper.wrapList(objectList);
         } else {
