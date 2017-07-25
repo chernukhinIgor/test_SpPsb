@@ -33,12 +33,43 @@ public class RestTaskController {
         }
     }
 
+    @GetMapping("taskPagination")
+    public JSONObject getPaginationTasks(
+            // default value or error
+            @RequestParam(required = true) String orderBy,
+            @RequestParam(required = true) String sortBy,
+            @RequestParam(required = true) int page,
+            @RequestParam(required = true) int pageLimit
+    ){
+        try{
+            List<Task> paginationTasks = taskService.getPaginationTasks(orderBy, sortBy,page,pageLimit);
+            List<Object> objectList = new ArrayList<Object>(paginationTasks);
+            return JsonWrapper.wrapList(objectList);
+        }catch (Exception ex){
+            JSONObject jsonError=new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "ERROR. Not valid params");
+            return jsonError;
+        }
+    }
+
     @GetMapping("tasks")
     public JSONObject getAllTasks() {
         List<Task> allTasks = taskService.getAllTasks();
         List<Object> objectList = new ArrayList<Object>(allTasks);
         return JsonWrapper.wrapList(objectList);
     }
+
+    @GetMapping("taskCount")
+    public JSONObject getTaskCount() {
+        int taskCount=taskService.getTaskCount();
+        JSONObject response = new JSONObject();
+        response.put("success", true);
+        response.put("data",taskCount);
+        return response;
+    }
+
+
 
     @PostMapping("task")
     public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {

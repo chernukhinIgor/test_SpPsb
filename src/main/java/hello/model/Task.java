@@ -7,6 +7,13 @@ import javax.validation.constraints.Size;
 @Entity
 public class Task {
 
+    private enum statusStates{
+        accepted,
+        canceled,
+        finished,
+        created
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="task_id")
@@ -28,6 +35,17 @@ public class Task {
     @Size(max=145)
     @Column(name="description")
     private String description;
+
+    @Column(name="status")
+    private statusStates status;
+
+    public statusStates getStatus() {
+        return status;
+    }
+
+    public void setStatus(statusStates status) {
+        this.status = status;
+    }
 
     public int getTaskId() {
         return taskId;

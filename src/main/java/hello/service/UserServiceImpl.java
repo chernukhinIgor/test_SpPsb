@@ -60,4 +60,14 @@ public class UserServiceImpl implements UserService {
     public List<Task> getResponsibleTasks(int id) {
         return userDAO.getResponsibleTasks(id);
     }
+
+    @Override
+    public int getUserCount() {
+        return userDAO.getUserCount();
+    }
+
+    @Override
+    public List<User> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
+        return userDAO.getPaginationUsers(orderBy,sortBy,page,pageLimit);
+    }
 }

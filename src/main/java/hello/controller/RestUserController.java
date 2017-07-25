@@ -37,11 +37,40 @@ public class RestUserController {
         }
     }
 
+    @GetMapping("userPagination")
+    public JSONObject getPaginationUsers(
+            // default value or error
+            @RequestParam(required = true) String orderBy,
+            @RequestParam(required = true) String sortBy,
+            @RequestParam(required = true) int page,
+            @RequestParam(required = true) int pageLimit
+    ){
+        try{
+            List<User> paginationTasks = userService.getPaginationUsers(orderBy, sortBy,page,pageLimit);
+            List<Object> objectList = new ArrayList<Object>(paginationTasks);
+            return JsonWrapper.wrapList(objectList);
+        }catch (Exception ex){
+            JSONObject jsonError=new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "ERROR. Not valid params");
+            return jsonError;
+        }
+    }
+
     @GetMapping("users")
     public JSONObject getAllUsers() {
         List<User> allUsers = userService.getAllUsers();
         List<Object> objectList = new ArrayList<>(allUsers);
         return JsonWrapper.wrapList(objectList);
+    }
+
+    @GetMapping("userCount")
+    public JSONObject getUserCount() {
+        int userCount=userService.getUserCount();
+        JSONObject response = new JSONObject();
+        response.put("success", true);
+        response.put("data",userCount);
+        return response;
     }
 
     @GetMapping("userCreatedTasks/{id}")

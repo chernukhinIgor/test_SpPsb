@@ -86,4 +86,19 @@ public class UserDAOImpl implements UserDAO {
         String hql = "FROM Task as tsk WHERE tsk.responsibleUserId = ? ORDER BY tsk.taskId";
         return entityManager.createQuery(hql).setParameter(1, id).getResultList();
     }
+
+    @Override
+    public int getUserCount() {
+        String hql = "FROM User as usr";
+        return entityManager.createQuery(hql).getResultList().size();
+    }
+
+    @Override
+    public List<User> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
+        String hql = "FROM User as usr ORDER BY usr."+orderBy+" "+sortBy;
+        return (List<User>) entityManager.createQuery(hql)
+                .setFirstResult(page*pageLimit-pageLimit)
+                .setMaxResults(pageLimit)
+                .getResultList();
+    }
 }

@@ -17,4 +17,6 @@ public interface UserDAO {
     boolean userExists(int userId);
     List<Task> getCreatedTasks(int id);
     List<Task> getResponsibleTasks(int id);
+    int getUserCount();
+    List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
 }
