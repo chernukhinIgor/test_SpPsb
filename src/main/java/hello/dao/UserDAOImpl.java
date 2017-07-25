@@ -12,6 +12,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
+import static hello.service.UserService.USER_NOT_DELETED_ERROR;
+import static hello.service.UserService.USER_NOT_EXIST_ERROR;
+
 @Transactional
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -55,19 +59,18 @@ public class UserDAOImpl implements UserDAO {
         if (userExists(userId)) {
             entityManager.remove(getUserById(userId));
             if (userExists(userId)) {
-                return -2;
+                return USER_NOT_DELETED_ERROR;
             }
-            return 1;
+            return USER_DELETED_SUCCESSFULLY;
         } else {
-            return -1;
+            return USER_NOT_EXIST_ERROR;
         }
     }
 
     @Override
     public boolean userExists(int userId) {
         String hql = "FROM User as usr WHERE usr.userId = ?";
-        //String hql = "FROM User as usr WHERE usr.name = ? and usr.surname = ?";
         int count = entityManager.createQuery(hql).setParameter(1, userId).getResultList().size();
-        return count > 0 ? true : false;
+        return count > 0;
     }
 }
