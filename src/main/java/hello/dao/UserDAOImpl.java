@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
@@ -88,9 +89,20 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getParametricUsers(String  requestStringParams) {
-        String hql = "select "+requestStringParams+" FROM User as usr ORDER BY usr.userId";
-        return entityManager.createQuery(hql).getResultList();
+    public List<Object[]> getParametricUsers(String  requestStringParams) {
+        //String hql = "FROM User as usr ORDER BY usr.userId";
+        //String hql = "Select usr.userId as B from User as usr";
+
+        Query query = entityManager.createQuery("select "+requestStringParams+" FROM User as usr ORDER BY usr.userId");
+        List<Object[]> rows = query.getResultList();
+        return rows;
+//        for (Object[] row: rows) {
+//            System.out.println(" ------------------- ");
+//            System.out.println("id: " + row[0]);
+//            System.out.println("name: " + row[1]);
+//        }
+//        String hql = "select "+requestStringParams+" FROM User as usr ORDER BY usr.userId";
+//        return entityManager.createQuery(hql).getResultList();
     }
 
 }

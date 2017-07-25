@@ -3,6 +3,7 @@ package hello.controller;
 import hello.model.Task;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -65,18 +66,17 @@ public class RestUserController {
             parameters.add("gender");
         if (birth)
             parameters.add("birth");
-
         if (requestStringParams != null) {
-            List<User> allUsers = userService.getParametricUsers(requestStringParams);
-
-            for (int i=0;i<allUsers.size();i++) {
-                for (int j=0;i<parameters.size();j++){
-                    Object user = allUsers.get(i);
-                    System.out.print(user);
+            JSONArray array = new JSONArray();
+            List<Object[]> allUsersAsObjects = userService.getParametricUsers(requestStringParams);
+            for (Object[] row : allUsersAsObjects) {
+                JSONObject data = new JSONObject();
+                for (int i=0;i<parameters.size();i++){
+                    data.element(parameters.get(i),row[i]);
                 }
+                array.add(data);
             }
-            List<Object> objectList = new ArrayList<>(allUsers);
-            return JsonWrapper.wrapList(objectList);
+            return JsonWrapper.wrapList(array);
         } else {
             List<User> allUsers = userService.getAllUsers();
             List<Object> objectList = new ArrayList<>(allUsers);
@@ -102,7 +102,6 @@ public class RestUserController {
                 resultString.add("gender");
             if (birth)
                 resultString.add("birth");
-
             return resultString.toString();
         }
         return null;

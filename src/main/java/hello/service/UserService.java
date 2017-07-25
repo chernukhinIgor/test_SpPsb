@@ -20,5 +20,5 @@ public interface UserService {
     int deleteUserById(int id);
     List<Task> getCreatedTasks(int id);
     List<Task> getResponsibleTasks(int id);
-    List<User> getParametricUsers(String  requestStringParams);
+    List<Object[]> getParametricUsers(String  requestStringParams);
 }

@@ -17,5 +17,5 @@ public interface UserDAO {
     boolean userExists(int userId);
     List<Task> getCreatedTasks(int id);
     List<Task> getResponsibleTasks(int id);
-    List<User> getParametricUsers(String  requestStringParams);
+    List<Object[]> getParametricUsers(String  requestStringParams);
 }
