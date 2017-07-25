@@ -4,6 +4,7 @@ import { Response} from '@angular/http';
 import { HttpService} from '../http.service';
 import { User} from '../classes'
 import { Task} from '../classes'
+import { Title } from '@angular/platform-browser';
 const route = './app/user/';
 
 @Component({
@@ -20,6 +21,8 @@ export class UserComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService){}
 
     ngOnInit(){
+        let title = new Title('');
+        title.setTitle('View User');
         let options: URLSearchParams = new URLSearchParams();
 
         this.activatedRoute.params.subscribe((params: Params) => {

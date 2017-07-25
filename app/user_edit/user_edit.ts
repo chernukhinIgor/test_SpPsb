@@ -4,6 +4,7 @@ import { HttpService} from '../http.service';
 import { Response} from '@angular/http';
 import { User} from '../classes'
 import { FormsModule }   from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 
 const element = 'user_edit';
 const route = './app/' + element + '/';
@@ -22,10 +23,13 @@ export class UserEdit {
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
             this.id = params['id'];
+            let title = new Title('');
             if(this.id) {
+                title.setTitle('Edit User');
                 //let res = this.httpService.getData('/api/user/' + this.id, null);
                 this.httpService.getData('user.json', null).subscribe((data: Response) => this.user=data.json().data[0]);
             } else {
+                title.setTitle('Create User');
                 this.user = new User;
             }
         });

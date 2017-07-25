@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
 var classes_1 = require("../classes");
+var platform_browser_1 = require("@angular/platform-browser");
 var element = 'user_edit';
 var route = './app/' + element + '/';
 var UserEdit = (function () {
@@ -24,11 +25,14 @@ var UserEdit = (function () {
         var _this = this;
         this.activatedRoute.params.subscribe(function (params) {
             _this.id = params['id'];
+            var title = new platform_browser_1.Title('');
             if (_this.id) {
+                title.setTitle('Edit User');
                 //let res = this.httpService.getData('/api/user/' + this.id, null);
                 _this.httpService.getData('user.json', null).subscribe(function (data) { return _this.user = data.json().data[0]; });
             }
             else {
+                title.setTitle('Create User');
                 _this.user = new classes_1.User;
             }
         });

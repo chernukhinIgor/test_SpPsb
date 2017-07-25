@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
+var platform_browser_1 = require("@angular/platform-browser");
 var route = './app/user/';
 var UserComponent = (function () {
     function UserComponent(activatedRoute, httpService) {
@@ -19,6 +20,8 @@ var UserComponent = (function () {
     }
     UserComponent.prototype.ngOnInit = function () {
         var _this = this;
+        var title = new platform_browser_1.Title('');
+        title.setTitle('View User');
         var options = new URLSearchParams();
         this.activatedRoute.params.subscribe(function (params) {
             options.set('id', params['id']);

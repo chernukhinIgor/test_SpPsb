@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_service_1 = require("../http.service");
+var platform_browser_1 = require("@angular/platform-browser");
 var route = './app/tasks/';
 var TasksComponent = (function () {
     function TasksComponent(httpService) {
@@ -18,6 +19,8 @@ var TasksComponent = (function () {
     }
     TasksComponent.prototype.ngOnInit = function () {
         var _this = this;
+        var title = new platform_browser_1.Title('');
+        title.setTitle('View Tasks');
         var options = new URLSearchParams();
         this.httpService.getData('tasks.json', options).subscribe(function (data) { return _this.tasks = data.json().data; });
     };

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
+var platform_browser_1 = require("@angular/platform-browser");
 var route = './app/home/';
 var HomeComponent = (function () {
     function HomeComponent(activatedRoute, httpService) {
@@ -19,6 +20,8 @@ var HomeComponent = (function () {
         this.page = 'home';
     }
     HomeComponent.prototype.ngOnInit = function () {
+        var title = new platform_browser_1.Title('');
+        title.setTitle('Dashboard');
         this.getNewTasks();
         this.getNewUsers();
     };

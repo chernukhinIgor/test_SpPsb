@@ -4,6 +4,7 @@ import { Response} from '@angular/http';
 import { HttpService} from '../http.service';
 import { FormsModule }   from '@angular/forms';
 import { Task} from '../classes'
+import { Title } from '@angular/platform-browser';
 
 const element = 'edit';
 const route = './app/' + element + '/';
@@ -42,14 +43,16 @@ export class Edit {
     constructor(public router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService) {}
 
     ngOnInit() {
-        // subscribe to router event
         this.activatedRoute.params.subscribe((params: Params) => {
+            let title = new Title('');
             this.users = this.getUsers();
             this.id = params['id'];
             if(this.id) {
+                title.setTitle('Edit Task');
                 //let res = this.httpService.getData('/api/get/' + this.id, null);
                 this.httpService.getData('task.json', null).subscribe((data: Response) => this.task=data.json().data[0]);
             } else {
+                title.setTitle('Create Task');
                 this.task = new Task;
             }
         });

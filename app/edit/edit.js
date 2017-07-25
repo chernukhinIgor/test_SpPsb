@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
 var classes_1 = require("../classes");
+var platform_browser_1 = require("@angular/platform-browser");
 var element = 'edit';
 var route = './app/' + element + '/';
 //tmp variables
@@ -41,15 +42,17 @@ var Edit = (function () {
     }
     Edit.prototype.ngOnInit = function () {
         var _this = this;
-        // subscribe to router event
         this.activatedRoute.params.subscribe(function (params) {
+            var title = new platform_browser_1.Title('');
             _this.users = _this.getUsers();
             _this.id = params['id'];
             if (_this.id) {
+                title.setTitle('Edit Task');
                 //let res = this.httpService.getData('/api/get/' + this.id, null);
                 _this.httpService.getData('task.json', null).subscribe(function (data) { return _this.task = data.json().data[0]; });
             }
             else {
+                title.setTitle('Create Task');
                 _this.task = new classes_1.Task;
             }
         });

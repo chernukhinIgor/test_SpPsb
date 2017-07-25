@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Params} from '@angular/router';
 import { Response} from '@angular/http';
 import { HttpService} from '../http.service';
+import { Title } from '@angular/platform-browser';
 import { Task} from '../classes'
 import { User} from '../classes'
 const route = './app/home/';
@@ -18,6 +19,8 @@ export class HomeComponent implements OnInit{
     constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService) {}
 
     ngOnInit(){
+        let title = new Title('');
+        title.setTitle('Dashboard');
         this.getNewTasks();
         this.getNewUsers();
     }
