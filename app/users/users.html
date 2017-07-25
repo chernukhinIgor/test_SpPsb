@@ -22,7 +22,7 @@
         <td>{{user?.gender}}</td>
         <td>{{user?.birth}}</td>
         <td>
-            <a href="#"><i class="fa fa-pencil"></i></a>
+            <a href="user/edit/{{user?.userId}}"><i class="fa fa-pencil"></i></a>
             <a href="#" (deleteClick)="onClick()" [moduleName]="'Users'" [entityId]="user?.userId"><i class="fa fa-trash"></i></a>
         </td>
 
