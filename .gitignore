@@ -8,3 +8,6 @@ target/classes/
 target/maven-status/maven-compiler-plugin/compile/default-compile/
 
 src/main/resources/application\.properties
+.idea/
+target/
+#src/test/
