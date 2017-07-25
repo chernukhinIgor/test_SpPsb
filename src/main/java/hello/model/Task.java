@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Task {
 
-    private enum statusStates{
+    public enum statusStates{
         accepted,
         canceled,
         finished,
