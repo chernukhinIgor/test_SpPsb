@@ -11,3 +11,4 @@ src/main/resources/application\.properties
 .idea/
 target/
 #src/test/
+src/test/resources/

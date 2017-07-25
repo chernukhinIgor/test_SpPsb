@@ -64,7 +64,7 @@ public class RestUserControllerTest {
                         .content(json)
         )
                 //.andExpect(status().isCreated());
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk());
     }
 
