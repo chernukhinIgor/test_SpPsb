@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service("taskService")
 public class TaskServiceImpl implements TaskService {
+
     @Autowired
     TaskDAO taskDAO;
 
@@ -26,7 +27,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public int addTask(Task task) {
         if (taskDAO.taskExists(task.getTaskId())) {
-            return -1;
+            return TASK_ALREADY_EXIST_ERROR;
         } else {
             return taskDAO.addTask(task);
         }

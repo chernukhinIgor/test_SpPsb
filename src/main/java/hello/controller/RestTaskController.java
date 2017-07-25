@@ -13,6 +13,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static hello.service.TaskService.*;
+
 @RestController
 public class RestTaskController {
     @Autowired
@@ -41,7 +43,7 @@ public class RestTaskController {
     @PostMapping("task")
     public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {
         int id = taskService.addTask(task);
-        if (id == -1) {
+        if (id == TASK_ALREADY_EXIST_ERROR) {
             JSONObject jsonError=new JSONObject();
             jsonError.put("success", false);
             jsonError.put("message", "ERROR. Creating task failed. Id already exists");
@@ -81,15 +83,15 @@ public class RestTaskController {
         int i = taskService.deleteTaskById(id);
         JSONObject response=new JSONObject();
         switch (i){
-            case -1:
+            case TASK_NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("message", "ERROR");
+                response.put("message", "ERROR. Task does not exist");
                 break;
-            case -2:
+            case TASK_NOT_DELETED_ERROR:
                 response.put("success", false);
-                response.put("message", "ERROR");
+                response.put("message", "ERROR. Task not deleted");
                 break;
-            case 1:
+            case TASK_DELETED_SUCCESSFULLY:
                 response.put("success", true);
                 response.put("message", "Task deleted succesfully");
                 break;
