@@ -4,6 +4,7 @@ package hello.dao;
  * Created by Tom on 21.07.2017.
  */
 
+import hello.model.Task;
 import hello.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,5 +73,17 @@ public class UserDAOImpl implements UserDAO {
         String hql = "FROM User as usr WHERE usr.userId = ?";
         int count = entityManager.createQuery(hql).setParameter(1, userId).getResultList().size();
         return count > 0;
+    }
+
+    @Override
+    public List<Task> getCreatedTasks(int id) {
+        String hql = "FROM Task as tsk WHERE tsk.creatorUserId = ? ORDER BY tsk.taskId";
+        return entityManager.createQuery(hql).setParameter(1, id).getResultList();
+    }
+
+    @Override
+    public List<Task> getResponsibleTasks(int id) {
+        String hql = "FROM Task as tsk WHERE tsk.responsibleUserId = ? ORDER BY tsk.taskId";
+        return entityManager.createQuery(hql).setParameter(1, id).getResultList();
     }
 }

@@ -8,3 +8,9 @@ target/classes/
 target/maven-status/maven-compiler-plugin/compile/default-compile/
 
 src/main/resources/application\.properties
+
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles\.lst
+
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles\.lst
+
+target/test-classes/hello\.controller/RestTaskControllerTest-context\.xml
