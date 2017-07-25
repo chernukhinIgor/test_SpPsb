@@ -26,6 +26,10 @@ var HttpService = (function () {
         return true;
         //return this.http.post(url, params);
     };
+    HttpService.prototype.deleteData = function (url, params) {
+        return true;
+        //return this.http.delete(url, params);
+    };
     return HttpService;
 }());
 HttpService = __decorate([

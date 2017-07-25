@@ -19,6 +19,7 @@ var tasks_1 = require("./tasks/tasks");
 var forms_1 = require("@angular/forms");
 var user_1 = require("./user/user");
 var users_1 = require("./users/users");
+var delete_directive_1 = require("./delete.directive");
 // определение маршрутов
 var appRoutes = [
     { path: '', component: home_component_1.HomeComponent },
@@ -40,7 +41,7 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, router_1.RouterModule.forRoot(appRoutes), http_1.HttpModule, forms_1.FormsModule],
-        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, edit_1.Edit, user_edit_1.UserEdit, users_1.UsersComponent, user_1.UserComponent, tasks_1.TasksComponent, task_1.TaskComponent, not_found_component_1.NotFoundComponent],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, edit_1.Edit, user_edit_1.UserEdit, users_1.UsersComponent, user_1.UserComponent, tasks_1.TasksComponent, task_1.TaskComponent, not_found_component_1.NotFoundComponent, delete_directive_1.DeleteDirective],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
