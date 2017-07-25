@@ -27,6 +27,7 @@ var Edit = (function () {
             _this.id = params['id'];
             if (_this.id) {
                 var res = _this.httpService.getData('/api/get/' + _this.id, null);
+                console.log(res);
                 _this.task = res[0];
             }
             else {

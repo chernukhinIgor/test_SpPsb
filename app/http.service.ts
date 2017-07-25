@@ -7,11 +7,7 @@ export class HttpService{
     constructor(private http: Http){ }
     getData(url: string, params: URLSearchParams) {
         var jsonObject = this.http.get(url, params);
-        if (jsonObject['success'] = "true") {
-            return jsonObject['data'];
-        } else {
-            return jsonObject['error'];
-        }
+        return jsonObject;
     }
 
     postData(url: string, params: any) {

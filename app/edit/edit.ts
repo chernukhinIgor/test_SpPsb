@@ -24,6 +24,9 @@ export class Edit {
             this.id = params['id'];
             if(this.id) {
                 let res = this.httpService.getData('/api/get/' + this.id, null);
+
+                console.log(res);
+
                 this.task = res[0];
             } else {
                 this.task = new Task;

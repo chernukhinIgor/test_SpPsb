@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'my-app',
-    template: `<div>
-        <router-outlet></router-outlet>
-    </div>`
+    templateUrl: 'app/app.components.html'
 })
 export class AppComponent {
-    name= '';
+    page = window.location.pathname
 }

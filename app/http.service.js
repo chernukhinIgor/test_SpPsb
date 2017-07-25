@@ -16,12 +16,7 @@ var HttpService = (function () {
     }
     HttpService.prototype.getData = function (url, params) {
         var jsonObject = this.http.get(url, params);
-        if (jsonObject['success'] = "true") {
-            return jsonObject['data'];
-        }
-        else {
-            return jsonObject['error'];
-        }
+        return jsonObject;
     };
     HttpService.prototype.postData = function (url, params) {
         return { id: 2 };
