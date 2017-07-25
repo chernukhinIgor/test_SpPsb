@@ -26,9 +26,8 @@ var Edit = (function () {
         this.activatedRoute.params.subscribe(function (params) {
             _this.id = params['id'];
             if (_this.id) {
-                var res = _this.httpService.getData('/api/get/' + _this.id, null);
-                console.log(res);
-                _this.task = res[0];
+                //let res = this.httpService.getData('/api/get/' + this.id, null);
+                _this.httpService.getData('task.json', null).subscribe(function (data) { return _this.task = data.json().data[0]; });
             }
             else {
                 _this.task = new classes_1.Task;

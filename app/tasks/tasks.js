@@ -19,7 +19,7 @@ var TasksComponent = (function () {
     TasksComponent.prototype.ngOnInit = function () {
         var _this = this;
         var options = new URLSearchParams();
-        this.httpService.getData('localhost/task.json', options).subscribe(function (data) { return _this.tasks = data.json().data; });
+        this.httpService.getData('tasks.json', options).subscribe(function (data) { return _this.tasks = data.json().data; });
     };
     TasksComponent.prototype.toggle = function () {
         this.condition = true;

@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Response} from '@angular/http';
 import { HttpService} from '../http.service';
 import { FormsModule }   from '@angular/forms';
 import { Task} from '../classes'
@@ -23,11 +24,8 @@ export class Edit {
         this.activatedRoute.params.subscribe((params: Params) => {
             this.id = params['id'];
             if(this.id) {
-                let res = this.httpService.getData('/api/get/' + this.id, null);
-
-                console.log(res);
-
-                this.task = res[0];
+                //let res = this.httpService.getData('/api/get/' + this.id, null);
+                this.httpService.getData('task.json', null).subscribe((data: Response) => this.task=data.json().data[0]);
             } else {
                 this.task = new Task;
             }

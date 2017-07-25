@@ -20,7 +20,7 @@ export class TasksComponent implements OnInit {
 
     ngOnInit(){
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData('localhost/task.json', options).subscribe((data: Response) => this.tasks=data.json().data);
+        this.httpService.getData('tasks.json', options).subscribe((data: Response) => this.tasks=data.json().data);
     }
 
     toggle(){
