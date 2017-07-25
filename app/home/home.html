@@ -1,7 +1,6 @@
-<div class="container">
-    <div class="text-center">
-        <h1>Dashboard</h1>
-    </div>
+<div class="text-center">
+    <h1>Dashboard</h1>
+</div>
 <div>
     <div *ngIf="users" class="card text-center">
         <h3 class="card-header">Last Added users</h3>
@@ -21,21 +20,19 @@
         </div>
     </div>
 </div>
-    <div *ngIf="tasks" class="card text-center">
-        <h3 class="card-header">Last Added Tasks</h3>
-        <div class="card-block">
-            <div class="row ">
-                <div *ngFor="let task of tasks" class="col-sm-4">
-                    <div class="card text-center cards-custm-style cards-outline-gray">
-                        <div class="card-block">
-                            <h3 class="card-title">{{task.name}}</h3>
-                            <p class="card-text">{{task.description}}</p>
-                            <a href="/task/edit/{{task.id}}" class="btn btn-primary">View this task</a>
-                        </div>
+<div *ngIf="tasks" class="card text-center">
+    <h3 class="card-header">Last Added Tasks</h3>
+    <div class="card-block">
+        <div class="row ">
+            <div *ngFor="let task of tasks" class="col-sm-4">
+                <div class="card text-center cards-custm-style cards-outline-gray">
+                    <div class="card-block">
+                        <h3 class="card-title">{{task.name}}</h3>
+                        <p class="card-text">{{task.description}}</p>
+                        <a href="/task/edit/{{task.id}}" class="btn btn-primary">View this task</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
