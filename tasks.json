@@ -2,51 +2,51 @@
   "success": true,
   "data": [
     {
-      "task_id": 1,
-      "creator_user_id": 1,
+      "taskId": 1,
+      "creatorUserId": 1,
       "name": "NewTask",
-      "responsible_user_id": 1,
-      "creator_user_id": 28,
+      "responsibleUserId": 1,
+      "creatorUserId": 28,
       "description": "someDescription"
     },
     {
-      "task_id": 2,
-      "creator_user_id": 2,
+      "taskId": 2,
+      "creatorUserId": 2,
       "name": "NewTask2",
-      "responsible_user_id": 2,
-      "creator_user_id": 28,
+      "responsibleUserId": 2,
+      "creatorUserId": 28,
       "description": "someDescription2"
     },
     {
-      "task_id": 3,
-      "creator_user_id": 2,
+      "taskId": 3,
+      "creatorUserId": 2,
       "name": "NewTask3",
-      "responsible_user_id": 2,
-      "creator_user_id": 28,
+      "responsibleUserId": 2,
+      "creatorUserId": 28,
       "description": "someDescription3"
     },
     {
-      "task_id": 4,
-      "creator_user_id": 2,
+      "taskId": 4,
+      "creatorUserId": 2,
       "name": "NewTask3",
-      "responsible_user_id": 2,
-      "creator_user_id": 28,
+      "responsibleUserId": 2,
+      "creatorUserId": 28,
       "description": "someDescription3"
     },
     {
-      "task_id": 4,
-      "creator_user_id": 2,
+      "taskId": 4,
+      "creatorUserId": 2,
       "name": "NewTask3",
-      "responsible_user_id": 2,
-      "creator_user_id": 28,
+      "responsibleUserId": 2,
+      "creatorUserId": 28,
       "description": "someDescription3"
     },
     {
-      "task_id": 4,
-      "creator_user_id": 2,
+      "taskId": 4,
+      "creatorUserId": 2,
       "name": "NewTask3",
-      "responsible_user_id": 2,
-      "creator_user_id": 28,
+      "responsibleUserId": 2,
+      "creatorUserId": 28,
       "description": "someDescription3"
     }
   ]

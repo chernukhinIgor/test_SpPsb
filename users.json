@@ -2,58 +2,58 @@
   "success": true,
   "data": [
     {
-      "user_id":1,
+      "userId":1,
       "name":"someName",
       "surname":"someSurname",
       "telephone":"someTelephone",
       "email":"someEmail",
-      "sex":"someSex",
-      "datebirth":"someDatebirth"
+      "gender":"someSex",
+      "birth":"someDatebirth"
     },
     {
-      "user_id":2,
+      "userId":2,
       "name":"someName",
       "surname":"someSurname",
       "telephone":"someTelephone",
       "email":"someEmail",
-      "sex":"someSex",
-      "datebirth":"someDatebirth"
+      "gender":"someSex",
+      "birth":"someDatebirth"
     },
     {
-      "user_id":3,
+      "userId":3,
       "name":"someName",
       "surname":"someSurname",
       "telephone":"someTelephone",
       "email":"someEmail",
-      "sex":"someSex",
-      "datebirth":"someDatebirth"
+      "gender":"someSex",
+      "birth":"someDatebirth"
     },
     {
-      "user_id":4,
+      "userId":4,
       "name":"someName",
       "surname":"someSurname",
       "telephone":"someTelephone",
       "email":"someEmail",
-      "sex":"someSex",
-      "datebirth":"someDatebirth"
+      "gender":"someSex",
+      "birth":"someDatebirth"
     },
     {
-      "user_id":5,
+      "userId":5,
       "name":"someName",
       "surname":"someSurname",
       "telephone":"someTelephone",
       "email":"someEmail",
-      "sex":"someSex",
-      "datebirth":"someDatebirth"
+      "gender":"someSex",
+      "birth":"someDatebirth"
     },
     {
-      "user_id":6,
+      "userId":6,
       "name":"someName",
       "surname":"someSurname",
       "telephone":"someTelephone",
       "email":"someEmail",
-      "sex":"someSex",
-      "datebirth":"someDatebirth"
+      "gender":"someSex",
+      "birth":"someDatebirth"
     }
   ]
 }

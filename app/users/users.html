@@ -2,7 +2,7 @@
 <div *ngIf="condition">
     <div *ngFor="let user of users" class="col-lg-3 panel panel-default">
         <dt>ID пользователя: </dt>
-        <dd>{{user?.user_id}}</dd>
+        <dd>{{user?.userId}}</dd>
 
         <dt>Имя:</dt>
         <dd>{{user?.name}}</dd>
@@ -20,7 +20,7 @@
         <dd>{{user?.gender}}</dd>
 
         <dt>Дата рождения:</dt>
-        <dd>{{user?.datebirth}}</dd>
+        <dd>{{user?.birth}}</dd>
     </div>
 </div>
 <div *ngIf="!condition">

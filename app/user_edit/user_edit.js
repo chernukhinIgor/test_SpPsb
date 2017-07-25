@@ -11,14 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
+var classes_1 = require("../classes");
 var element = 'user_edit';
 var route = './app/' + element + '/';
-var User = (function () {
-    function User() {
-    }
-    return User;
-}());
-exports.User = User;
 var UserEdit = (function () {
     function UserEdit(router, activatedRoute, httpService) {
         this.router = router;
@@ -31,11 +26,12 @@ var UserEdit = (function () {
         this.activatedRoute.params.subscribe(function (params) {
             _this.id = params['id'];
             if (_this.id) {
-                var res = _this.httpService.getData('/api/user/' + _this.id, null);
+                //let res = this.httpService.getData('/api/user/' + this.id, null);
+                var res = _this.httpService.getData('user.json', null);
                 _this.user = res[0];
             }
             else {
-                _this.user = new User;
+                _this.user = new classes_1.User;
             }
         });
     };

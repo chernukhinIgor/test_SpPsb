@@ -2,17 +2,10 @@ import { Component} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpService} from '../http.service';
 import { FormsModule }   from '@angular/forms';
+import { Task} from '../classes'
 
 const element = 'edit';
 const route = './app/' + element + '/';
-
-export class Task{
-    task_id: number;
-    creator_user_id: number;
-    name: string;
-    responsible_user_id: number;
-    description: string;
-}
 
 @Component({
     selector: 'home-app',
@@ -45,7 +38,6 @@ export class Edit {
             let res = this.httpService.postData('/api/get/', this.task );
             location.href = '/task/edit/' + res.id
         }
-        console.log(this.task);
     }
 
 }

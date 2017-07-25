@@ -11,47 +11,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../http.service");
-var classes_1 = require("../classes");
-var element = 'edit';
-var route = './app/' + element + '/';
-var Edit = (function () {
-    function Edit(router, activatedRoute, httpService) {
-        this.router = router;
+var route = './app/user/';
+var UserComponent = (function () {
+    function UserComponent(activatedRoute, httpService) {
         this.activatedRoute = activatedRoute;
         this.httpService = httpService;
+        this.condition = false;
     }
-    Edit.prototype.ngOnInit = function () {
+    UserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        // subscribe to router event
+        var options = new URLSearchParams();
         this.activatedRoute.params.subscribe(function (params) {
-            _this.id = params['id'];
-            if (_this.id) {
-                var res = _this.httpService.getData('/api/get/' + _this.id, null);
-                _this.task = res[0];
-            }
-            else {
-                _this.task = new classes_1.Task;
-            }
+            options.set('id', params['id']);
         });
+        this.httpService.getData('user.json', options).subscribe(function (data) { return _this.user = data.json().data[0]; });
     };
-    Edit.prototype.onSubmit = function (f) {
-        if (this.id) {
-            var res = this.httpService.putData('/api/get/' + this.id, this.task);
-        }
-        else {
-            var res = this.httpService.postData('/api/get/', this.task);
-            location.href = '/task/edit/' + res.id;
-        }
+    UserComponent.prototype.toggle = function () {
+        this.condition = true;
     };
-    return Edit;
+    return UserComponent;
 }());
-Edit = __decorate([
+UserComponent = __decorate([
     core_1.Component({
-        selector: 'home-app',
-        templateUrl: route + element + '.html',
+        selector: 'user-comp',
+        templateUrl: route + 'user.html',
         providers: [http_service_1.HttpService]
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, http_service_1.HttpService])
-], Edit);
-exports.Edit = Edit;
-//# sourceMappingURL=edit.js.map
+    __metadata("design:paramtypes", [router_1.ActivatedRoute, http_service_1.HttpService])
+], UserComponent);
+exports.UserComponent = UserComponent;
+//# sourceMappingURL=user.js.map

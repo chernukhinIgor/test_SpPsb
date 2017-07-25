@@ -1,7 +1,7 @@
 
 <div *ngIf="user" class="col-lg-3 panel panel-default">
     <dt>ID</dt>
-    <dd>{{task?.task_id}}</dd>
+    <dd>{{user?.userId}}</dd>
 
     <div class="form-group">
         <label>Name</label>
@@ -33,7 +33,7 @@
 
     <div class="form-group">
         <label>creator user id</label>
-       <input type="date" [(ngModel)]="user.datebirth">
+       <input type="date" [(ngModel)]="user.birth">
     </div>
 
 </div>

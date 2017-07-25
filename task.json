@@ -1,10 +1,10 @@
 {
   "success": true,
   "data": [{
-    "task_id":1,
-    "creator_user_id":1,
+    "taskId":1,
+    "creatorUserId":1,
     "name":"someName",
-    "responsible_user_id":1,
+    "responsibleUserId":1,
     "description":"someDescription"
   }]
 }
