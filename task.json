@@ -2,6 +2,7 @@
   "success": true,
   "data": [{
     "taskId":1,
+    "status": "new",
     "creatorUserId":3,
     "name":"someName",
     "responsibleUserId":2,
