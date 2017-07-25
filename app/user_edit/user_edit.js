@@ -22,13 +22,11 @@ var UserEdit = (function () {
     }
     UserEdit.prototype.ngOnInit = function () {
         var _this = this;
-        // subscribe to router event
         this.activatedRoute.params.subscribe(function (params) {
             _this.id = params['id'];
             if (_this.id) {
                 //let res = this.httpService.getData('/api/user/' + this.id, null);
-                var res = _this.httpService.getData('user.json', null);
-                _this.user = res[0];
+                _this.httpService.getData('user.json', null).subscribe(function (data) { return _this.user = data.json().data[0]; });
             }
             else {
                 _this.user = new classes_1.User;

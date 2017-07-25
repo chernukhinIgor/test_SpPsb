@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import { HttpService} from '../http.service';
+import { Response} from '@angular/http';
 import { User} from '../classes'
 import { FormsModule }   from '@angular/forms';
 
@@ -19,13 +20,11 @@ export class UserEdit {
     constructor(public router: Router, private activatedRoute: ActivatedRoute, private httpService: HttpService) {}
 
     ngOnInit() {
-        // subscribe to router event
         this.activatedRoute.params.subscribe((params: Params) => {
             this.id = params['id'];
             if(this.id) {
                 //let res = this.httpService.getData('/api/user/' + this.id, null);
-                let res = this.httpService.getData('user.json', null);
-                this.user = res[0];
+                this.httpService.getData('user.json', null).subscribe((data: Response) => this.user=data.json().data[0]);
             } else {
                 this.user = new User;
             }
