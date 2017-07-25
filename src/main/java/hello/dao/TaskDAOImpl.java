@@ -9,6 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+import static hello.service.TaskService.TASK_DELETED_SUCCESSFULLY;
+import static hello.service.TaskService.TASK_NOT_DELETED_ERROR;
+import static hello.service.TaskService.TASK_NOT_EXIST_ERROR;
+
 @Transactional
 @Repository
 public class TaskDAOImpl implements TaskDAO {
@@ -51,11 +55,11 @@ public class TaskDAOImpl implements TaskDAO {
         if(taskExists(taskId)){
             entityManager.remove(getTaskById(taskId));
             if(taskExists(taskId)){
-                return -2;
+                return TASK_NOT_DELETED_ERROR;
             }
-            return 1;
+            return TASK_DELETED_SUCCESSFULLY;
         }else{
-            return -1;
+            return TASK_NOT_EXIST_ERROR;
         }
 
     }
