@@ -1,40 +1,62 @@
 
-<div *ngIf="task" class="col-lg-3 panel panel-default">
-    <dt>ID</dt>
-    <dd>{{task?.taskId}}</dd>
-
+<div *ngIf="task" class="col-lg-6 panel panel-default">
+    <span class="help-block"></span>
     <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" [(ngModel)]="task.name"/>
+        <label class="col-md-3 control-label"  for="taskid">ID</label>
+        <div class="col-md-8">
+            <input readonly id="taskid" name="taskid" type="text" [(ngModel)]="task.taskId" class="form-control input-md"/>
+            <span class="help-block"></span>
+        </div>
     </div>
 
     <div class="form-group">
-        <label for="name">Description</label>
-        <input type="text" [(ngModel)]="task.description"/>
+        <label class="col-md-3 control-label"  for="taskname">Name</label>
+        <div class="col-md-8">
+            <input id="taskname" name="taskname" type="text" [(ngModel)]="task.name" placeholder="Insert Name" class="form-control input-md"/>
+            <span class="help-block"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-md-3 control-label" for="description">Description</label>
+        <div class="col-md-8   pad-bt-10">
+            <textarea id="description" name="description" type="text" [(ngModel)]="task.description"  placeholder="Insert description" class="form-control input-md"></textarea>
+        </div>
     </div>
 
     <div class="form-group">
-        <label for="name">responsible user id</label>
-        <select [(ngModel)]="task.responsibleUserId">
-            <option value="1">one</option>
-            <option value="2">two</option>
-            <option value="3">tre</option>
-            <option value="4">four</option>
-        </select>
+        <label class="col-lg-3 control-label">responsible user id:</label>
+        <div class="col-lg-8">
+            <div class="ui-select">
+                <select class="form-control" [(ngModel)]="task.responsibleUserId">
+                    <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
+                </select>
+                <span class="help-block"></span>
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
-        <label for="name">creator user id</label>
-        <select [(ngModel)]="task.creatorUserId">
-            <option value="1">one</option>
-            <option value="2">two</option>
-            <option value="3">tre</option>
-            <option value="4">four</option>
-        </select>
+        <label class="col-lg-3 control-label">creator user id:</label>
+        <div class="col-lg-8">
+            <div class="ui-select">
+                <select class="form-control" [(ngModel)]="task.creatorUserId">
+                    <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
+                </select>
+                <span class="help-block"></span>
+            </div>
+        </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-md-3 control-label"></label>
+        <div class="col-md-8">
+            <input type="button" (click)="onSubmit()" class="btn btn-primary" value="Save Changes">
+            <span></span>
+            <input type="reset" (click)="cancel()" class="btn btn-default" value="Cancel">
+            <span class="help-block"></span>
+        </div>
+    </div>
 
-</div>
-<div *ngIf="task">
-    <button type="submit"  (click)="onSubmit()" class="btn btn-primary">Submit</button>
 </div>

@@ -14,6 +14,25 @@ var http_service_1 = require("../http.service");
 var classes_1 = require("../classes");
 var element = 'edit';
 var route = './app/' + element + '/';
+//tmp variables
+var users = [
+    {
+        id: '1',
+        name: 'name One'
+    },
+    {
+        id: '2',
+        name: 'name two'
+    },
+    {
+        id: '3',
+        name: 'name three'
+    },
+    {
+        id: '3',
+        name: 'name four'
+    }
+];
 var Edit = (function () {
     function Edit(router, activatedRoute, httpService) {
         this.router = router;
@@ -24,6 +43,7 @@ var Edit = (function () {
         var _this = this;
         // subscribe to router event
         this.activatedRoute.params.subscribe(function (params) {
+            _this.users = _this.getUsers();
             _this.id = params['id'];
             if (_this.id) {
                 //let res = this.httpService.getData('/api/get/' + this.id, null);
@@ -34,7 +54,7 @@ var Edit = (function () {
             }
         });
     };
-    Edit.prototype.onSubmit = function (f) {
+    Edit.prototype.onSubmit = function () {
         if (this.id) {
             var res = this.httpService.putData('/api/get/' + this.id, this.task);
         }
@@ -42,6 +62,9 @@ var Edit = (function () {
             var res = this.httpService.postData('/api/get/', this.task);
             location.href = '/task/edit/' + res.id;
         }
+    };
+    Edit.prototype.getUsers = function () {
+        return users;
     };
     return Edit;
 }());
