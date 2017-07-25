@@ -65,4 +65,14 @@ public class UserServiceImpl implements UserService {
     public List<Object[]> getParametricUsers(String  requestStringParams) {
         return userDAO.getParametricUsers(requestStringParams);
     }
+
+    @Override
+    public int getUserCount() {
+        return userDAO.getUserCount();
+    }
+
+    @Override
+    public List<User> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
+        return userDAO.getPaginationUsers(orderBy,sortBy,page,pageLimit);
+    }
 }
