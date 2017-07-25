@@ -5,7 +5,6 @@ import { User} from '../classes'
 import { Title } from '@angular/platform-browser';
 const route = './app/users/';
 
-
 @Component({
     selector: 'users-comp',
     templateUrl: route + 'users.html',
