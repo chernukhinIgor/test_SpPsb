@@ -47,13 +47,13 @@ public class RestUserController {
             @RequestParam(required = true) String sortBy,
             @RequestParam(required = true) int page,
             @RequestParam(required = true) int pageLimit
-    ){
-        try{
-            List<User> paginationTasks = userService.getPaginationUsers(orderBy, sortBy,page,pageLimit);
+    ) {
+        try {
+            List<User> paginationTasks = userService.getPaginationUsers(orderBy, sortBy, page, pageLimit);
             List<Object> objectList = new ArrayList<Object>(paginationTasks);
             return JsonWrapper.wrapList(objectList);
-        }catch (Exception ex){
-            JSONObject jsonError=new JSONObject();
+        } catch (Exception ex) {
+            JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
             jsonError.put("message", "ERROR. Not valid params");
             return jsonError;
@@ -62,10 +62,10 @@ public class RestUserController {
 
     @GetMapping("userCount")
     public JSONObject getUserCount() {
-        int userCount=userService.getUserCount();
+        int userCount = userService.getUserCount();
         JSONObject response = new JSONObject();
         response.put("success", true);
-        response.put("data",userCount);
+        response.put("data", userCount);
         return response;
     }
 
@@ -98,12 +98,22 @@ public class RestUserController {
         if (requestStringParams != null) {
             JSONArray array = new JSONArray();
             List<Object[]> allUsersAsObjects = userService.getParametricUsers(requestStringParams);
-            for (Object[] row : allUsersAsObjects) {
-                JSONObject data = new JSONObject();
-                for (int i=0;i<parameters.size();i++){
-                    data.element(parameters.get(i),row[i]);
+            if (parameters.size() == 1) {
+                for (Object row : allUsersAsObjects) {
+                    JSONObject data = new JSONObject();
+                    for (int i = 0; i < parameters.size(); i++) {
+                        data.element(parameters.get(i), row);
+                    }
+                    array.add(data);
                 }
-                array.add(data);
+            } else {
+                for (Object[] row : allUsersAsObjects) {
+                    JSONObject data = new JSONObject();
+                    for (int i = 0; i < parameters.size(); i++) {
+                        data.element(parameters.get(i), row[i]);
+                    }
+                    array.add(data);
+                }
             }
             return JsonWrapper.wrapList(array);
         } else {
