@@ -14,6 +14,8 @@ import { FormsModule }   from '@angular/forms';
 import { UserComponent }   from './user/user';
 import { UsersComponent }   from './users/users';
 import { DeleteDirective }   from './delete.directive';
+import { PagerService } from './pagination_service/index';
+import * as _ from 'underscore';
 
 
 // определение маршрутов
@@ -32,7 +34,9 @@ const appRoutes: Routes =[
 
 @NgModule({
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes), HttpModule, FormsModule],
-    declarations: [ AppComponent, HomeComponent, Edit, UserEdit, UsersComponent, UserComponent, TasksComponent, TaskComponent, NotFoundComponent, DeleteDirective],
+    declarations: [ AppComponent, HomeComponent, Edit, UserEdit, UsersComponent, UserComponent,
+        TasksComponent, TaskComponent, NotFoundComponent, DeleteDirective],
+    providers:    [ PagerService ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
