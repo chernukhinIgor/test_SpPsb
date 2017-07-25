@@ -86,4 +86,11 @@ public class UserDAOImpl implements UserDAO {
         String hql = "FROM Task as tsk WHERE tsk.responsibleUserId = ? ORDER BY tsk.taskId";
         return entityManager.createQuery(hql).setParameter(1, id).getResultList();
     }
+
+    @Override
+    public List<User> getParametricUsers(String requestStringParams) {
+        String hql = "select "+requestStringParams+" FROM User as usr ORDER BY usr.userId";
+        return entityManager.createQuery(hql).getResultList();
+    }
+
 }

@@ -60,4 +60,9 @@ public class UserServiceImpl implements UserService {
     public List<Task> getResponsibleTasks(int id) {
         return userDAO.getResponsibleTasks(id);
     }
+
+    @Override
+    public List<User> getParametricUsers(String requestStringParams) {
+        return userDAO.getParametricUsers(requestStringParams);
+    }
 }
