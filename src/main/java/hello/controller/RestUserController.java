@@ -25,7 +25,7 @@ import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
 @RestController
 public class RestUserController {
     @Autowired
-    private UserService  userService;
+    private UserService userService;
 
     @GetMapping("user/{id}")
     public JSONObject getUserById(@PathVariable("id") Integer id) {
