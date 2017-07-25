@@ -20,7 +20,7 @@ import static hello.service.UserService.USER_NOT_EXIST_ERROR;
 
 @Transactional
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl  implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
