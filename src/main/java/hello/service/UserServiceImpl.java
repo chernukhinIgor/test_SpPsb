@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getParametricUsers(String requestStringParams) {
+    public List<User> getParametricUsers(String  requestStringParams) {
         return userDAO.getParametricUsers(requestStringParams);
     }
 }

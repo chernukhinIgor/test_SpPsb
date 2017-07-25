@@ -88,7 +88,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getParametricUsers(String requestStringParams) {
+    public List<User> getParametricUsers(String  requestStringParams) {
         String hql = "select "+requestStringParams+" FROM User as usr ORDER BY usr.userId";
         return entityManager.createQuery(hql).getResultList();
     }

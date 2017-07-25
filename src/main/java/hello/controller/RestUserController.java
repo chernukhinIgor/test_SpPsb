@@ -41,7 +41,6 @@ public class RestUserController {
 
     @GetMapping("users")
     public JSONObject getAllUsers(
-
             @RequestParam(required = false) boolean userId,
             @RequestParam(required = false) boolean name,
             @RequestParam(required = false) boolean surname,
