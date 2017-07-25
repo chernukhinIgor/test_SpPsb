@@ -3,6 +3,7 @@
   "data": [
     {
       "taskId": 1,
+      "status": "new",
       "creatorUserId": 1,
       "name": "NewTask",
       "responsibleUserId": 1,
@@ -11,6 +12,7 @@
     },
     {
       "taskId": 2,
+      "status": "new",
       "creatorUserId": 2,
       "name": "NewTask2",
       "responsibleUserId": 2,
@@ -19,6 +21,7 @@
     },
     {
       "taskId": 3,
+      "status": "new",
       "creatorUserId": 2,
       "name": "NewTask3",
       "responsibleUserId": 2,
@@ -27,6 +30,7 @@
     },
     {
       "taskId": 4,
+      "status": "new",
       "creatorUserId": 2,
       "name": "NewTask4",
       "responsibleUserId": 2,
@@ -35,6 +39,7 @@
     },
     {
       "taskId": 5,
+      "status": "new",
       "creatorUserId": 2,
       "name": "NewTask5",
       "responsibleUserId": 2,
@@ -43,6 +48,7 @@
     },
     {
       "taskId": 6,
+      "status": "new",
       "creatorUserId": 2,
       "name": "NewTask6",
       "responsibleUserId": 2,

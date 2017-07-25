@@ -1,5 +1,9 @@
 <br/>
-
+<div class="row">
+    <div class="col-xs-11">
+        <a href="user/edit/" class="btn btn-default pull-right">Create</a>
+    </div>
+</div>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -14,18 +18,18 @@
     </thead>
     <tbody>
     <tr *ngFor="let user of users">
-        <th scope="row">{{user?.userId}}</th>
-        <td>{{user?.name}}</td>
-        <td>{{user?.surname}}</td>
-        <td>{{user?.telephone}}</td>
-        <td>{{user?.email}}</td>
-        <td>{{user?.gender}}</td>
-        <td>{{user?.birth}}</td>
+        <th scope="row" [innerHTML]="user?.userId"></th>
+        <td [innerHTML]="user?.name"></td>
+        <td [innerHTML]="user?.surname"></td>
+        <td [innerHTML]="user?.telephone"></td>
+        <td [innerHTML]="user?.email"></td>
+        <td [innerHTML]="user?.gender"></td>
+        <td [innerHTML]="user?.birth"></td>
         <td>
-            <a href="user/edit/{{user?.userId}}"><i class="fa fa-pencil"></i></a>
-            <a href="#" (deleteClick)="onClick()" [moduleName]="'Users'" [entityId]="user?.userId"><i class="fa fa-trash"></i></a>
+            <a href="user/edit/{{user?.userId}}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil link"></i></a>
+            <a href="javascript:void(0);" (deleteClick)="onClick()" [moduleName]="'Users'" [entityId]="user?.userId"
+               data-toggle="tooltip" title="Delete"><i class="fa fa-trash link"></i></a>
         </td>
-
     </tr>
     </tbody>
 </table>

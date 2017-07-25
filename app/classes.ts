@@ -1,5 +1,6 @@
 export class Task{
     taskId: number;
+    status: string;
     creatorUserId: number;
     name: string;
     responsibleUserId: number;
