@@ -1,6 +1,7 @@
 package hello.service;
 
 import hello.dao.UserDAO;
+import hello.model.Task;
 import hello.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean userExists(int id) {
+        return userDAO.userExists(id);
+    }
+
+    @Override
     public int deleteUserById(int id) {
         return userDAO.deleteUser(id);
+    }
+
+    @Override
+    public List<Task> getCreatedTasks(int id) {
+        return userDAO.getCreatedTasks(id);
+    }
+
+    @Override
+    public List<Task> getResponsibleTasks(int id) {
+        return userDAO.getResponsibleTasks(id);
     }
 }

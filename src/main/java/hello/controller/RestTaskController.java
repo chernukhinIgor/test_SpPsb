@@ -42,23 +42,30 @@ public class RestTaskController {
 
     @PostMapping("task")
     public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {
-        int id = taskService.addTask(task);
-        if (id == TASK_ALREADY_EXIST_ERROR) {
-            JSONObject jsonError=new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("message", "ERROR. Creating task failed. Id already exists");
+        int i = taskService.addTask(task);
 
-            return jsonError;
-        }else{
-            JSONObject jsonSuccess=new JSONObject();
-            jsonSuccess.put("success", true);
-
-            JSONObject data=new JSONObject();
-            data.put("taskId", id);
-            jsonSuccess.put("data", data);
-
-            return jsonSuccess;
+        JSONObject response=new JSONObject();
+        switch (i){
+            case TASK_ALREADY_EXIST_ERROR:
+                response.put("success", false);
+                response.put("message", "ERROR. Creating task failed. Id already exists");
+                break;
+            case CREATOR_USER_ID_NOT_EXIST_ERROR:
+                response.put("success", false);
+                response.put("message", "ERROR. Creator user id not exists");
+                break;
+            case RESPONSIBLE_USER_ID_NOT_EXIST_ERROR:
+                response.put("success", false);
+                response.put("message", "ERROR. Responsible user id not exists");
+                break;
+            default:
+                response.put("success", true);
+                JSONObject data=new JSONObject();
+                data.put("taskId", i);
+                response.put("data", data);
+                break;
         }
+        return response;
     }
 
     @PutMapping("task")

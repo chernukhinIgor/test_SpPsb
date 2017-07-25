@@ -2,6 +2,8 @@ package hello.dao;
 
 import hello.model.Task;
 import hello.model.User;
+import hello.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,13 +11,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-import static hello.service.TaskService.TASK_DELETED_SUCCESSFULLY;
-import static hello.service.TaskService.TASK_NOT_DELETED_ERROR;
-import static hello.service.TaskService.TASK_NOT_EXIST_ERROR;
+import static hello.service.TaskService.*;
 
 @Transactional
 @Repository
 public class TaskDAOImpl implements TaskDAO {
+    @Autowired
+    UserDAO userDAO;
+
     @PersistenceContext
     private EntityManager entityManager;
     @SuppressWarnings("unchecked")
@@ -33,10 +36,15 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public int addTask(Task task) {
-        entityManager.persist(task);
-        entityManager.flush();
-        return task.getTaskId();
-
+        if(!userDAO.userExists(task.getCreatorUserId())){
+            return CREATOR_USER_ID_NOT_EXIST_ERROR;
+        }else if(!userDAO.userExists(task.getResponsibleUserId())){
+            return RESPONSIBLE_USER_ID_NOT_EXIST_ERROR;
+        }else{
+            entityManager.persist(task);
+            entityManager.flush();
+            return task.getTaskId();
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package hello.controller;
 
+import hello.model.Task;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
 import net.sf.json.JSONObject;
@@ -41,6 +42,34 @@ public class RestUserController {
         List<User> allUsers = userService.getAllUsers();
         List<Object> objectList = new ArrayList<>(allUsers);
         return JsonWrapper.wrapList(objectList);
+    }
+
+    @GetMapping("userCreatedTasks/{id}")
+    public JSONObject getAllCreatedTasks(@PathVariable("id") Integer id) {
+        if(userService.userExists(id)){
+            List<Task> allCreatedTasks = userService.getCreatedTasks(id);
+            List<Object> objectList = new ArrayList<>(allCreatedTasks);
+            return JsonWrapper.wrapList(objectList);
+        }else{
+            JSONObject jsonError = new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "user not found");
+            return jsonError;
+        }
+    }
+
+    @GetMapping("userResponsibleTasks/{id}")
+    public JSONObject getAllResponsibleTasks(@PathVariable("id") Integer id) {
+        if(userService.userExists(id)){
+            List<Task> allResponsibleTasks = userService.getResponsibleTasks(id);
+            List<Object> objectList = new ArrayList<>(allResponsibleTasks);
+            return JsonWrapper.wrapList(objectList);
+        }else{
+            JSONObject jsonError = new JSONObject();
+            jsonError.put("success", false);
+            jsonError.put("message", "user not found");
+            return jsonError;
+        }
     }
 
     @PostMapping("user")
