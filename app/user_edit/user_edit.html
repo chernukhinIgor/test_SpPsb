@@ -1,75 +1,87 @@
+<div class="text-center">
+    <h2>Edit User</h2>
+</div>
 
-<div *ngIf="user" class="col-lg-6 panel panel-default">
-    <span class="help-block"></span>
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="taskid">ID</label>
-        <div class="col-md-8">
-            <input readonly id="taskid" name="taskid" type="text" [(ngModel)]="user.userId" class="form-control input-md"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="username">Name</label>
-        <div class="col-md-8">
-            <input id="username" name="username" type="text" [(ngModel)]="user.name" placeholder="Insert Name" class="form-control input-md"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="usersurname">Surname</label>
-        <div class="col-md-8">
-            <input id="usersurname" name="usersurname" type="text" [(ngModel)]="user.surname" placeholder="Insert surname" class="form-control input-md"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="userphone">Phone</label>
-        <div class="col-md-8">
-            <input id="userphone" name="userphone" type="text" [(ngModel)]="user.telephone" placeholder="Insert phone" class="form-control input-md"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="useremail">Email</label>
-        <div class="col-md-8">
-            <input id="useremail" name="useremail" type="email" [(ngModel)]="user.email" placeholder="Insert email" class="form-control input-md"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-3 control-label">Gender:</label>
-        <div class="col-lg-8">
-            <div class="ui-select">
-                <select class="form-control" [(ngModel)]="user.gender">
-                    <option value="male">male</option>
-                    <option value="female">female</option>
-                </select>
+<div *ngIf="user" class=" center-block edit-block panel panel-default width50">
+    <div class="panel-body">
+        <span class="help-block"></span>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="taskid">ID</label>
+            <div class="col-md-8">
+                <input readonly id="taskid" name="taskid" type="text" [(ngModel)]="user.userId"
+                       class="form-control input-md"/>
                 <span class="help-block"></span>
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="userbirth">Email</label>
-        <div class="col-md-8">
-            <input id="userbirth" name="userbirth" type="date" [(ngModel)]="user.birth" class="form-control input-md"/>
-            <span class="help-block"></span>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="username">Name</label>
+            <div class="col-md-8">
+                <input id="username" name="username" type="text" [(ngModel)]="user.name" placeholder="Insert Name"
+                       class="form-control input-md"/>
+                <span class="help-block"></span>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label class="col-md-3 control-label"></label>
-        <div class="col-md-8">
-            <input type="button" (click)="onSubmit()" class="btn btn-primary" value="Save Changes">
-            <span></span>
-            <input type="reset" (click)="cancel()" class="btn btn-default" value="Cancel">
-            <span class="help-block"></span>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="usersurname">Surname</label>
+            <div class="col-md-8">
+                <input id="usersurname" name="usersurname" type="text" [(ngModel)]="user.surname"
+                       placeholder="Insert surname" class="form-control input-md"/>
+                <span class="help-block"></span>
+            </div>
         </div>
-    </div>
 
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="userphone">Phone</label>
+            <div class="col-md-8">
+                <input id="userphone" name="userphone" type="text" [(ngModel)]="user.telephone"
+                       placeholder="Insert phone" class="form-control input-md"/>
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="useremail">Email</label>
+            <div class="col-md-8">
+                <input id="useremail" name="useremail" type="email" [(ngModel)]="user.email" placeholder="Insert email"
+                       class="form-control input-md"/>
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Gender:</label>
+            <div class="col-lg-8">
+                <div class="ui-select">
+                    <select class="form-control" [(ngModel)]="user.gender">
+                        <option value="male">male</option>
+                        <option value="female">female</option>
+                    </select>
+                    <span class="help-block"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="userbirth">Email</label>
+            <div class="col-md-8">
+                <input id="userbirth" name="userbirth" type="date" [(ngModel)]="user.birth"
+                       class="form-control input-md"/>
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+                <input type="button" (click)="onSubmit()" class="btn btn-primary" value="Save Changes">
+                <span></span>
+                <input type="reset" (click)="cancel()" class="btn btn-default" value="Cancel">
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+    </div>
 </div>

@@ -1,10 +1,12 @@
-
+<div class="text-center">
+    <h2>View Task</h2>
+</div>
 <div *ngIf="task" class="card">
-    <div class="center-block panel panel-default" style="width: 50%">
+    <div class="center-block panel panel-default width50">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-lg-6">
-                    <h4>{{task?.name}}</h4>
+                    <h4 [innerHTML]="task?.name"></h4>
                 </div>
                 <div class="col-lg-6">
                     <a href="task/edit/{{task?.taskId}}" class="btn btn-default pull-right">edit</a>
@@ -14,17 +16,17 @@
         <div class="panel-body">
             <div class="row">
                 <dt class="col-sm-6">ID задачи:</dt>
-                <dd class="col-sm-6">{{task?.taskId}}</dd>
+                <dd class="col-sm-6" [innerHTML]="task?.taskId"></dd>
             </div>
 
             <div class="row">
                 <dt class="col-sm-6">ID ответственного пользователя:</dt>
-                <dd class="col-sm-6">{{task?.responsibleUserId}}</dd>
+                <dd class="col-sm-6" [innerHTML]="task?.responsibleUserId"></dd>
             </div>
 
             <div class="row">
                 <dt class="col-sm-6">Описание задачи:</dt>
-                <dd class="col-sm-6">{{task?.description}}</dd>
+                <dd class="col-sm-6" [innerHTML]="task?.description"></dd>
             </div>
         </div>
     </div>

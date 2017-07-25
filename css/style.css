@@ -34,3 +34,11 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.width50 {
+    width: 50%;
+}
+
+.edit-block {
+
+}

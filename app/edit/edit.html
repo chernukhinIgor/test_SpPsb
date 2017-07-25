@@ -1,77 +1,85 @@
+<div class="text-center">
+    <h2>Edit Task</h2>
+</div>
 
-<div *ngIf="task" class="col-lg-6 panel panel-default">
-    <span class="help-block"></span>
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="taskid">ID</label>
-        <div class="col-md-8">
-            <input readonly id="taskid" name="taskid" type="text" [(ngModel)]="task.taskId" class="form-control input-md"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-md-3 control-label"  for="taskname">Name</label>
-        <div class="col-md-8">
-            <input id="taskname" name="taskname" type="text" [(ngModel)]="task.name" placeholder="Insert Name" class="form-control input-md"/>
-            <span class="help-block"></span>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <label class="col-md-3 control-label" for="description">Description</label>
-        <div class="col-md-8   pad-bt-10">
-            <textarea id="description" name="description" type="text" [(ngModel)]="task.description"  placeholder="Insert description" class="form-control input-md"></textarea>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-lg-3 control-label">responsible user id:</label>
-        <div class="col-lg-8">
-            <div class="ui-select">
-                <select class="form-control" [(ngModel)]="task.responsibleUserId">
-                    <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
-                </select>
+<div *ngIf="task" class="center-block panel panel-default width50">
+    <div class="panel-body">
+        <span class="help-block"></span>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="taskid">ID</label>
+            <div class="col-md-8">
+                <input readonly id="taskid" name="taskid" type="text" [(ngModel)]="task.taskId"
+                       class="form-control input-md"/>
                 <span class="help-block"></span>
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label class="col-lg-3 control-label">creator user id:</label>
-        <div class="col-lg-8">
-            <div class="ui-select">
-                <select class="form-control" [(ngModel)]="task.creatorUserId">
-                    <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
-                </select>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="taskname">Name</label>
+            <div class="col-md-8">
+                <input id="taskname" name="taskname" type="text" [(ngModel)]="task.name" placeholder="Insert Name"
+                       class="form-control input-md"/>
                 <span class="help-block"></span>
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label class="col-lg-3 control-label">status:</label>
-        <div class="col-lg-8">
-            <div class="ui-select">
-                <select class="form-control" [(ngModel)]="task.status">
-                    <option>new</option>
-                    <option>accepted</option>
-                    <option>cancelled</option>
-                    <option>finished</option>
-                </select>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="description">Description</label>
+            <div class="col-md-8   pad-bt-10">
+                <textarea id="description" name="description" type="text" [(ngModel)]="task.description"
+                          placeholder="Insert description" class="form-control input-md"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-4 control-label">responsible user id:</label>
+            <div class="col-lg-8">
+                <div class="ui-select">
+                    <select class="form-control" [(ngModel)]="task.responsibleUserId">
+                        <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
+                    </select>
+                    <span class="help-block"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-4 control-label">creator user id:</label>
+            <div class="col-lg-8">
+                <div class="ui-select">
+                    <select class="form-control" [(ngModel)]="task.creatorUserId">
+                        <option *ngFor="let user of users" value="{{user.id}}">{{user.name}}</option>
+                    </select>
+                    <span class="help-block"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-4 control-label">status:</label>
+            <div class="col-lg-8">
+                <div class="ui-select">
+                    <select class="form-control" [(ngModel)]="task.status">
+                        <option>new</option>
+                        <option>accepted</option>
+                        <option>cancelled</option>
+                        <option>finished</option>
+                    </select>
+                    <span class="help-block"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+                <input type="button" (click)="onSubmit()" class="btn btn-primary" value="Save Changes">
+                <span></span>
+                <input type="reset" (click)="cancel()" class="btn btn-default" value="Cancel">
                 <span class="help-block"></span>
             </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label class="col-md-3 control-label"></label>
-        <div class="col-md-8">
-            <input type="button" (click)="onSubmit()" class="btn btn-primary" value="Save Changes">
-            <span></span>
-            <input type="reset" (click)="cancel()" class="btn btn-default" value="Cancel">
-            <span class="help-block"></span>
-        </div>
     </div>
-
 </div>
