@@ -1,30 +1,31 @@
 <br/>
-<div *ngIf="condition">
-    <div *ngFor="let user of users" class="col-lg-3 panel panel-default">
-        <dt>ID пользователя: </dt>
-        <dd>{{user?.userId}}</dd>
 
-        <dt>Имя:</dt>
-        <dd>{{user?.name}}</dd>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID пользователя</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Телефон</th>
+        <th>Email</th>
+        <th>Пол</th>
+        <th>Дата рождения</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+        <th scope="row">{{user?.userId}}</th>
+        <td>{{user?.name}}</td>
+        <td>{{user?.surname}}</td>
+        <td>{{user?.telephone}}</td>
+        <td>{{user?.email}}</td>
+        <td>{{user?.gender}}</td>
+        <td>{{user?.birth}}</td>
+        <td>
+            <a href="#"><i class="fa fa-pencil"></i></a>
+            <a href="#" (deleteClick)="onClick()" [moduleName]="'Users'" [entityId]="user?.userId"><i class="fa fa-trash"></i></a>
+        </td>
 
-        <dt>Фамилия:</dt>
-        <dd>{{user?.surname}}</dd>
-
-        <dt>Телефон:</dt>
-        <dd>{{user?.telephone}}</dd>
-
-        <dt>Email:</dt>
-        <dd>{{user?.email}}</dd>
-
-        <dt>Пол:</dt>
-        <dd>{{user?.gender}}</dd>
-
-        <dt>Дата рождения:</dt>
-        <dd>{{user?.birth}}</dd>
-    </div>
-</div>
-<div *ngIf="!condition">
-    <button (click)="toggle()" class="btn btn-primary">Загрузка</button>
-</div>
-
-
+    </tr>
+    </tbody>
+</table>

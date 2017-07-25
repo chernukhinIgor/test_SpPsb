@@ -20,7 +20,7 @@
         <td>{{task?.description}}</td>
         <td>
             <a href="task/edit/{{task?.taskId}}"><i class="fa fa-pencil"></i></a>
-            <a href="#"><i class="fa fa-trash"></i></a>
+            <a href="#" (deleteClick)="onClick()" [moduleName]="'Tasks'" [entityId]="task?.taskId"><i class="fa fa-trash"></i></a>
         </td>
 
     </tr>
