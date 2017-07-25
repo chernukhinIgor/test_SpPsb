@@ -96,4 +96,11 @@ public class TaskDAOImpl implements TaskDAO {
                 .setMaxResults(pageLimit)
                 .getResultList();
     }
+
+    @Override
+    public List<Object[]> getParametricTasks(String requestStringParams) {
+        Query query = entityManager.createQuery("select "+requestStringParams+" FROM Task as tsk ORDER BY tsk.taskId");
+        List<Object[]> rows = query.getResultList();
+        return rows;
+    }
 }

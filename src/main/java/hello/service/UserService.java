@@ -20,5 +20,7 @@ public interface UserService {
     int deleteUserById(int id);
     List<Task> getCreatedTasks(int id);
     List<Task> getResponsibleTasks(int id);
+    int getUserCount();
+    List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
     List<Object[]> getParametricUsers(String  requestStringParams);
 }

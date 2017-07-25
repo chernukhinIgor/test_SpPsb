@@ -90,19 +90,24 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<Object[]> getParametricUsers(String  requestStringParams) {
-        //String hql = "FROM User as usr ORDER BY usr.userId";
-        //String hql = "Select usr.userId as B from User as usr";
-
         Query query = entityManager.createQuery("select "+requestStringParams+" FROM User as usr ORDER BY usr.userId");
         List<Object[]> rows = query.getResultList();
         return rows;
-//        for (Object[] row: rows) {
-//            System.out.println(" ------------------- ");
-//            System.out.println("id: " + row[0]);
-//            System.out.println("name: " + row[1]);
-//        }
-//        String hql = "select "+requestStringParams+" FROM User as usr ORDER BY usr.userId";
-//        return entityManager.createQuery(hql).getResultList();
+    }
+
+    @Override
+    public int getUserCount() {
+        String hql = "FROM User as usr";
+        return entityManager.createQuery(hql).getResultList().size();
+    }
+
+    @Override
+    public List<User> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
+        String hql = "FROM User as usr ORDER BY usr."+orderBy+" "+sortBy;
+        return (List<User>) entityManager.createQuery(hql)
+                .setFirstResult(page*pageLimit-pageLimit)
+                .setMaxResults(pageLimit)
+                .getResultList();
     }
 
 }

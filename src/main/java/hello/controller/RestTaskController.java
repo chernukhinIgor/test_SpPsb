@@ -4,6 +4,7 @@ import hello.model.Task;
 import hello.model.User;
 import hello.service.TaskService;
 import hello.utils.JsonWrapper;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import static hello.service.TaskService.*;
 
@@ -53,12 +55,85 @@ public class RestTaskController {
         }
     }
 
+
+
+
+
     @GetMapping("tasks")
-    public JSONObject getAllTasks() {
-        List<Task> allTasks = taskService.getAllTasks();
-        List<Object> objectList = new ArrayList<Object>(allTasks);
-        return JsonWrapper.wrapList(objectList);
+    public JSONObject getAllTasks(
+            @RequestParam(required = false) boolean taskId,
+            @RequestParam(required = false) boolean creatorUserId,
+            @RequestParam(required = false) boolean name,
+            @RequestParam(required = false) boolean responsibleUserId,
+            @RequestParam(required = false) boolean description,
+            @RequestParam(required = false) boolean status
+    ) throws IllegalAccessException {
+        String requestStringParams = requestHasParams(taskId, creatorUserId, name, responsibleUserId, description, status);
+        List<String> parameters = new ArrayList<>();
+        if (taskId)
+            parameters.add("taskId");
+        if (creatorUserId)
+            parameters.add("creatorUserId");
+        if (name)
+            parameters.add("name");
+        if (responsibleUserId)
+            parameters.add("responsibleUserId");
+        if (description)
+            parameters.add("description");
+        if (status)
+            parameters.add("status");
+        if (requestStringParams != null) {
+            JSONArray array = new JSONArray();
+            List<Object[]> allTasksAsObjects = taskService.getParametricTasks(requestStringParams);
+            for (Object[] row : allTasksAsObjects) {
+                JSONObject data = new JSONObject();
+                for (int i=0;i<parameters.size();i++){
+                    data.element(parameters.get(i),row[i]);
+                }
+                array.add(data);
+            }
+            return JsonWrapper.wrapList(array);
+        } else {
+            List<Task> allTasks = taskService.getAllTasks();
+            List<Object> objectList = new ArrayList<>(allTasks);
+            return JsonWrapper.wrapList(objectList);
+        }
     }
+
+    private String requestHasParams(boolean taskId, boolean creatorUserId, boolean name, boolean responsibleUserId, boolean description, boolean status) {
+        if (taskId || creatorUserId || name || responsibleUserId || description || status ) {
+            StringJoiner resultString = new StringJoiner(",");
+            //Select t.A as B from table as t
+            if (taskId)
+                resultString.add("taskId");
+            if (creatorUserId)
+                resultString.add("creatorUserId");
+            if (name)
+                resultString.add("name");
+            if (responsibleUserId)
+                resultString.add("responsibleUserId");
+            if (description)
+                resultString.add("description");
+            if (status)
+                resultString.add("status");
+            return resultString.toString();
+        }
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("taskCount")
     public JSONObject getTaskCount() {

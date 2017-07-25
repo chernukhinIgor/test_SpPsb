@@ -57,4 +57,9 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getPaginationTasks(String orderBy, String sortBy, int page, int pageLimit) {
         return taskDAO.getPaginationTasks(orderBy,sortBy,page,pageLimit);
     }
+
+    @Override
+    public List<Object[]> getParametricTasks(String requestStringParams) {
+        return taskDAO.getParametricTasks(requestStringParams);
+    }
 }

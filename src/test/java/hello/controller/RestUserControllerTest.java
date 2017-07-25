@@ -68,4 +68,19 @@ public class RestUserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void testPostUser() throws Exception {
+        User user = new User();
+        user.setName("123");
+        user.setSurname("234");
+        String json = new Gson().toJson(user);
+
+        mockMvc.perform(
+                post("/user")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(status().isOk());
+    }
+
 }
