@@ -22,8 +22,9 @@
         <td>{{user?.gender}}</td>
         <td>{{user?.birth}}</td>
         <td>
-            <a href="user/edit/{{user?.userId}}"><i class="fa fa-pencil"></i></a>
-            <a href="#" (deleteClick)="onClick()" [moduleName]="'Users'" [entityId]="user?.userId"><i class="fa fa-trash"></i></a>
+            <a href="user/edit/{{user?.userId}}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil link"></i></a>
+            <a href="javascript:void(0);" (deleteClick)="onClick()" [moduleName]="'Users'" [entityId]="user?.userId"
+               data-toggle="tooltip" title="Delete"><i class="fa fa-trash link"></i></a>
         </td>
 
     </tr>
