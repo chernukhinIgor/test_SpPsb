@@ -13,7 +13,7 @@ import { TasksComponent }   from './tasks/tasks';
 import { FormsModule }   from '@angular/forms';
 import { UserComponent }   from './user/user';
 import { UsersComponent }   from './users/users';
-
+import { DeleteDirective }   from './delete.directive';
 
 
 // определение маршрутов
@@ -32,7 +32,7 @@ const appRoutes: Routes =[
 
 @NgModule({
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes), HttpModule, FormsModule],
-    declarations: [ AppComponent, HomeComponent, Edit, UserEdit, UsersComponent, UserComponent, TasksComponent, TaskComponent, NotFoundComponent],
+    declarations: [ AppComponent, HomeComponent, Edit, UserEdit, UsersComponent, UserComponent, TasksComponent, TaskComponent, NotFoundComponent, DeleteDirective],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
