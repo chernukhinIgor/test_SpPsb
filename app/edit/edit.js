@@ -66,6 +66,9 @@ var Edit = (function () {
     Edit.prototype.getUsers = function () {
         return users;
     };
+    Edit.prototype.cancel = function () {
+        window.history.back();
+    };
     return Edit;
 }());
 Edit = __decorate([

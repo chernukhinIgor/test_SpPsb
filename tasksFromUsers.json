@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": [
+    {
+      "taskId": 1,
+      "status": "new",
+      "creatorUserId": 1,
+      "name": "NewTask",
+      "responsibleUserId": 1,
+      "description": "someDescription"
+    },
+    {
+      "taskId": 2,
+      "status": "new",
+      "creatorUserId": 1,
+      "name": "NewTask2",
+      "responsibleUserId": 2,
+      "description": "someDescription2"
+    },
+    {
+      "taskId": 3,
+      "status": "new",
+      "creatorUserId": 1,
+      "name": "NewTask3",
+      "responsibleUserId": 2,
+      "description": "someDescription3"
+    }
+  ]
+}

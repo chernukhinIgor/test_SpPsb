@@ -68,4 +68,8 @@ export class Edit {
         return users;
     }
 
+    cancel () {
+        window.history.back();
+    }
+
 }

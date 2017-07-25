@@ -43,6 +43,9 @@ var UserEdit = (function () {
         }
         console.log(this.user);
     };
+    UserEdit.prototype.cancel = function () {
+        window.history.back();
+    };
     return UserEdit;
 }());
 UserEdit = __decorate([

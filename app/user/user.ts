@@ -3,6 +3,7 @@ import { ActivatedRoute, Params} from '@angular/router';
 import { Response} from '@angular/http';
 import { HttpService} from '../http.service';
 import { User} from '../classes'
+import { Task} from '../classes'
 const route = './app/user/';
 
 @Component({
@@ -14,7 +15,7 @@ const route = './app/user/';
 export class UserComponent implements OnInit {
 
     user: User;
-    condition: boolean=false;
+    tasks: Task[];
 
     constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService){}
 
@@ -26,9 +27,7 @@ export class UserComponent implements OnInit {
         });
 
         this.httpService.getData('user.json', options).subscribe((data: Response) => this.user=data.json().data[0]);
+        this.httpService.getData('tasksFromUsers.json', options).subscribe((data: Response) => this.tasks=data.json().data);
     }
 
-    toggle(){
-        this.condition=true;
-    }
 }

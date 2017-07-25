@@ -1,30 +1,72 @@
 <br/>
-<div *ngIf="condition">
-    <div class="col-lg-3 panel panel-default">
-        <dt>ID пользователя: </dt>
-        <dd>{{user?.userId}}</dd>
+<div *ngIf="user" class="card">
+    <div class="center-block panel panel-default" style="width: 50%">
+        <div class="panel-heading">{{user?.name}}</div>
+        <div class="panel-body">
+            <div class="row">
+                <dt class="col-sm-4">ID пользователя:</dt>
+                <dd class="col-sm-8">{{user?.userId}}</dd>
+            </div>
+            <div class="row">
+                <dt class="col-sm-4">Фамилия:</dt>
+                <dd class="col-sm-8">{{user?.surname}}</dd>
+            </div>
 
-        <dt>Имя:</dt>
-        <dd>{{user?.name}}</dd>
+            <div class="row">
+                <dt class="col-sm-4">Телефон:</dt>
+                <dd class="col-sm-8">{{user?.telephone}}</dd>
+            </div>
 
-        <dt>Фамилия:</dt>
-        <dd>{{user?.surname}}</dd>
+            <div class="row">
+                <dt class="col-sm-4">Email:</dt>
+                <dd class="col-sm-8">{{user?.email}}</dd>
+            </div>
 
-        <dt>Телефон:</dt>
-        <dd>{{user?.telephone}}</dd>
+            <div class="row">
+                <dt class="col-sm-4">Пол:</dt>
+                <dd class="col-sm-8">{{user?.gender}}</dd>
+            </div>
 
-        <dt>Email:</dt>
-        <dd>{{user?.email}}</dd>
-
-        <dt>Пол:</dt>
-        <dd>{{user?.gender}}</dd>
-
-        <dt>Дата рождения:</dt>
-        <dd>{{user?.birth}}</dd>
+            <div class="row">
+                <dt class="col-sm-4">Дата рождения:</dt>
+                <dd class="col-sm-8">{{user?.birth}}</dd>
+            </div>
+        </div>
     </div>
 </div>
-<div *ngIf="!condition">
-    <button (click)="toggle()" class="btn btn-primary">Загрузка</button>
+<div *ngIf="user" class="card text-center">
+    <h3 class="card-header">User tasks</h3>
+    <div class="card-block">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID задачи</th>
+                <th>Статус</th>
+                <th>ID создавшего пользователя</th>
+                <th>Название задачи</th>
+                <th>ID ответственного пользователя</th>
+                <th>Описание задачи</th>
+                <th>Действие</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let task of tasks">
+                <th scope="row" [innerHTML]="task?.taskId"></th>
+                <td [innerHTML]="task?.status"></td>
+                <td [innerHTML]="task?.creatorUserId"></td>
+                <td [innerHTML]="task?.name"></td>
+                <td [innerHTML]="task?.responsibleUserId"></td>
+                <td [innerHTML]="task?.description"></td>
+                <td>
+                    <a href="task/get/{{task?.taskId}}" data-toggle="tooltip" title="View"><i class="fa fa-eye link"></i></a>
+                    <a href="task/edit/{{task?.taskId}}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil link"></i></a>
+                    <a href="javascript:void(0);" (deleteClick)="onClick()" [moduleName]="'Tasks'" [entityId]="task?.taskId"
+                       data-toggle="tooltip" title="Delete"><i class="fa fa-trash link"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

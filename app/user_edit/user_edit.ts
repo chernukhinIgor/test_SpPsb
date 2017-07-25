@@ -41,4 +41,8 @@ export class UserEdit {
         console.log(this.user);
     }
 
+    cancel () {
+        window.history.back();
+    }
+
 }

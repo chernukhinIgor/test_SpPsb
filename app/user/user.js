@@ -16,7 +16,6 @@ var UserComponent = (function () {
     function UserComponent(activatedRoute, httpService) {
         this.activatedRoute = activatedRoute;
         this.httpService = httpService;
-        this.condition = false;
     }
     UserComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -25,9 +24,7 @@ var UserComponent = (function () {
             options.set('id', params['id']);
         });
         this.httpService.getData('user.json', options).subscribe(function (data) { return _this.user = data.json().data[0]; });
-    };
-    UserComponent.prototype.toggle = function () {
-        this.condition = true;
+        this.httpService.getData('tasksFromUsers.json', options).subscribe(function (data) { return _this.tasks = data.json().data; });
     };
     return UserComponent;
 }());
