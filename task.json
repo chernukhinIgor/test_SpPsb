@@ -5,6 +5,7 @@
     "creatorUserId":3,
     "name":"someName",
     "responsibleUserId":2,
-    "description":"someDescription"
+    "description":"someDescription",
+    "status": "new"
   }]
 }

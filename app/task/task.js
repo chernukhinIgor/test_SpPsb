@@ -24,7 +24,7 @@ var TaskComponent = (function () {
         this.activatedRoute.params.subscribe(function (params) {
             options.set('id', params['id']);
         });
-        this.httpService.getData('task.json', options).subscribe(function (data) { return _this.task = data.json().data[0]; });
+        this.httpService.getData('tasks.json', options).subscribe(function (data) { return _this.task = data.json().data[0]; });
     };
     TaskComponent.prototype.toggle = function () {
         this.condition = true;

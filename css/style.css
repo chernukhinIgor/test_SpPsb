@@ -1,3 +1,10 @@
 .pad-bt-10 {
     padding-bottom: 10px;
 }
+.cards-custm-style {
+    background-color: #f8f8f8;
+}
+
+.cards-outline-gray {
+    outline: 1px solid #d8d8d7;
+}
