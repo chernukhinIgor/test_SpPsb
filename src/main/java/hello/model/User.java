@@ -27,6 +27,9 @@ public class User {
 	@Column(name="gender")
 	private String gender;
 
+	@Column(name="datebirth")
+	private String birth;
+
 	public String getGender() {
 		return gender;
 	}
@@ -34,9 +37,6 @@ public class User {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
-	@Column(name="datebirth")
-	private String birth;
 
 	public int getUserId() {
 		return userId;

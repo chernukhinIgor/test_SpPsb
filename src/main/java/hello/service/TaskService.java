@@ -22,5 +22,7 @@ public interface TaskService {
     int addTask(@Valid Task task);
     boolean updateTask(@Valid Task task);
     int deleteTaskById(int id);
+    int getTaskCount();
+    List<Task>getPaginationTasks(String orderBy, String sortBy, int page, int pageLimit);
 
 }

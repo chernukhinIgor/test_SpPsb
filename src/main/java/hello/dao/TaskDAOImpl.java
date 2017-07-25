@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 import static hello.service.TaskService.*;
@@ -78,5 +79,21 @@ public class TaskDAOImpl implements TaskDAO {
         int count = entityManager.createQuery(hql).setParameter(1, taskId)
                 .getResultList().size();
         return count > 0 ? true : false;
+    }
+
+    @Override
+    public int getTaskCount() {
+        String hql = "FROM Task as tsk";
+        return entityManager.createQuery(hql).getResultList().size();
+
+    }
+
+    @Override
+    public List<Task> getPaginationTasks(String orderBy, String sortBy, int page, int pageLimit) {
+        String hql = "FROM Task as tsk ORDER BY tsk."+orderBy+" "+sortBy;
+        return (List<Task>) entityManager.createQuery(hql)
+                .setFirstResult(page*pageLimit-pageLimit)
+                .setMaxResults(pageLimit)
+                .getResultList();
     }
 }

@@ -13,4 +13,6 @@ public interface TaskDAO {
     void updateTask(Task task);
     int deleteTask(int taskId);
     boolean taskExists(int taskId);
+    int getTaskCount();
+    List<Task>getPaginationTasks(String orderBy, String sortBy, int page, int pageLimit);
 }

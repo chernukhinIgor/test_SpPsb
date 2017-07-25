@@ -47,4 +47,14 @@ public class TaskServiceImpl implements TaskService {
     public int deleteTaskById(int id) {
         return taskDAO.deleteTask(id);
     }
+
+    @Override
+    public int getTaskCount() {
+        return taskDAO.getTaskCount();
+    }
+
+    @Override
+    public List<Task> getPaginationTasks(String orderBy, String sortBy, int page, int pageLimit) {
+        return taskDAO.getPaginationTasks(orderBy,sortBy,page,pageLimit);
+    }
 }
