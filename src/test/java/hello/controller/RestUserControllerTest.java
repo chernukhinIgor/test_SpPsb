@@ -3,6 +3,8 @@ package hello.controller;
 import com.solidfire.gson.Gson;
 import hello.model.User;
 import hello.service.UserService;
+import jdk.nashorn.internal.parser.JSONParser;
+import net.sf.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -75,12 +79,37 @@ public class RestUserControllerTest {
         user.setSurname("234");
         String json = new Gson().toJson(user);
 
-        mockMvc.perform(
-                post("/user")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-        ).andExpect(status().isOk());
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                .post("/user")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andReturn();
+
+
+
+        String content = result.getResponse().getContentAsString();
+
+        net.minidev.json.parser.JSONParser parser=new net.minidev.json.parser.JSONParser();
+
+
+
+        Object obj=parser.parse(content);
+
+        JSONObject jsn = JSONObject.fromObject(obj);
+       // Object success = jsn.get("success");
+
+
+        System.out.println(jsn.get("data"));
+
+        System.out.println(obj);
+
+//        mockMvc.perform(
+//                post("/user")
+//                        .accept(MediaType.APPLICATION_JSON)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(json)
+//        ).andExpect(status().isOk());
     }
 
 }
