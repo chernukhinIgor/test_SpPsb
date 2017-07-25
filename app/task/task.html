@@ -1,24 +1,33 @@
-<br/>
-<div *ngIf="condition">
-    <div class="col-lg-3 panel panel-default">
-        <dt>ID задачи: </dt>
-        <dd>{{task?.taskId}}</dd>
 
-        <dt>ID создавшего пользователя:</dt>
-        <dd>{{task?.creatorUserId}}</dd>
+<div *ngIf="task" class="card">
+    <div class="center-block panel panel-default" style="width: 50%">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4>{{task?.name}}</h4>
+                </div>
+                <div class="col-lg-6">
+                    <a href="task/edit/{{task?.taskId}}" class="btn btn-default pull-right">edit</a>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <dt class="col-sm-6">ID задачи:</dt>
+                <dd class="col-sm-6">{{task?.taskId}}</dd>
+            </div>
 
-        <dt>Название задачи:</dt>
-        <dd>{{task?.name}}</dd>
+            <div class="row">
+                <dt class="col-sm-6">ID ответственного пользователя:</dt>
+                <dd class="col-sm-6">{{task?.responsibleUserId}}</dd>
+            </div>
 
-        <dt>ID ответственного пользователя:</dt>
-        <dd>{{task?.responsibleUserId}}</dd>
-
-        <dt>Описание задачи:</dt>
-        <dd>{{task?.description}}</dd>
+            <div class="row">
+                <dt class="col-sm-6">Описание задачи:</dt>
+                <dd class="col-sm-6">{{task?.description}}</dd>
+            </div>
+        </div>
     </div>
-</div>
-<div *ngIf="!condition">
-    <button (click)="toggle()" class="btn btn-primary">Загрузка</button>
 </div>
 
 

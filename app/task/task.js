@@ -16,7 +16,6 @@ var TaskComponent = (function () {
     function TaskComponent(activatedRoute, httpService) {
         this.activatedRoute = activatedRoute;
         this.httpService = httpService;
-        this.condition = false;
     }
     TaskComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -25,9 +24,6 @@ var TaskComponent = (function () {
             options.set('id', params['id']);
         });
         this.httpService.getData('tasks.json', options).subscribe(function (data) { return _this.task = data.json().data[0]; });
-    };
-    TaskComponent.prototype.toggle = function () {
-        this.condition = true;
     };
     return TaskComponent;
 }());

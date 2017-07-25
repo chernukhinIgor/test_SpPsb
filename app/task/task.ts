@@ -14,7 +14,6 @@ const route = './app/task/';
 export class TaskComponent implements OnInit {
 
     task: Task;
-    condition: boolean=false;
 
     constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService){}
 
@@ -26,9 +25,5 @@ export class TaskComponent implements OnInit {
         });
 
         this.httpService.getData('tasks.json', options).subscribe((data: Response) => this.task=data.json().data[0]);
-    }
-
-    toggle(){
-        this.condition=true;
     }
 }
