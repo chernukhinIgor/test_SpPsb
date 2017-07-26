@@ -22,8 +22,9 @@ export class LoginComponent {
         private authenticationService: AuthenticationService) { }
 
     ngOnInit() {
-        // reset login status
-        this.authenticationService.logout();
+        if(localStorage.getItem('currentUser') !== null) {
+            this.router.navigate(['/']);
+        }
     }
 
     login() {

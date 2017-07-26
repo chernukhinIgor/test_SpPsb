@@ -22,8 +22,9 @@ var LoginComponent = (function () {
         this.error = '';
     }
     LoginComponent.prototype.ngOnInit = function () {
-        // reset login status
-        this.authenticationService.logout();
+        if (localStorage.getItem('currentUser') !== null) {
+            this.router.navigate(['/']);
+        }
     };
     LoginComponent.prototype.login = function () {
         var _this = this;
