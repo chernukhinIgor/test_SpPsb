@@ -15,8 +15,6 @@ import { PagerService } from '../pagination_service/index';
 export class UsersComponent implements OnInit {
 
     users: User[];
-    condition: boolean=false;
-
     constructor(private httpService: HttpService, private pagerService: PagerService){}
 
     // array of all items to be paged
