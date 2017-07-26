@@ -61,7 +61,14 @@ export class Edit {
 
     onSubmit() {
         if(this.id) {
-            let res = this.httpService.putData('task/', this.task);
+            let res = this.httpService.putData('task/', this.task).subscribe((data: Response) => {
+                if(data.json().success == true) {
+                    // console.log(this.id)
+                    location.href = '/task/get/' +this.id;
+                } else {
+                    alert(data.json().message)
+                }
+            });
         } else {
             let res = this.httpService.postData('task/', this.task ).subscribe((data: Response) => {
                 if (data.json().success == true) {
