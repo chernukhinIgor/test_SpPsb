@@ -29,9 +29,7 @@ var HomeComponent = (function () {
         var _this = this;
         var options = new URLSearchParams();
         this.httpService.getData('tasks', options).subscribe(function (data) {
-            console.log('tasks');
-            console.log(data.json());
-            if (data.json().succes) {
+            if (data.json().success == true) {
                 var tasks = data.json().data;
                 _this.tasks = tasks.slice(Math.max(tasks.length - 3, 1));
             }
@@ -44,9 +42,7 @@ var HomeComponent = (function () {
         var _this = this;
         var options = new URLSearchParams();
         this.httpService.getData('users', options).subscribe(function (data) {
-            console.log('users');
-            console.log(data.json());
-            if (data.json().succes) {
+            if (data.json().success == true) {
                 var users = data.json().data;
                 _this.users = users.slice(Math.max(users.length - 3, 1));
             }

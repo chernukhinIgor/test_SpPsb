@@ -27,9 +27,7 @@ export class HomeComponent implements OnInit{
     getNewTasks () {
         let options: URLSearchParams = new URLSearchParams();
         this.httpService.getData('tasks', options).subscribe((data: Response) => {
-            console.log('tasks')
-            console.log(data.json())
-            if(data.json().succes) {
+            if(data.json().success == true) {
                 let tasks = data.json().data;
                 this.tasks= tasks.slice(Math.max(tasks.length - 3, 1))
             } else {
@@ -40,11 +38,8 @@ export class HomeComponent implements OnInit{
 
     getNewUsers() {
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData('users', options).subscribe ((data: Response) => {
-            console.log('users')
-            console.log(data.json())
-
-            if (data.json().succes) {
+        this.httpService.getData('users', options).subscribe((data: Response) => {
+            if (data.json().success == true) {
                 let users = data.json().data;
                 this.users = users.slice(Math.max(users.length - 3, 1))
             } else {
