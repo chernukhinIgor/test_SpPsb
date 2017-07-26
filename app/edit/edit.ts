@@ -45,7 +45,8 @@ export class Edit {
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
             let title = new Title('');
-            this.users = this.getUsers();
+            this.getUsers();
+
             this.id = params['id'];
             if(this.id) {
                 title.setTitle('Edit Task');
@@ -69,9 +70,13 @@ export class Edit {
 
     getUsers() {
         let options: URLSearchParams = new URLSearchParams();
-        options.set('params','id');
-        options.set('params','name');
-        this.httpService.getData('users/', options).subscribe((data: Response) => { return data.json().data});
+        return this.httpService.getData('users?params=id&params=name', options).subscribe((data: Response) => {
+            if(data.json().success == true) {
+                this.users =  data.json().data
+            } else {
+                alert(data.json().message);
+            }
+        });
     }
 
     cancel () {
