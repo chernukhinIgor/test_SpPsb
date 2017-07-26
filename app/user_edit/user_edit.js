@@ -16,8 +16,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var element = 'user_edit';
 var route = './app/' + element + '/';
 var UserEdit = (function () {
-    function UserEdit(router, activatedRoute, httpService) {
-        this.router = router;
+    function UserEdit(activatedRoute, httpService) {
         this.activatedRoute = activatedRoute;
         this.httpService = httpService;
     }
@@ -48,7 +47,6 @@ var UserEdit = (function () {
         if (this.id) {
             this.httpService.putData('user', this.user).subscribe(function (data) {
                 if (data.json().success == true) {
-                    // console.log(this.id)
                     location.href = '/user/get/' + _this.id;
                 }
                 else {
@@ -59,7 +57,6 @@ var UserEdit = (function () {
         else {
             this.httpService.postData('user', this.user).subscribe(function (data) {
                 if (data.json().success == true) {
-                    // console.log(data.json().data.userId)
                     location.href = '/user/get/' + data.json().data.userId;
                 }
                 else {
@@ -79,7 +76,7 @@ UserEdit = __decorate([
         templateUrl: route + element + '.html',
         providers: [http_service_1.HttpService]
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, http_service_1.HttpService])
+    __metadata("design:paramtypes", [router_1.ActivatedRoute, http_service_1.HttpService])
 ], UserEdit);
 exports.UserEdit = UserEdit;
 //# sourceMappingURL=user_edit.js.map

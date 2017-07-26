@@ -12,10 +12,13 @@ var core_1 = require("@angular/core");
 var http_service_1 = require("../http.service");
 var platform_browser_1 = require("@angular/platform-browser");
 var route = './app/users/';
+var index_1 = require("../pagination_service/index");
 var UsersComponent = (function () {
-    function UsersComponent(httpService) {
+    function UsersComponent(httpService, pagerService) {
         this.httpService = httpService;
-        this.condition = false;
+        this.pagerService = pagerService;
+        // pager object
+        this.pager = {};
     }
     UsersComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -24,15 +27,23 @@ var UsersComponent = (function () {
         var options = new URLSearchParams();
         this.httpService.getData('users', options).subscribe(function (data) {
             if (data.json().success == true) {
-                _this.users = data.json().data;
+                _this.allItems = data.json().data;
+                // initialize to page 1
+                _this.setPage(1);
             }
             else {
                 alert(data.json().message);
             }
         });
     };
-    UsersComponent.prototype.toggle = function () {
-        this.condition = true;
+    UsersComponent.prototype.setPage = function (page) {
+        if (page < 1 || page > this.pager.totalPages) {
+            return;
+        }
+        // get pager object from service
+        this.pager = this.pagerService.getPager(this.allItems.length, page);
+        // get current page of items
+        this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
     };
     return UsersComponent;
 }());
@@ -42,7 +53,7 @@ UsersComponent = __decorate([
         templateUrl: route + 'users.html',
         providers: [http_service_1.HttpService]
     }),
-    __metadata("design:paramtypes", [http_service_1.HttpService])
+    __metadata("design:paramtypes", [http_service_1.HttpService, index_1.PagerService])
 ], UsersComponent);
 exports.UsersComponent = UsersComponent;
 //# sourceMappingURL=users.js.map

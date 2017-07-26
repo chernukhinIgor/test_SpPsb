@@ -15,28 +15,8 @@ var classes_1 = require("../classes");
 var platform_browser_1 = require("@angular/platform-browser");
 var element = 'edit';
 var route = './app/' + element + '/';
-//tmp variables
-var users = [
-    {
-        id: '1',
-        name: 'name One'
-    },
-    {
-        id: '2',
-        name: 'name two'
-    },
-    {
-        id: '3',
-        name: 'name three'
-    },
-    {
-        id: '3',
-        name: 'name four'
-    }
-];
 var Edit = (function () {
-    function Edit(router, activatedRoute, httpService) {
-        this.router = router;
+    function Edit(activatedRoute, httpService) {
         this.activatedRoute = activatedRoute;
         this.httpService = httpService;
     }
@@ -48,7 +28,6 @@ var Edit = (function () {
             _this.id = params['id'];
             if (_this.id) {
                 title.setTitle('Edit Task');
-                //let res = this.httpService.getData('/api/get/' + this.id, null);
                 _this.httpService.getData('task/' + _this.id, null).subscribe(function (data) { return _this.task = data.json().data[0]; });
             }
             else {
@@ -58,11 +37,19 @@ var Edit = (function () {
         });
     };
     Edit.prototype.onSubmit = function () {
+        var _this = this;
         if (this.id) {
-            var res = this.httpService.putData('task/', this.task);
+            this.httpService.putData('task', this.task).subscribe(function (data) {
+                if (data.json().success == true) {
+                    location.href = '/task/get/' + _this.id;
+                }
+                else {
+                    alert(data.json().message);
+                }
+            });
         }
         else {
-            var res = this.httpService.postData('task/', this.task).subscribe(function (data) {
+            this.httpService.postData('task', this.task).subscribe(function (data) {
                 if (data.json().success == true) {
                     // console.log(data.json().data.userId)
                     location.href = '/task/get/' + data.json().data.userId;
@@ -96,7 +83,7 @@ Edit = __decorate([
         templateUrl: route + element + '.html',
         providers: [http_service_1.HttpService]
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, http_service_1.HttpService])
+    __metadata("design:paramtypes", [router_1.ActivatedRoute, http_service_1.HttpService])
 ], Edit);
 exports.Edit = Edit;
 //# sourceMappingURL=edit.js.map

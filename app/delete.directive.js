@@ -19,7 +19,14 @@ var DeleteDirective = (function () {
     };
     DeleteDirective.prototype.onClick = function () {
         if (this.entityId) {
-            var res = this.httpService.deleteData(this.moduleName + '/' + this.entityId, null);
+            this.httpService.deleteData(this.moduleName + '/' + this.entityId, null).subscribe(function (data) {
+                if (data.json()['success'] == true) {
+                    location.reload();
+                }
+                else {
+                    alert(data.json()['message']);
+                }
+            });
         }
         else {
             alert('Invalid id');

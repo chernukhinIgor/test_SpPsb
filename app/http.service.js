@@ -25,7 +25,7 @@ var HttpService = (function () {
         return this.http.put(apiUrl + url, params);
     };
     HttpService.prototype.deleteData = function (url, params) {
-        return this.http.delete(apiUrl + url.toLowerCase(), params).subscribe();
+        return this.http.delete(apiUrl + url, params);
     };
     return HttpService;
 }());
