@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import hello.model.User;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
 import static hello.service.UserService.USER_NOT_DELETED_ERROR;
@@ -24,6 +22,7 @@ import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
 
 @RestController
 public class RestUserController {
+
     @Autowired
     private UserService userService;
 
@@ -50,7 +49,7 @@ public class RestUserController {
     ) {
         try {
             List<User> paginationTasks = userService.getPaginationUsers(orderBy, sortBy, page, pageLimit);
-            List<Object> objectList = new ArrayList<Object>(paginationTasks);
+            List<Object> objectList = new ArrayList<>(paginationTasks);
             return JsonWrapper.wrapList(objectList);
         } catch (Exception ex) {
             JSONObject jsonError = new JSONObject();
@@ -70,49 +69,17 @@ public class RestUserController {
     }
 
     @GetMapping("users")
-    public JSONObject getAllUsers(
-            @RequestParam(required = false) boolean userId,
-            @RequestParam(required = false) boolean name,
-            @RequestParam(required = false) boolean surname,
-            @RequestParam(required = false) boolean telephone,
-            @RequestParam(required = false) boolean email,
-            @RequestParam(required = false) boolean gender,
-            @RequestParam(required = false) boolean birth
-    ) throws IllegalAccessException {
-        String requestStringParams = requestHasParams(userId, name, surname, telephone, email, gender, birth);
-        List<String> parameters = new ArrayList<>();
-        if (userId)
-            parameters.add("userId");
-        if (name)
-            parameters.add("name");
-        if (surname)
-            parameters.add("surname");
-        if (telephone)
-            parameters.add("telephone");
-        if (email)
-            parameters.add("email");
-        if (gender)
-            parameters.add("gender");
-        if (birth)
-            parameters.add("birth");
-        if (requestStringParams != null) {
+    public JSONObject getAllUsers(@RequestParam(required = false, value="params") List<String> columns){
+        if (columns != null) {
             JSONArray array = new JSONArray();
-            List<Object[]> allUsersAsObjects = userService.getParametricUsers(requestStringParams);
-            if (parameters.size() == 1) {
+            List<Object[]> allUsersAsObjects = userService.getParametricUsers(columns);
+            if (columns.size() == 1) {
                 for (Object row : allUsersAsObjects) {
-                    JSONObject data = new JSONObject();
-                    for (int i = 0; i < parameters.size(); i++) {
-                        data.element(parameters.get(i), row);
-                    }
-                    array.add(data);
+                    array.add(JsonWrapper.returnJsonFromObjectWithSingleRow(columns, row));
                 }
             } else {
                 for (Object[] row : allUsersAsObjects) {
-                    JSONObject data = new JSONObject();
-                    for (int i = 0; i < parameters.size(); i++) {
-                        data.element(parameters.get(i), row[i]);
-                    }
-                    array.add(data);
+                    array.add(JsonWrapper.returnJsonFromObjectWithMultipleRows(columns, row));
                 }
             }
             return JsonWrapper.wrapList(array);
@@ -122,30 +89,6 @@ public class RestUserController {
             return JsonWrapper.wrapList(objectList);
         }
     }
-
-    private String requestHasParams(boolean userId, boolean name, boolean surname, boolean telephone, boolean email, boolean gender, boolean birth) {
-        if (userId || name || surname || telephone || email || gender || birth) {
-            StringJoiner resultString = new StringJoiner(",");
-            //Select t.A as B from table as t
-            if (userId)
-                resultString.add("userId");
-            if (name)
-                resultString.add("name");
-            if (surname)
-                resultString.add("surname");
-            if (telephone)
-                resultString.add("telephone");
-            if (email)
-                resultString.add("email");
-            if (gender)
-                resultString.add("gender");
-            if (birth)
-                resultString.add("birth");
-            return resultString.toString();
-        }
-        return null;
-    }
-
 
     @GetMapping("userCreatedTasks/{id}")
     public JSONObject getAllCreatedTasks(@PathVariable("id") Integer id) {

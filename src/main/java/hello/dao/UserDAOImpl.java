@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.StringJoiner;
 
 import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
 import static hello.service.UserService.USER_NOT_DELETED_ERROR;
@@ -89,8 +90,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Object[]> getParametricUsers(String  requestStringParams) {
-        Query query = entityManager.createQuery("select "+requestStringParams+" FROM User as usr ORDER BY usr.userId");
+    public List<Object[]> getParametricUsers(List<String> requestStringParams) {
+        StringJoiner stringJoiner = new StringJoiner(", ");
+        for (String param:requestStringParams) {
+            stringJoiner.add(param);
+        }
+        Query query = entityManager.createQuery("select "+stringJoiner.toString()+" FROM User as usr ORDER BY usr.userId");
         List<Object[]> rows = query.getResultList();
         return rows;
     }

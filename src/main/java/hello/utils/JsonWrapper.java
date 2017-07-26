@@ -1,6 +1,5 @@
 package hello.utils;
 
-import hello.model.User;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -23,5 +22,21 @@ public class JsonWrapper {
         response.put("success",true);
         response.element("data",ojbs);
         return response;
+    }
+
+    public static JSONObject returnJsonFromObjectWithMultipleRows(List<String> columns, Object[] row) {
+        JSONObject data = new JSONObject();
+        for (int i = 0; i < columns.size(); i++) {
+            data.element(columns.get(i), row[i]);
+        }
+        return data;
+    }
+
+    public static JSONObject returnJsonFromObjectWithSingleRow(List<String> columns, Object row) {
+        JSONObject data = new JSONObject();
+        for (int i = 0; i < columns.size(); i++) {
+            data.element(columns.get(i), row);
+        }
+        return data;
     }
 }

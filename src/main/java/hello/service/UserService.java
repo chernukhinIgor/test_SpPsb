@@ -22,5 +22,5 @@ public interface UserService {
     List<Task> getResponsibleTasks(int id);
     int getUserCount();
     List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
-    List<Object[]> getParametricUsers(String  requestStringParams);
+    List<Object[]> getParametricUsers(List<String> requestStringParams);
 }
