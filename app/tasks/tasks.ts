@@ -34,7 +34,7 @@ export class TasksComponent implements OnInit {
         let title = new Title('');
         title.setTitle('View Tasks');
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData('tasks.json', options).subscribe((data: Response) => {
+        this.httpService.getData('tasks', options).subscribe((data: Response) => {
             this.allItems = data.json().data;
 
             // initialize to page 1
