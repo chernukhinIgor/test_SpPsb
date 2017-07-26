@@ -21,6 +21,7 @@ var tasks_1 = require("./tasks/tasks");
 var forms_1 = require("@angular/forms");
 var user_1 = require("./user/user");
 var users_1 = require("./users/users");
+var navbar_1 = require("./navbar/navbar");
 var delete_directive_1 = require("./delete.directive");
 var index_1 = require("./pagination_service/index");
 var index_2 = require("./_guards/index");
@@ -65,7 +66,8 @@ AppModule = __decorate([
             not_found_component_1.NotFoundComponent,
             delete_directive_1.DeleteDirective,
             login_1.LoginComponent,
-            register_1.RegisterComponent
+            register_1.RegisterComponent,
+            navbar_1.myNavbar
         ],
         providers: [
             index_1.PagerService,

@@ -15,6 +15,7 @@ import { TasksComponent }   from './tasks/tasks';
 import { FormsModule }   from '@angular/forms';
 import { UserComponent }   from './user/user';
 import { UsersComponent }   from './users/users';
+import { myNavbar }   from './navbar/navbar';
 import { DeleteDirective }   from './delete.directive';
 import { PagerService } from './pagination_service/index';
 import { AuthGuard } from './_guards/index';
@@ -56,7 +57,8 @@ const appRoutes: Routes =[
         NotFoundComponent,
         DeleteDirective,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        myNavbar
     ],
     providers: [
         PagerService,
