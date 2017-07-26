@@ -29,7 +29,8 @@ export class HomeComponent implements OnInit{
         this.httpService.getData('tasks', options).subscribe((data: Response) => {
             if(data.json().success == true) {
                 let tasks = data.json().data;
-                this.tasks= tasks.slice(Math.max(tasks.length - 3, 1))
+                this.tasks= tasks.slice(-3)
+                console.log(this.tasks)
             } else {
                 alert(data.json().message)
             }
@@ -41,7 +42,7 @@ export class HomeComponent implements OnInit{
         this.httpService.getData('users', options).subscribe((data: Response) => {
             if (data.json().success == true) {
                 let users = data.json().data;
-                this.users = users.slice(Math.max(users.length - 3, 1))
+                this.users = users.slice(-3)
             } else {
                 alert(data.json().message)
             }

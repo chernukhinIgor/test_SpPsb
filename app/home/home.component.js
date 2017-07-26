@@ -31,7 +31,8 @@ var HomeComponent = (function () {
         this.httpService.getData('tasks', options).subscribe(function (data) {
             if (data.json().success == true) {
                 var tasks = data.json().data;
-                _this.tasks = tasks.slice(Math.max(tasks.length - 3, 1));
+                _this.tasks = tasks.slice(-3);
+                console.log(_this.tasks);
             }
             else {
                 alert(data.json().message);
@@ -44,7 +45,7 @@ var HomeComponent = (function () {
         this.httpService.getData('users', options).subscribe(function (data) {
             if (data.json().success == true) {
                 var users = data.json().data;
-                _this.users = users.slice(Math.max(users.length - 3, 1));
+                _this.users = users.slice(-3);
             }
             else {
                 alert(data.json().message);
