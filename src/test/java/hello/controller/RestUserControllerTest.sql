@@ -1,0 +1,1 @@
+insert into User(name) values ('Sam');

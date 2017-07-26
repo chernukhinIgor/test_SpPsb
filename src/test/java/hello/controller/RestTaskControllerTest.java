@@ -78,6 +78,7 @@ public class RestTaskControllerTest {
         task.setResponsibleUserId(2);
         task.setStatus(Task.statusStates.canceled);
         String json = new Gson().toJson(task);
+
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                 .post("/task")
                 .accept(MediaType.APPLICATION_JSON)
