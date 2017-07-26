@@ -15,17 +15,17 @@ var HttpService = (function () {
         this.http = http;
     }
     HttpService.prototype.getData = function (url, params) {
-        var jsonObject = this.http.get(url, params);
+        var jsonObject = this.http.get(apiUrl + url, params);
         return jsonObject;
     };
     HttpService.prototype.postData = function (url, params) {
-        return this.http.post(url, params);
+        return this.http.post(apiUrl + url, params);
     };
     HttpService.prototype.putData = function (url, params) {
-        return this.http.post(url, params);
+        return this.http.post(apiUrl + url, params);
     };
     HttpService.prototype.deleteData = function (url, params) {
-        return this.http.delete(url, params);
+        return this.http.delete(apiUrl + url, params);
     };
     return HttpService;
 }());

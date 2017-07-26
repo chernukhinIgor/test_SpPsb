@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit{
 
     getNewTasks () {
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData(apiUrl +'tasks', options).subscribe((data: Response) => {
+        this.httpService.getData('tasks', options).subscribe((data: Response) => {
             if(data.json().succes) {
                 let tasks = data.json().data;
                 this.tasks= tasks.slice(Math.max(tasks.length - 3, 1))
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit{
 
     getNewUsers() {
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData(apiUrl +'users', options).subscribe ((data: Response) => {
+        this.httpService.getData('users', options).subscribe ((data: Response) => {
             if (data.json().succes) {
                 let users = data.json().data;
                 this.users = users.slice(Math.max(users.length - 3, 1))

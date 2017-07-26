@@ -28,7 +28,7 @@ var UserEdit = (function () {
             var title = new platform_browser_1.Title('');
             if (_this.id) {
                 title.setTitle('Edit User');
-                _this.httpService.getData(apiUrl + 'user/' + _this.id, null).subscribe(function (data) {
+                _this.httpService.getData('user/' + _this.id, null).subscribe(function (data) {
                     if (data.json().success == true) {
                         _this.user = data.json().data[0];
                     }
@@ -46,7 +46,7 @@ var UserEdit = (function () {
     UserEdit.prototype.onSubmit = function () {
         var _this = this;
         if (this.id) {
-            this.httpService.putData(apiUrl + 'user', this.user).subscribe(function (data) {
+            this.httpService.putData('user', this.user).subscribe(function (data) {
                 if (data.json().success == true) {
                     location.href = '/task/get/' + _this.id;
                 }
@@ -56,7 +56,7 @@ var UserEdit = (function () {
             });
         }
         else {
-            this.httpService.postData(apiUrl + 'user', this.user).subscribe(function (data) {
+            this.httpService.postData('user', this.user).subscribe(function (data) {
                 if (data.json().success == true) {
                     location.href = '/task/get/' + data.json().data;
                 }

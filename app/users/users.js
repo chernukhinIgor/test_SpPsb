@@ -22,7 +22,7 @@ var UsersComponent = (function () {
         var title = new platform_browser_1.Title('');
         title.setTitle('View Users');
         var options = new URLSearchParams();
-        this.httpService.getData(apiUrl + 'users', options).subscribe(function (data) {
+        this.httpService.getData('users', options).subscribe(function (data) {
             if (data.json().success == true) {
                 _this.users = data.json().data;
             }

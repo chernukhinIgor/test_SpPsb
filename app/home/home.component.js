@@ -28,7 +28,7 @@ var HomeComponent = (function () {
     HomeComponent.prototype.getNewTasks = function () {
         var _this = this;
         var options = new URLSearchParams();
-        this.httpService.getData(apiUrl + 'tasks', options).subscribe(function (data) {
+        this.httpService.getData('tasks', options).subscribe(function (data) {
             if (data.json().succes) {
                 var tasks = data.json().data;
                 _this.tasks = tasks.slice(Math.max(tasks.length - 3, 1));
@@ -41,7 +41,7 @@ var HomeComponent = (function () {
     HomeComponent.prototype.getNewUsers = function () {
         var _this = this;
         var options = new URLSearchParams();
-        this.httpService.getData(apiUrl + 'users', options).subscribe(function (data) {
+        this.httpService.getData('users', options).subscribe(function (data) {
             if (data.json().succes) {
                 var users = data.json().data;
                 _this.users = users.slice(Math.max(users.length - 3, 1));

@@ -26,7 +26,7 @@ export class UserEdit {
             let title = new Title('');
             if(this.id) {
                 title.setTitle('Edit User');
-                this.httpService.getData(apiUrl +'user/' + this.id, null).subscribe((data: Response) => {
+                this.httpService.getData('user/' + this.id, null).subscribe((data: Response) => {
                     if(data.json().success == true) {
                         this.user=data.json().data[0];
                     } else {
@@ -43,7 +43,7 @@ export class UserEdit {
 
     onSubmit() {
         if(this.id) {
-            this.httpService.putData(apiUrl +'user', this.user).subscribe((data: Response) => {
+            this.httpService.putData('user', this.user).subscribe((data: Response) => {
                 if(data.json().success == true) {
                     location.href = '/task/get/' +this.id;
                 } else {
@@ -51,7 +51,7 @@ export class UserEdit {
                 }
             });
         } else {
-            this.httpService.postData(apiUrl +'user', this.user ).subscribe((data: Response) => {
+            this.httpService.postData('user', this.user ).subscribe((data: Response) => {
                 if(data.json().success == true) {
                     location.href = '/task/get/' + data.json().data;
                 } else {

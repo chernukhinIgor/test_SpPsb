@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
 
         this.activatedRoute.params.subscribe((params: Params) => {
             options.set('id', params['id']);
-            this.httpService.getData( apiUrl +'user/' + params['id'], null).subscribe((data: Response) => {
+            this.httpService.getData( 'user/' + params['id'], null).subscribe((data: Response) => {
                 if (data.json().success == true) {
                     this.user = data.json().data[0];
                 } else {
@@ -37,7 +37,7 @@ export class UserComponent implements OnInit {
                 }
             });
 
-            this.httpService.getData(apiUrl +'userCreatedTasks/' + params['id'], null).subscribe((data: Response) => {
+            this.httpService.getData('userCreatedTasks/' + params['id'], null).subscribe((data: Response) => {
                 if (data.json().success == true) {
                     this.tasks = data.json().data;
                 } else {

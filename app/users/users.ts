@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
     ngOnInit(){let title = new Title('');
         title.setTitle('View Users');
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData(apiUrl +'users', options).subscribe((data: Response) => {
+        this.httpService.getData('users', options).subscribe((data: Response) => {
             if(data.json().success == true) {
                 this.users=data.json().data
             } else {
