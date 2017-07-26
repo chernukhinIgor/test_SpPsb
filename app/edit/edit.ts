@@ -63,8 +63,14 @@ export class Edit {
         if(this.id) {
             let res = this.httpService.putData('task/', this.task);
         } else {
-            let res = this.httpService.postData('task/', this.task );
-            location.href = '/task/edit/' + res.id
+            let res = this.httpService.postData('task/', this.task ).subscribe((data: Response) => {
+                if (data.json().success == true) {
+                    // console.log(data.json().data.userId)
+                    location.href = '/task/get/' + data.json().data.userId;
+                } else {
+                    alert(data.json().message);
+                }
+            });
         }
     }
 

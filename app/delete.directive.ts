@@ -22,7 +22,7 @@ export class DeleteDirective implements OnInit{
     onClick() {
         console.log(this.moduleName, this.entityId);
         if (this.entityId) {
-            let res = this.httpService.deleteData('/api/delete/' + this.entityId, this.moduleName);
+            let res = this.httpService.deleteData(this.moduleName+'/'+this.entityId, null);
         } else {
             alert('Invalid id');
         }
