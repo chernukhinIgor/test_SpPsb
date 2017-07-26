@@ -16,7 +16,7 @@ export class HttpService{
 
 
     putData(url: string, params: any) {
-        return this.http.post(apiUrl + url, params);
+        return this.http.put(apiUrl + url, params);
     }
 
     deleteData(url: string, params: any) {

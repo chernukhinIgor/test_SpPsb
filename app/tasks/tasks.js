@@ -26,7 +26,7 @@ var TasksComponent = (function () {
         var title = new platform_browser_1.Title('');
         title.setTitle('View Tasks');
         var options = new URLSearchParams();
-        this.httpService.getData('tasks.json', options).subscribe(function (data) {
+        this.httpService.getData('tasks', options).subscribe(function (data) {
             _this.allItems = data.json().data;
             // initialize to page 1
             _this.setPage(1);

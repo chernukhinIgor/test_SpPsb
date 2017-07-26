@@ -22,7 +22,7 @@ var HttpService = (function () {
         return this.http.post(apiUrl + url, params);
     };
     HttpService.prototype.putData = function (url, params) {
-        return this.http.post(apiUrl + url, params);
+        return this.http.put(apiUrl + url, params);
     };
     HttpService.prototype.deleteData = function (url, params) {
         return this.http.delete(apiUrl + url, params);

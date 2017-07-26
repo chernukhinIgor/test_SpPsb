@@ -49,7 +49,7 @@ var Edit = (function () {
             if (_this.id) {
                 title.setTitle('Edit Task');
                 //let res = this.httpService.getData('/api/get/' + this.id, null);
-                _this.httpService.getData('task.json', null).subscribe(function (data) { return _this.task = data.json().data[0]; });
+                _this.httpService.getData('task/' + _this.id, null).subscribe(function (data) { return _this.task = data.json().data[0]; });
             }
             else {
                 title.setTitle('Create Task');
@@ -59,15 +59,18 @@ var Edit = (function () {
     };
     Edit.prototype.onSubmit = function () {
         if (this.id) {
-            var res = this.httpService.putData('/api/get/' + this.id, this.task);
+            var res = this.httpService.putData('task/', this.task);
         }
         else {
-            var res = this.httpService.postData('/api/get/', this.task);
+            var res = this.httpService.postData('task/', this.task);
             location.href = '/task/edit/' + res.id;
         }
     };
     Edit.prototype.getUsers = function () {
-        return users;
+        var options = new URLSearchParams();
+        options.set('params', 'id');
+        options.set('params', 'name');
+        this.httpService.getData('users/', options).subscribe(function (data) { return data.json().data; });
     };
     Edit.prototype.cancel = function () {
         window.history.back();
