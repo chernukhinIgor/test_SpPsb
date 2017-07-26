@@ -45,7 +45,8 @@ export class UserEdit {
         if(this.id) {
             this.httpService.putData('user', this.user).subscribe((data: Response) => {
                 if(data.json().success == true) {
-                    location.href = '/task/get/' +this.id;
+                    console.log(this.id)
+                    // location.href = '/user/get/' +this.id;
                 } else {
                     alert(data.json().message)
                 }
@@ -53,7 +54,8 @@ export class UserEdit {
         } else {
             this.httpService.postData('user', this.user ).subscribe((data: Response) => {
                 if(data.json().success == true) {
-                    location.href = '/task/get/' + data.json().data;
+                    console.log(data.json().data)
+                    // location.href = '/user/get/' + data.json().data;
                 } else {
                     alert(data.json().message)
                 }

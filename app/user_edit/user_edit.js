@@ -48,7 +48,7 @@ var UserEdit = (function () {
         if (this.id) {
             this.httpService.putData('user', this.user).subscribe(function (data) {
                 if (data.json().success == true) {
-                    location.href = '/task/get/' + _this.id;
+                    console.log(_this.id);
                 }
                 else {
                     alert(data.json().message);
@@ -58,7 +58,7 @@ var UserEdit = (function () {
         else {
             this.httpService.postData('user', this.user).subscribe(function (data) {
                 if (data.json().success == true) {
-                    location.href = '/task/get/' + data.json().data;
+                    console.log(data.json().data);
                 }
                 else {
                     alert(data.json().message);
