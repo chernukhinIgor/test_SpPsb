@@ -59,7 +59,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Object[]> getParametricTasks(String requestStringParams) {
+    public List<Object[]> getParametricTasks(List<String> requestStringParams) {
         return taskDAO.getParametricTasks(requestStringParams);
     }
 }

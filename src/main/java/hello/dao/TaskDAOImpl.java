@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.StringJoiner;
 
 import static hello.service.TaskService.*;
 
@@ -98,8 +99,12 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public List<Object[]> getParametricTasks(String requestStringParams) {
-        Query query = entityManager.createQuery("select "+requestStringParams+" FROM Task as tsk ORDER BY tsk.taskId");
+    public List<Object[]> getParametricTasks(List<String> requestStringParams) {
+        StringJoiner stringJoiner = new StringJoiner(", ");
+        for (String param:requestStringParams) {
+            stringJoiner.add(param);
+        }
+        Query query = entityManager.createQuery("select "+stringJoiner.toString()+" FROM Task as tsk ORDER BY tsk.taskId");
         List<Object[]> rows = query.getResultList();
         return rows;
     }

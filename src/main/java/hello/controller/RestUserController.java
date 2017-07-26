@@ -19,6 +19,7 @@ import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
 import static hello.service.UserService.USER_NOT_DELETED_ERROR;
 import static hello.service.UserService.USER_NOT_EXIST_ERROR;
 import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
+import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
 
 @RestController
 public class RestUserController {
@@ -71,17 +72,8 @@ public class RestUserController {
     @GetMapping("users")
     public JSONObject getAllUsers(@RequestParam(required = false, value="params") List<String> columns){
         if (columns != null) {
-            JSONArray array = new JSONArray();
             List<Object[]> allUsersAsObjects = userService.getParametricUsers(columns);
-            if (columns.size() == 1) {
-                for (Object row : allUsersAsObjects) {
-                    array.add(JsonWrapper.returnJsonFromObjectWithSingleRow(columns, row));
-                }
-            } else {
-                for (Object[] row : allUsersAsObjects) {
-                    array.add(JsonWrapper.returnJsonFromObjectWithMultipleRows(columns, row));
-                }
-            }
+            JSONArray array = getJsonArrayFromObjects(columns, allUsersAsObjects);
             return JsonWrapper.wrapList(array);
         } else {
             List<User> allUsers = userService.getAllUsers();

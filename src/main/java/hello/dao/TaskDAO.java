@@ -15,5 +15,5 @@ public interface TaskDAO {
     boolean taskExists(int taskId);
     int getTaskCount();
     List<Task>getPaginationTasks(String orderBy, String sortBy, int page, int pageLimit);
-    List<Object[]> getParametricTasks(String  requestStringParams);
+    List<Object[]> getParametricTasks(List<String>  requestStringParams);
 }

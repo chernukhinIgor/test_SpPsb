@@ -39,4 +39,18 @@ public class JsonWrapper {
         }
         return data;
     }
+
+    public static JSONArray getJsonArrayFromObjects(List<String> columns, List<Object[]> allTasksAsObjects) {
+        JSONArray array = new JSONArray();
+        if (columns.size() == 1) {
+            for (Object row : allTasksAsObjects) {
+                array.add(JsonWrapper.returnJsonFromObjectWithSingleRow(columns, row));
+            }
+        } else {
+            for (Object[] row : allTasksAsObjects) {
+                array.add(JsonWrapper.returnJsonFromObjectWithMultipleRows(columns, row));
+            }
+        }
+        return array;
+    }
 }
