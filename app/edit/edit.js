@@ -44,7 +44,7 @@ var Edit = (function () {
         var _this = this;
         this.activatedRoute.params.subscribe(function (params) {
             var title = new platform_browser_1.Title('');
-            _this.users = _this.getUsers();
+            _this.getUsers();
             _this.id = params['id'];
             if (_this.id) {
                 title.setTitle('Edit Task');
@@ -62,15 +62,28 @@ var Edit = (function () {
             var res = this.httpService.putData('task/', this.task);
         }
         else {
-            var res = this.httpService.postData('task/', this.task);
-            location.href = '/task/edit/' + res.id;
+            var res = this.httpService.postData('task/', this.task).subscribe(function (data) {
+                if (data.json().success == true) {
+                    // console.log(data.json().data.userId)
+                    location.href = '/task/get/' + data.json().data.userId;
+                }
+                else {
+                    alert(data.json().message);
+                }
+            });
         }
     };
     Edit.prototype.getUsers = function () {
+        var _this = this;
         var options = new URLSearchParams();
-        options.set('params', 'id');
-        options.set('params', 'name');
-        this.httpService.getData('users/', options).subscribe(function (data) { return data.json().data; });
+        return this.httpService.getData('users?params=id&params=name', options).subscribe(function (data) {
+            if (data.json().success == true) {
+                _this.users = data.json().data;
+            }
+            else {
+                alert(data.json().message);
+            }
+        });
     };
     Edit.prototype.cancel = function () {
         window.history.back();
