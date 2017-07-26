@@ -9,25 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
-        this.page = window.location.pathname;
-        this.navbar = false;
-        if (this.page != '/login' && this.page != '/register') {
-            this.navbar = true;
-        }
-        else {
-            this.navbar = false;
-        }
+var http_service_1 = require("../http.service");
+var route = './app/login/';
+var LoginComponent = (function () {
+    function LoginComponent() {
+        console.log('aaaaaaaaaaa');
     }
-    return AppComponent;
+    LoginComponent.prototype.ngOnInit = function () {
+    };
+    return LoginComponent;
 }());
-AppComponent = __decorate([
+LoginComponent = __decorate([
     core_1.Component({
-        selector: 'my-app',
-        templateUrl: 'app/app.components.html'
+        selector: 'login-comp',
+        templateUrl: route + 'login.html',
+        styleUrls: [route + 'style.css'],
+        providers: [http_service_1.HttpService]
     }),
     __metadata("design:paramtypes", [])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+], LoginComponent);
+exports.LoginComponent = LoginComponent;
+//# sourceMappingURL=login.js.map

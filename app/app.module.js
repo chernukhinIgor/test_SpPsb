@@ -9,6 +9,8 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
+var login_1 = require("./login/login");
+var register_1 = require("./register/register");
 var app_component_1 = require("./app.component");
 var home_component_1 = require("./home/home.component");
 var edit_1 = require("./edit/edit");
@@ -21,18 +23,21 @@ var user_1 = require("./user/user");
 var users_1 = require("./users/users");
 var delete_directive_1 = require("./delete.directive");
 var index_1 = require("./pagination_service/index");
+var auth_1 = require("./auth/auth");
 // определение маршрутов
 var appRoutes = [
-    { path: '', component: home_component_1.HomeComponent },
-    { path: 'task/edit/:id', component: edit_1.Edit },
-    { path: 'task/edit', component: edit_1.Edit },
-    { path: 'task/get/:id', component: task_1.TaskComponent },
-    { path: 'tasks', component: tasks_1.TasksComponent },
-    { path: 'user/edit/:id', component: user_edit_1.UserEdit },
-    { path: 'user/edit', component: user_edit_1.UserEdit },
-    { path: 'user/get/:id', component: user_1.UserComponent },
-    { path: 'users', component: users_1.UsersComponent },
-    { path: '**', component: not_found_component_1.NotFoundComponent }
+    { path: '', component: home_component_1.HomeComponent, canActivate: [auth_1.AuthGuard] },
+    { path: 'login', component: login_1.LoginComponent },
+    { path: 'register', component: register_1.RegisterComponent },
+    { path: 'task/edit/:id', component: edit_1.Edit, canActivate: [auth_1.AuthGuard] },
+    { path: 'task/edit', component: edit_1.Edit, canActivate: [auth_1.AuthGuard] },
+    { path: 'task/get/:id', component: task_1.TaskComponent, canActivate: [auth_1.AuthGuard] },
+    { path: 'tasks', component: tasks_1.TasksComponent, canActivate: [auth_1.AuthGuard] },
+    { path: 'user/edit/:id', component: user_edit_1.UserEdit, canActivate: [auth_1.AuthGuard] },
+    { path: 'user/edit', component: user_edit_1.UserEdit, canActivate: [auth_1.AuthGuard] },
+    { path: 'user/get/:id', component: user_1.UserComponent, canActivate: [auth_1.AuthGuard] },
+    { path: 'users', component: users_1.UsersComponent, canActivate: [auth_1.AuthGuard] },
+    { path: '**', component: not_found_component_1.NotFoundComponent, canActivate: [auth_1.AuthGuard] }
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -43,8 +48,8 @@ AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, router_1.RouterModule.forRoot(appRoutes), http_1.HttpModule, forms_1.FormsModule],
         declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, edit_1.Edit, user_edit_1.UserEdit, users_1.UsersComponent, user_1.UserComponent,
-            tasks_1.TasksComponent, task_1.TaskComponent, not_found_component_1.NotFoundComponent, delete_directive_1.DeleteDirective],
-        providers: [index_1.PagerService],
+            tasks_1.TasksComponent, task_1.TaskComponent, not_found_component_1.NotFoundComponent, delete_directive_1.DeleteDirective, login_1.LoginComponent, register_1.RegisterComponent],
+        providers: [index_1.PagerService, auth_1.AuthGuard],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

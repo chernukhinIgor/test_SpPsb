@@ -9,25 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
-        this.page = window.location.pathname;
-        this.navbar = false;
-        if (this.page != '/login' && this.page != '/register') {
-            this.navbar = true;
-        }
-        else {
-            this.navbar = false;
-        }
+var router_1 = require("@angular/router");
+var AuthGuard = (function () {
+    function AuthGuard(router) {
+        this.router = router;
     }
-    return AppComponent;
+    AuthGuard.prototype.canActivate = function () {
+        if (this.checkLogin()) {
+            return true;
+        }
+        this.router.navigate(['login']);
+        return false;
+    };
+    AuthGuard.prototype.checkLogin = function () {
+        return true;
+    };
+    AuthGuard.prototype.canDeactivate = function () {
+    };
+    return AuthGuard;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'my-app',
-        templateUrl: 'app/app.components.html'
-    }),
-    __metadata("design:paramtypes", [])
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+AuthGuard = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [router_1.Router])
+], AuthGuard);
+exports.AuthGuard = AuthGuard;
+//# sourceMappingURL=auth.js.map

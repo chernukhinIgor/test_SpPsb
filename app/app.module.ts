@@ -1,8 +1,10 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { HttpModule }   from '@angular/http';
+import { LoginComponent }   from './login/login';
+import { RegisterComponent }   from './register/register';
 import { AppComponent }   from './app.component';
 import { HomeComponent }   from './home/home.component';
 import { Edit }   from './edit/edit';
@@ -15,28 +17,30 @@ import { UserComponent }   from './user/user';
 import { UsersComponent }   from './users/users';
 import { DeleteDirective }   from './delete.directive';
 import { PagerService } from './pagination_service/index';
+import { AuthGuard } from './auth/auth';
 import * as _ from 'underscore';
-
 
 // определение маршрутов
 const appRoutes: Routes =[
-    { path: '', component: HomeComponent },
-    { path: 'task/edit/:id', component: Edit },
-    { path: 'task/edit', component: Edit },
-    { path: 'task/get/:id', component: TaskComponent },
-    { path: 'tasks', component: TasksComponent },
-    { path: 'user/edit/:id', component: UserEdit },
-    { path: 'user/edit', component: UserEdit },
-    { path: 'user/get/:id', component: UserComponent },
-    { path: 'users', component: UsersComponent },
-    { path: '**', component: NotFoundComponent }
+    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent},
+    { path: 'register', component: RegisterComponent },
+    { path: 'task/edit/:id', component: Edit, canActivate: [AuthGuard] },
+    { path: 'task/edit', component: Edit, canActivate: [AuthGuard] },
+    { path: 'task/get/:id', component: TaskComponent, canActivate: [AuthGuard] },
+    { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard] },
+    { path: 'user/edit/:id', component: UserEdit, canActivate: [AuthGuard] },
+    { path: 'user/edit', component: UserEdit, canActivate: [AuthGuard] },
+    { path: 'user/get/:id', component: UserComponent, canActivate: [AuthGuard] },
+    { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+    { path: '**', component: NotFoundComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
     imports:      [ BrowserModule, RouterModule.forRoot(appRoutes), HttpModule, FormsModule],
     declarations: [ AppComponent, HomeComponent, Edit, UserEdit, UsersComponent, UserComponent,
-        TasksComponent, TaskComponent, NotFoundComponent, DeleteDirective],
-    providers:    [ PagerService ],
+        TasksComponent, TaskComponent, NotFoundComponent, DeleteDirective, LoginComponent, RegisterComponent],
+    providers:    [ PagerService, AuthGuard ],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

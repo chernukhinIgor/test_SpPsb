@@ -5,5 +5,13 @@ import { Component } from '@angular/core';
     templateUrl: 'app/app.components.html'
 })
 export class AppComponent {
-    page = window.location.pathname
+    page = window.location.pathname;
+    navbar = false;
+    constructor () {
+        if (this.page != '/login' && this.page != '/register'){
+            this.navbar = true;
+        } else {
+            this.navbar = false;
+        }
+    }
 }

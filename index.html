@@ -12,6 +12,7 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
     <script>
+        localStorage.setItem('users', JSON.stringify({id:1, token:'dksfhgr23tgyuewhbvffv2763'}));
         var apiUrl = 'http://localhost:8080/';
         System.import('app').catch(function(err){ console.error(err); });
     </script>
