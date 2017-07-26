@@ -28,8 +28,14 @@ var UserEdit = (function () {
             var title = new platform_browser_1.Title('');
             if (_this.id) {
                 title.setTitle('Edit User');
-                //let res = this.httpService.getData('/api/user/' + this.id, null);
-                _this.httpService.getData('user.json', null).subscribe(function (data) { return _this.user = data.json().data[0]; });
+                _this.httpService.getData(apiUrl + 'user/' + _this.id, null).subscribe(function (data) {
+                    if (data.json().success == true) {
+                        _this.user = data.json().data[0];
+                    }
+                    else {
+                        alert(data.json().message);
+                    }
+                });
             }
             else {
                 title.setTitle('Create User');
@@ -37,15 +43,28 @@ var UserEdit = (function () {
             }
         });
     };
-    UserEdit.prototype.onSubmit = function (f) {
+    UserEdit.prototype.onSubmit = function () {
+        var _this = this;
         if (this.id) {
-            var res = this.httpService.putData('/api/get/' + this.id, this.user);
+            this.httpService.putData(apiUrl + 'user', this.user).subscribe(function (data) {
+                if (data.json().success == true) {
+                    location.href = '/task/get/' + _this.id;
+                }
+                else {
+                    alert(data.json().message);
+                }
+            });
         }
         else {
-            var res = this.httpService.postData('/api/get/', this.user);
-            location.href = '/task/edit/' + res.id;
+            this.httpService.postData(apiUrl + 'user', this.user).subscribe(function (data) {
+                if (data.json().success == true) {
+                    location.href = '/task/get/' + data.json().data;
+                }
+                else {
+                    alert(data.json().message);
+                }
+            });
         }
-        console.log(this.user);
     };
     UserEdit.prototype.cancel = function () {
         window.history.back();

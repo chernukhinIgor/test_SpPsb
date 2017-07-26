@@ -25,9 +25,23 @@ var UserComponent = (function () {
         var options = new URLSearchParams();
         this.activatedRoute.params.subscribe(function (params) {
             options.set('id', params['id']);
+            _this.httpService.getData(apiUrl + 'user/' + params['id'], null).subscribe(function (data) {
+                if (data.json().success == true) {
+                    _this.user = data.json().data[0];
+                }
+                else {
+                    alert(data.json().message);
+                }
+            });
+            _this.httpService.getData(apiUrl + 'userCreatedTasks/' + params['id'], null).subscribe(function (data) {
+                if (data.json().success == true) {
+                    _this.tasks = data.json().data;
+                }
+                else {
+                    alert(data.json().message);
+                }
+            });
         });
-        this.httpService.getData('user.json', options).subscribe(function (data) { return _this.user = data.json().data[0]; });
-        this.httpService.getData('tasksFromUsers.json', options).subscribe(function (data) { return _this.tasks = data.json().data; });
     };
     return UserComponent;
 }());

@@ -19,16 +19,13 @@ var HttpService = (function () {
         return jsonObject;
     };
     HttpService.prototype.postData = function (url, params) {
-        return { id: 2 };
-        //return this.http.post(url, params);
+        return this.http.post(url, params);
     };
     HttpService.prototype.putData = function (url, params) {
-        return true;
-        //return this.http.post(url, params);
+        return this.http.post(url, params);
     };
     HttpService.prototype.deleteData = function (url, params) {
-        return true;
-        //return this.http.delete(url, params);
+        return this.http.delete(url, params);
     };
     return HttpService;
 }());

@@ -3,8 +3,7 @@ import { ActivatedRoute, Params} from '@angular/router';
 import { Response} from '@angular/http';
 import { HttpService} from '../http.service';
 import { Title } from '@angular/platform-browser';
-import { Task} from '../classes'
-import { User} from '../classes'
+import { Task, User} from '../classes'
 const route = './app/home/';
 
 @Component({
@@ -27,11 +26,25 @@ export class HomeComponent implements OnInit{
 
     getNewTasks () {
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData('tasksnew.json', options).subscribe((data: Response) => this.tasks=data.json().data);
+        this.httpService.getData(apiUrl +'tasks', options).subscribe((data: Response) => {
+            if(data.json().succes) {
+                let tasks = data.json().data;
+                this.tasks= tasks.slice(Math.max(tasks.length - 3, 1))
+            } else {
+                alert(data.json().message)
+            }
+        });
     }
 
     getNewUsers() {
         let options: URLSearchParams = new URLSearchParams();
-        this.httpService.getData('usersnew.json', options).subscribe((data: Response) => this.users=data.json().data);
+        this.httpService.getData(apiUrl +'users', options).subscribe ((data: Response) => {
+            if (data.json().succes) {
+                let users = data.json().data;
+                this.users = users.slice(Math.max(users.length - 3, 1))
+            } else {
+                alert(data.json().message)
+            }
+        });
     }
 }

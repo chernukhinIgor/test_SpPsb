@@ -28,12 +28,28 @@ var HomeComponent = (function () {
     HomeComponent.prototype.getNewTasks = function () {
         var _this = this;
         var options = new URLSearchParams();
-        this.httpService.getData('tasksnew.json', options).subscribe(function (data) { return _this.tasks = data.json().data; });
+        this.httpService.getData(apiUrl + 'tasks', options).subscribe(function (data) {
+            if (data.json().succes) {
+                var tasks = data.json().data;
+                _this.tasks = tasks.slice(Math.max(tasks.length - 3, 1));
+            }
+            else {
+                alert(data.json().message);
+            }
+        });
     };
     HomeComponent.prototype.getNewUsers = function () {
         var _this = this;
         var options = new URLSearchParams();
-        this.httpService.getData('usersnew.json', options).subscribe(function (data) { return _this.users = data.json().data; });
+        this.httpService.getData(apiUrl + 'users', options).subscribe(function (data) {
+            if (data.json().succes) {
+                var users = data.json().data;
+                _this.users = users.slice(Math.max(users.length - 3, 1));
+            }
+            else {
+                alert(data.json().message);
+            }
+        });
     };
     return HomeComponent;
 }());

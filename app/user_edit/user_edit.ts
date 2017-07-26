@@ -26,8 +26,14 @@ export class UserEdit {
             let title = new Title('');
             if(this.id) {
                 title.setTitle('Edit User');
-                //let res = this.httpService.getData('/api/user/' + this.id, null);
-                this.httpService.getData('user.json', null).subscribe((data: Response) => this.user=data.json().data[0]);
+                this.httpService.getData(apiUrl +'user/' + this.id, null).subscribe((data: Response) => {
+                    if(data.json().success == true) {
+                        this.user=data.json().data[0];
+                    } else {
+                        alert(data.json().message)
+                    }
+                });
+                // this.httpService.getData('user.json', null).subscribe((data: Response) => this.user=data.json().data[0]);
             } else {
                 title.setTitle('Create User');
                 this.user = new User;
@@ -35,14 +41,24 @@ export class UserEdit {
         });
     }
 
-    onSubmit(f: FormsModule) {
+    onSubmit() {
         if(this.id) {
-            let res = this.httpService.putData('/api/get/' + this.id, this.user);
+            this.httpService.putData(apiUrl +'user', this.user).subscribe((data: Response) => {
+                if(data.json().success == true) {
+                    location.href = '/task/get/' +this.id;
+                } else {
+                    alert(data.json().message)
+                }
+            });
         } else {
-            let res = this.httpService.postData('/api/get/', this.user );
-            location.href = '/task/edit/' + res.id
+            this.httpService.postData(apiUrl +'user', this.user ).subscribe((data: Response) => {
+                if(data.json().success == true) {
+                    location.href = '/task/get/' + data.json().data;
+                } else {
+                    alert(data.json().message)
+                }
+            });
         }
-        console.log(this.user);
     }
 
     cancel () {

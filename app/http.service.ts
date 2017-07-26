@@ -11,18 +11,15 @@ export class HttpService{
     }
 
     postData(url: string, params: any) {
-        return {id: 2};
-        //return this.http.post(url, params);
+        return this.http.post(url, params);
     }
 
 
     putData(url: string, params: any) {
-        return true;
-        //return this.http.post(url, params);
+        return this.http.post(url, params);
     }
 
     deleteData(url: string, params: any) {
-        return true;
-        //return this.http.delete(url, params);
+        return this.http.delete(url, params);
     }
 }
