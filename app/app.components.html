@@ -11,6 +11,9 @@
                         <li [ngClass]="{'active': page == '/users'}"><a href="/users">Users</a></li>
                         <li [ngClass]="{'active': page == '/tasks'}"><a href="/tasks">Tasks</a></li>
                     </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>

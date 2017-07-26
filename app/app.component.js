@@ -9,17 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var index_1 = require("./_services/index");
+var router_1 = require("@angular/router");
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(router, authenticationService) {
+        this.router = router;
+        this.authenticationService = authenticationService;
         this.page = window.location.pathname;
         this.navbar = false;
+    }
+    AppComponent.prototype.ngOnInit = function () {
         if (this.page != '/login' && this.page != '/register') {
             this.navbar = true;
         }
         else {
             this.navbar = false;
         }
-    }
+    };
+    AppComponent.prototype.logout = function () {
+        this.authenticationService.logout();
+        this.router.navigate(['/login']);
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -27,7 +37,7 @@ AppComponent = __decorate([
         selector: 'my-app',
         templateUrl: 'app/app.components.html'
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [router_1.Router, index_1.AuthenticationService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map
