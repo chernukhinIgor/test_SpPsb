@@ -20,6 +20,7 @@ import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
 
 @RestController
 public class RestTaskController {
+
     @Autowired
     private TaskService taskService;
 
