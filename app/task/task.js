@@ -25,8 +25,8 @@ var TaskComponent = (function () {
         var options = new URLSearchParams();
         this.activatedRoute.params.subscribe(function (params) {
             options.set('id', params['id']);
+            _this.httpService.getData('task/' + params['id'], null).subscribe(function (data) { return _this.task = data.json().data[0]; });
         });
-        this.httpService.getData('task/' + options['id'], null).subscribe(function (data) { return _this.task = data.json().data[0]; });
     };
     return TaskComponent;
 }());
