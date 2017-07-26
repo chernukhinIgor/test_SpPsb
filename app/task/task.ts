@@ -25,9 +25,13 @@ export class TaskComponent implements OnInit {
 
         this.activatedRoute.params.subscribe((params: Params) => {
             options.set('id', params['id']);
-            this.httpService.getData('task/'+params['id'], null).subscribe((data: Response) => this.task=data.json().data[0]);
+            this.httpService.getData('task/'+params['id'], null).subscribe((data: Response) => {
+                if (data.json().success == true) {
+                    this.task = data.json().data[0];
+                } else {
+                    alert(data.json().message)
+                }
+            });
         });
-
-
     }
 }

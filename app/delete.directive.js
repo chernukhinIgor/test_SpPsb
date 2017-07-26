@@ -18,7 +18,6 @@ var DeleteDirective = (function () {
     DeleteDirective.prototype.ngOnInit = function () {
     };
     DeleteDirective.prototype.onClick = function () {
-        console.log(this.moduleName, this.entityId);
         if (this.entityId) {
             var res = this.httpService.deleteData(this.moduleName + '/' + this.entityId, null);
         }

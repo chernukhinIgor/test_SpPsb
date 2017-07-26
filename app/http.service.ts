@@ -20,6 +20,6 @@ export class HttpService{
     }
 
     deleteData(url: string, params: any) {
-        return this.http.delete(apiUrl + url, params);
+        return this.http.delete(apiUrl + url.toLowerCase(), params).subscribe();
     }
 }
