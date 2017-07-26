@@ -10,12 +10,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_service_1 = require("../http.service");
+var index_1 = require("../_services/index");
+var router_1 = require("@angular/router");
 var route = './app/login/';
 var LoginComponent = (function () {
-    function LoginComponent() {
-        console.log('aaaaaaaaaaa');
+    function LoginComponent(router, authenticationService) {
+        this.router = router;
+        this.authenticationService = authenticationService;
+        this.model = {};
+        this.loading = false;
+        this.error = '';
     }
     LoginComponent.prototype.ngOnInit = function () {
+        // reset login status
+        this.authenticationService.logout();
+    };
+    LoginComponent.prototype.login = function () {
+        var _this = this;
+        this.loading = true;
+        this.authenticationService.login(this.model.username, this.model.password)
+            .subscribe(function (result) {
+            if (result === true) {
+                _this.router.navigate(['/']);
+            }
+            else {
+                _this.error = 'Email or password is incorrect';
+                _this.loading = false;
+            }
+        });
     };
     return LoginComponent;
 }());
@@ -26,7 +48,8 @@ LoginComponent = __decorate([
         styleUrls: [route + 'style.css'],
         providers: [http_service_1.HttpService]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [router_1.Router,
+        index_1.AuthenticationService])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.js.map
