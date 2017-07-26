@@ -2,7 +2,8 @@
   System.config({
     paths: {
       // псевдоним для пути к модулям
-      'npm:': 'node_modules/'
+      'npm:': 'node_modules/',
+      'underscore': 'node_modules/underscore'
     },
     // указываем загрузчику System, где искать модули
     map: {
@@ -29,6 +30,10 @@
       },
       rxjs: {
         defaultExtension: 'js'
+      },
+      'underscore': {
+          main: 'underscore.js',
+          defaultExtension: 'js'
       }
     }
   });
