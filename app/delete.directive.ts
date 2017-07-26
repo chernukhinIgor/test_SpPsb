@@ -20,7 +20,6 @@ export class DeleteDirective implements OnInit{
 
     @HostListener('click', ['$event'])
     onClick() {
-        console.log(this.moduleName, this.entityId);
         if (this.entityId) {
             let res = this.httpService.deleteData(this.moduleName+'/'+this.entityId, null);
         } else {
