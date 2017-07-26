@@ -21,7 +21,13 @@ export class DeleteDirective implements OnInit{
     @HostListener('click', ['$event'])
     onClick() {
         if (this.entityId) {
-            let res = this.httpService.deleteData(this.moduleName+'/'+this.entityId, null);
+            this.httpService.deleteData(this.moduleName+'/'+this.entityId, null).subscribe((data: Response) => {
+                if (data.json()['success'] == true) {
+                    location.reload();
+                } else {
+                    alert(data.json()['message']);
+                }
+            });
         } else {
             alert('Invalid id');
         }

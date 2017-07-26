@@ -29,7 +29,7 @@
         <td>
             <a href="task/get/{{task?.taskId}}" data-toggle="tooltip" title="View"><i class="fa fa-eye link"></i></a>
             <a href="task/edit/{{task?.taskId}}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil link"></i></a>
-            <a href="javascript:void(0);" (deleteClick)="onClick()" [moduleName]="'Tasks'" [entityId]="task?.taskId"
+            <a href="javascript:void(0);" (deleteClick)="onClick()" [moduleName]="'task'" [entityId]="task?.taskId"
                data-toggle="tooltip" title="Delete"><i class="fa fa-trash link"></i></a>
         </td>
     </tr>
