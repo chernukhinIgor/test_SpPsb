@@ -50,7 +50,7 @@ export class Edit {
             if(this.id) {
                 title.setTitle('Edit Task');
                 //let res = this.httpService.getData('/api/get/' + this.id, null);
-                this.httpService.getData('task.json', null).subscribe((data: Response) => this.task=data.json().data[0]);
+                this.httpService.getData('task/'+this.id, null).subscribe((data: Response) => this.task=data.json().data[0]);
             } else {
                 title.setTitle('Create Task');
                 this.task = new Task;
@@ -60,15 +60,18 @@ export class Edit {
 
     onSubmit() {
         if(this.id) {
-            let res = this.httpService.putData('/api/get/' + this.id, this.task);
+            let res = this.httpService.putData('task/', this.task);
         } else {
-            let res = this.httpService.postData('/api/get/', this.task );
+            let res = this.httpService.postData('task/', this.task );
             location.href = '/task/edit/' + res.id
         }
     }
 
     getUsers() {
-        return users;
+        let options: URLSearchParams = new URLSearchParams();
+        options.set('params','id');
+        options.set('params','name');
+        this.httpService.getData('users/', options).subscribe((data: Response) => { return data.json().data});
     }
 
     cancel () {

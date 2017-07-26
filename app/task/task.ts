@@ -27,6 +27,6 @@ export class TaskComponent implements OnInit {
             options.set('id', params['id']);
         });
 
-        this.httpService.getData('tasks.json', options).subscribe((data: Response) => this.task=data.json().data[0]);
+        this.httpService.getData('task/'+options['id'], null).subscribe((data: Response) => this.task=data.json().data[0]);
     }
 }
