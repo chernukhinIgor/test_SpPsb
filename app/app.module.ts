@@ -20,6 +20,9 @@ import { DeleteDirective }   from './delete.directive';
 import { PagerService } from './pagination_service/index';
 import { AuthGuard } from './_guards/index';
 import { AuthenticationService, UserService } from './_services/index';
+import { ModalDirective } from './modal.directive';
+import { ForgotPasswordComponent } from "./forgot_password/forgot_password";
+
 import * as _ from 'underscore';
 
 // определение маршрутов
@@ -27,6 +30,7 @@ const appRoutes: Routes =[
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent },
+    { path: 'forgotpassword', component: ForgotPasswordComponent },
     { path: 'task/edit/:id', component: Edit, canActivate: [AuthGuard] },
     { path: 'task/edit', component: Edit, canActivate: [AuthGuard] },
     { path: 'task/get/:id', component: TaskComponent, canActivate: [AuthGuard] },
@@ -58,7 +62,9 @@ const appRoutes: Routes =[
         DeleteDirective,
         LoginComponent,
         RegisterComponent,
-        myNavbar
+        myNavbar,
+        ModalDirective,
+        ForgotPasswordComponent
     ],
     providers: [
         PagerService,

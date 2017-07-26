@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
         let options: URLSearchParams = new URLSearchParams();
         this.httpService.getData('users', options).subscribe((data: Response) => {
             if(data.json().success == true) {
-                this.allItems=data.json().data
+                this.allItems=data.json().data;
                 // initialize to page 1
                 this.setPage(1);
             } else {

@@ -7,9 +7,22 @@
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="onSubmit();activateTokenModal.show();">Sign up</button>
     </form>
     <a href="/login" class="forgot-password">
         Or sign in
     </a>
 </div>
+
+<modal #activateTokenModal id="activate"
+       [show-modal]="isModalOpen"
+       [title]="'Activate account'">
+    <div class="popup-content">
+        <p>We sent you an activation code. Check your email for activate your account.</p>
+    </div>
+    <div class="popup-footer">
+        <button type="button" class="btn btn-secondary" (click)="onClick()" aria-label="Close">
+            OK
+        </button>
+    </div>
+</modal>

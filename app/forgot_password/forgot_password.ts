@@ -2,16 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../http.service';
 import { Router} from '@angular/router';
 
-const route = './app/register/';
+const route = './app/forgot_password/';
 
 @Component({
-    selector: 'register-comp',
-    templateUrl: route + 'register.html',
+    selector: 'forgot-password-comp',
+    templateUrl: route + 'forgot_password.html',
     styleUrls: [route + 'style.css'],
     providers: [HttpService]
 })
 
-export class RegisterComponent {
+export class ForgotPasswordComponent {
     constructor(private router: Router) {}
 
     ngOnInit(){
@@ -21,11 +21,7 @@ export class RegisterComponent {
     }
 
 
-    onSubmit(){
-
-    }
     onClick() {
-
         this.router.navigate(['login']);
     }
 }
