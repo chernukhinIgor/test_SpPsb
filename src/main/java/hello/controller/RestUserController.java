@@ -27,6 +27,7 @@ public class RestUserController {
     @Autowired
     private UserService userService;
 
+    @CrossOrigin
     @GetMapping("user/{id}")
     public JSONObject getUserById(@PathVariable("id") Integer id) {
         User user = userService.getUserById(id);
@@ -40,6 +41,7 @@ public class RestUserController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("userPagination")
     public JSONObject getPaginationUsers(
             // default value or error
@@ -60,6 +62,7 @@ public class RestUserController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("userCount")
     public JSONObject getUserCount() {
         int userCount = userService.getUserCount();
@@ -69,6 +72,7 @@ public class RestUserController {
         return response;
     }
 
+    @CrossOrigin
     @GetMapping("users")
     public JSONObject getAllUsers(@RequestParam(required = false, value="params") List<String> columns){
         if (columns != null) {
@@ -82,6 +86,7 @@ public class RestUserController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("userCreatedTasks/{id}")
     public JSONObject getAllCreatedTasks(@PathVariable("id") Integer id) {
         if (userService.userExists(id)) {
@@ -96,6 +101,7 @@ public class RestUserController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("userResponsibleTasks/{id}")
     public JSONObject getAllResponsibleTasks(@PathVariable("id") Integer id) {
         if (userService.userExists(id)) {
@@ -110,6 +116,7 @@ public class RestUserController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("user")
     public JSONObject addUser(@RequestBody User user, UriComponentsBuilder builder) {
         int returnedValue = userService.addUser(user);
@@ -127,6 +134,7 @@ public class RestUserController {
         return jsonResponse;
     }
 
+    @CrossOrigin
     @PutMapping("user")
     public JSONObject updateUser(@RequestBody User user) {
         if (userService.updateUser(user)) {
@@ -141,6 +149,7 @@ public class RestUserController {
         }
     }
 
+    @CrossOrigin
     @DeleteMapping("user/{id}")
     public JSONObject deleteUser(@PathVariable("id") Integer id) {
         int deleteResult = userService.deleteUserById(id);

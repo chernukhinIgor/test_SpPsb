@@ -3,7 +3,7 @@ package hello.controller;
 import com.solidfire.gson.Gson;
 import hello.model.User;
 import hello.service.UserService;
-import jdk.nashorn.internal.parser.JSONParser;
+import junit.framework.Assert;
 import net.sf.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import net.minidev.json.parser.JSONParser;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -57,8 +59,8 @@ public class RestUserControllerTest {
     @Test
     public void testGetAllUsersSucceeds() throws Exception {
         User user = new User();
-        user.setName("123");
-        user.setSurname("234");
+        user.setName("testUser");
+        user.setSurname("testUser");
         String json = new Gson().toJson(user);
 
         mockMvc.perform(
@@ -73,10 +75,10 @@ public class RestUserControllerTest {
     }
 
     @Test
-    public void testPostUser() throws Exception {
+    public void addUser() throws Exception {
         User user = new User();
-        user.setName("123");
-        user.setSurname("234");
+        user.setName("testUser");
+        user.setSurname("testUser");
         String json = new Gson().toJson(user);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
@@ -86,21 +88,18 @@ public class RestUserControllerTest {
                 .content(json))
                 .andReturn();
 
-
-
         String content = result.getResponse().getContentAsString();
 
-        net.minidev.json.parser.JSONParser parser=new net.minidev.json.parser.JSONParser();
-
-
-
+        JSONParser parser=new JSONParser();
         Object obj=parser.parse(content);
-
         JSONObject jsn = JSONObject.fromObject(obj);
-       // Object success = jsn.get("success");
 
+        assertEquals(true, jsn.get("success"));
 
         System.out.println(jsn.get("data"));
+
+
+       // System.out.println(jsn.get("data"));
 
         System.out.println(obj);
 

@@ -24,6 +24,7 @@ public class RestTaskController {
     @Autowired
     private TaskService taskService;
 
+    @CrossOrigin
     @GetMapping("task/{id}")
     public JSONObject getTaskByID(@PathVariable("id") Integer id) {
         Task task = taskService.getTaskById(id);
@@ -37,6 +38,7 @@ public class RestTaskController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("taskPagination")
     public JSONObject getPaginationTasks(
             // default value or error
@@ -57,6 +59,7 @@ public class RestTaskController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("tasks")
     public JSONObject getAllTasks(@RequestParam(required = false, value="params") List<String> columns) {
         if (columns != null) {
@@ -70,6 +73,7 @@ public class RestTaskController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("taskCount")
     public JSONObject getTaskCount() {
         int taskCount=taskService.getTaskCount();
@@ -81,6 +85,7 @@ public class RestTaskController {
 
 
 
+    @CrossOrigin
     @PostMapping("task")
     public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {
         int i = taskService.addTask(task);
@@ -109,6 +114,7 @@ public class RestTaskController {
         return response;
     }
 
+    @CrossOrigin
     @PutMapping("task")
     public JSONObject updateTask (@RequestBody Task task) {
         if (taskService.updateTask(task)) {
@@ -126,6 +132,7 @@ public class RestTaskController {
         }
     }
 
+    @CrossOrigin
     @DeleteMapping("task/{id}")
     public JSONObject deleteTask(@PathVariable("id") Integer id) {
         int i = taskService.deleteTaskById(id);
