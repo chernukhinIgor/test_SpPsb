@@ -30,7 +30,7 @@
         <td>
             <a href="user/get/{{user?.userId}}" data-toggle="tooltip" title="View"><i class="fa fa-eye link"></i></a>
             <a href="user/edit/{{user?.userId}}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil link"></i></a>
-            <a href="javascript:void(0);" (deleteClick)="onClick()" [moduleName]="'Users'" [entityId]="user?.userId"
+            <a href="javascript:void(0);" (deleteClick)="onClick()" [moduleName]="'user'" [entityId]="user?.userId"
                data-toggle="tooltip" title="Delete"><i class="fa fa-trash link"></i></a>
         </td>
     </tr>
