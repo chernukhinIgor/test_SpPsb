@@ -4,13 +4,14 @@ import {Response} from '@angular/http';
 import {HttpService} from '../http.service';
 import {Title} from '@angular/platform-browser';
 import {User, Task} from '../classes'
-
+import {Collapse} from '../collapse'
 const route = './app/profile/';
 
 @Component({
     selector: 'profile-comp',
     templateUrl: route + 'profile.html',
-    providers: [HttpService]
+    providers: [HttpService],
+    directives: [Collapse]
 })
 
 export class ProfileComponent implements OnInit {
@@ -18,6 +19,7 @@ export class ProfileComponent implements OnInit {
     user: User;
     tasks: Task[];
 
+    public isCollapsed:boolean = false;
     constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService) {
     }
 

@@ -25,6 +25,7 @@ import { AuthGuard } from './_guards/index';
 import { AuthenticationService, UserService, RegistrationService } from './_services/index';
 import { ModalDirective } from './modal.directive';
 import { ForgotPasswordComponent } from "./forgot_password/forgot_password";
+import { Collapse } from "./collapse"
 
 import * as _ from 'underscore';
 
@@ -71,7 +72,8 @@ const appRoutes: Routes =[
         Notify,
         ModalDirective,
         ForgotPasswordComponent,
-        ProfileComponent
+        ProfileComponent,
+        Collapse
     ],
     providers: [
         PagerService,

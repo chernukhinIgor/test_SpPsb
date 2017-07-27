@@ -38,8 +38,8 @@ export class LoginComponent {
                 if (result === true) {
                     this.router.navigate(['/']);
                 } else {
-                    Notify.appendNotify('title', 'mess')
                     this.error = 'Email or password is incorrect';
+                    Notify.appendNotify('title', this.error, 'red')
                     this.loading = false;
                 }
             });
