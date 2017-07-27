@@ -18,6 +18,7 @@ export class Notify {
 
         newMess.message = message;
         newMess.title = title;
+        newMess.uniqueID = Date.now();
         newMess.type = (function(color) {
             switch(color) {
                 case 'red':
@@ -31,14 +32,30 @@ export class Notify {
             }
         })(color);
 
-        Notify.notifys.push(newMess)
+        Notify.notifys.push(newMess);
+        Notify.removeByTimes(newMess.uniqueID);
     }
 
-    removeNotify(id: number) {
-        Notify.notifys.splice(id, 1);
+    static removeNotify(uniqueID: number) {
+        for(let i = 0; i < Notify.notifys.length; i++){
+            if(Notify.notifys[i].uniqueID === uniqueID) {
+                Notify.notifys.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    remove(uniqueID: number) {
+        Notify.removeNotify(uniqueID);
     }
 
     getNotify() {
         return Notify.notifys;
+    }
+
+    static removeByTimes (uniqueID: number) {
+        setTimeout(function () {
+            Notify.removeNotify(uniqueID);
+        }, 5000)
     }
 }

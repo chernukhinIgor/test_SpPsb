@@ -1,6 +1,6 @@
 <div class="notify-msg">
-    <div *ngFor="let notify of getNotify(); let i = index" [@myAppAnimation] data-notify="container" class="alert {{notify.type}}" role="alert">
-        <button (click)="removeNotify(i)" type="button" aria-hidden="true" class="close"
+    <div *ngFor="let notify of getNotify()" [@myAppAnimation] data-notify="container" class="alert {{notify.type}}" role="alert">
+        <button (click)="remove(notify.uniqueID)" type="button" aria-hidden="true" class="close"
                 data-notify="dismiss">×
         </button>
         <span data-notify="icon"></span>
