@@ -36,4 +36,5 @@ export class Account {
 export class NotifyMess {
     title: string;
     message: string;
+    type: string;
 }

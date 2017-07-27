@@ -1,5 +1,5 @@
 <div class="notify-msg">
-    <div *ngFor="let notify of getNotify(); let i = index" [@myAppAnimation] data-notify="container" class="alert alert-success" role="alert">
+    <div *ngFor="let notify of getNotify(); let i = index" [@myAppAnimation] data-notify="container" class="alert {{notify.type}}" role="alert">
         <button (click)="removeNotify(i)" type="button" aria-hidden="true" class="close"
                 data-notify="dismiss">×
         </button>

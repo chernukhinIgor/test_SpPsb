@@ -3,6 +3,7 @@ import {HttpService} from '../http.service';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
 import {LoginUser} from '../classes'
+import { Notify} from "../notify/notify"
 
 const route = './app/login/';
 
@@ -37,6 +38,7 @@ export class LoginComponent {
                 if (result === true) {
                     this.router.navigate(['/']);
                 } else {
+                    Notify.appendNotify('title', 'mess')
                     this.error = 'Email or password is incorrect';
                     this.loading = false;
                 }

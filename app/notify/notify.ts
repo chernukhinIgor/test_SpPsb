@@ -13,11 +13,23 @@ export class Notify {
 
     constructor(private elementRef:ElementRef) {}
 
-    public static appendNotify(title: string, message: string) {
+    public static appendNotify(title: string, message: string, color: string) {
         let newMess = new NotifyMess;
 
         newMess.message = message;
         newMess.title = title;
+        newMess.type = (function(color) {
+            switch(color) {
+                case 'red':
+                    return 'alert-danger';
+                case 'blue':
+                    return 'alert-info';
+                case 'yellow':
+                    return 'alert-warning';
+                default:
+                    return 'alert-success';
+            }
+        })(color);
 
         Notify.notifys.push(newMess)
     }

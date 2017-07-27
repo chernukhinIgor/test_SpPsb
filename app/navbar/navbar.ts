@@ -18,7 +18,10 @@ export class myNavbar {
     }
 
     pushNotify() {
-        Notify.appendNotify('title', 'mess');
+        Notify.appendNotify('title', 'mess', 'red');
+        Notify.appendNotify('title', 'mess', 'yellow');
+        Notify.appendNotify('title', 'mess', 'blue');
+        Notify.appendNotify('title', 'mess', '');
     }
 
     logout () {
