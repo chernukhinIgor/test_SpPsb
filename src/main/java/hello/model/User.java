@@ -1,15 +1,20 @@
 package hello.model;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="user_id")
 	private int userId;
+
+	@NotNull
+	@Column(name="password")
+	private String password;
 
 	@NotNull
 	@Column(name="name")
@@ -21,6 +26,7 @@ public class User {
 	@Column(name="telephone")
 	private String telephone;
 
+	@NotNull
 	@Column(name="email")
 	private String email;
 
@@ -29,6 +35,14 @@ public class User {
 
 	@Column(name="datebirth")
 	private String birth;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getGender() {
 		return gender;
@@ -95,5 +109,7 @@ public class User {
 				", surname='" + surname + '\'' +
 				'}';
 	}
+
+
 }
 

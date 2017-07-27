@@ -2,6 +2,7 @@ package hello.service;
 
 import hello.model.Task;
 import hello.model.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,4 +24,5 @@ public interface UserService {
     int getUserCount();
     List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
     List<Object[]> getParametricUsers(List<String> requestStringParams);
+    User getUserByMail(String mail);
 }

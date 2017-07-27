@@ -67,6 +67,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByMail(String mail) {
+        return userDAO.getUserByMail(mail);
+    }
+
+    @Override
     public int getUserCount() {
         return userDAO.getUserCount();
     }

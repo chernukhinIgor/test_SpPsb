@@ -115,4 +115,16 @@ public class UserDAOImpl implements UserDAO {
                 .getResultList();
     }
 
+    @Override
+    public User getUserByMail(String mail) {
+        //User user = entityManager.find(User.class, username);
+        String hql = "FROM User as usr WHERE usr.email = ?";
+        List<User> resultList = entityManager.createQuery(hql).setParameter(1, mail).getResultList();
+        if (resultList.size() == 1) {
+            User us = resultList.get(0);
+            return us;
+        }
+        return null;
+    }
+
 }

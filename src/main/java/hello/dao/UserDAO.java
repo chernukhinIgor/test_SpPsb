@@ -20,4 +20,5 @@ public interface UserDAO {
     List<Object[]> getParametricUsers(List<String> requestStringParams);
     int getUserCount();
     List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
+    User getUserByMail(String mail);
 }
