@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-const template: string = '' +
+const template: string = '<div class="modal-background"></div>' +
     '  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" [style.display]="showModal ? \'block\' : \'none\'">\n' +
     '    <div class="modal-dialog" role="document">\n' +
     '      <div class="modal-content">\n' +
