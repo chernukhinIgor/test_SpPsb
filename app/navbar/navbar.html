@@ -9,6 +9,7 @@
                     <li [ngClass]="{'active': page == '/'}"><a href="/">Home</a></li>
                     <li [ngClass]="{'active': page == '/users'}"><a href="/users">Users</a></li>
                     <li [ngClass]="{'active': page == '/tasks'}"><a href="/tasks">Tasks</a></li>
+                    <li><a href="javascript:void(0);" (click)="pushNotify()">Test Notify</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown" [class.open]="navDropDown">
@@ -21,7 +22,7 @@
                         </a>
                         <ul class="dropdown-menu" on-mouseover="navDropDown= true" on-mouseleave="navDropDown= false">
                             <li><a  href="/profile">View Profile</a></li>
-                            <li><a href="javascript:void(0);" (click)="pushNotify()">Notify</a></li>
+
                             <li role="separator" class="divider"></li>
                             <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
                         </ul>
