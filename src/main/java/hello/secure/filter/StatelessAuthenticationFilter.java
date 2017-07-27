@@ -1,9 +1,7 @@
-package hello.configuration;
+package hello.secure.filter;
 
-import hello.model.User;
+import hello.secure.service.TokenAuthenticationService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -14,8 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Tom on 27.07.2017.
@@ -49,7 +45,6 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 //                true,
 //                roles);
 //        String tokenForUser = this.authenticationService.tokenHandler.createTokenForUser(uD);
-        //createTokenForUser()
 //        UserAuthentication userAuthentication = new UserAuthentication(uD);
 //        authenticationService.addAuthentication(httpResponse,userAuthentication);
 

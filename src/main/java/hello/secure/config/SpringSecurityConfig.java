@@ -1,5 +1,8 @@
-package hello.configuration;
+package hello.secure.config;
 
+import hello.secure.filter.StatelessAuthenticationFilter;
+import hello.secure.service.TokenAuthenticationService;
+import hello.secure.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -38,11 +41,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 // Allow anonymous resource requests
-                .antMatchers("/").permitAll()
-                .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("**/*.html").permitAll()
-                .antMatchers("**/*.css").permitAll()
-                .antMatchers("**/*.js").permitAll()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/favicon.ico").permitAll()
+//                .antMatchers("**/*.html").permitAll()
+//                .antMatchers("**/*.css").permitAll()
+//                .antMatchers("**/*.js").permitAll()
 
                 // Allow anonymous logins
 

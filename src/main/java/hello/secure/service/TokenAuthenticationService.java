@@ -1,7 +1,10 @@
-package hello.configuration;
+package hello.secure.service;
 
+import hello.secure.TokenHandler;
+import hello.secure.model.UserAuthentication;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Tom on 27.07.2017.
  */
+
+@Service("tokenAuthenticationService")
 public class TokenAuthenticationService {
 
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";

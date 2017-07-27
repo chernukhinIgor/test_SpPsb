@@ -1,5 +1,6 @@
-package hello.configuration;
+package hello.secure;
 
+import hello.secure.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.User;
@@ -11,7 +12,8 @@ import java.util.Date;
  */
 public final class TokenHandler {
 
-    static final long EXPIRATION_TIME = 60000;
+    //15 Min
+    static final long EXPIRATION_TIME = 15 * 60 * 1000;
     private final String secret;
     private final UserDetailsServiceImpl userService;
 
