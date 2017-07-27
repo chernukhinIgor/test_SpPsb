@@ -41,12 +41,7 @@ public class RestLoginController {
 
     private boolean checkPassword(User inputUser, User dbUser){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
         String salt=dbUser.getSalt();
-        //System.out.println(salt);
-       // String hashPswd=passwordEncoder.encode(salt+inputUser.getPassword());
-      //  System.out.println(hashPswd);
-
         if(passwordEncoder.matches(salt+inputUser.getPassword(),dbUser.getPassword())) {
             return true;
         }
