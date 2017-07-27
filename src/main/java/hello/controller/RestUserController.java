@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import hello.model.User;
@@ -26,6 +27,16 @@ public class RestUserController {
 
     @Autowired
     private UserService userService;
+
+//    @Controller
+//    @RequestMapping("/account/login")
+//    public class LoginController {
+//
+//        @RequestMapping(method = RequestMethod.POST)
+//        public String login() {
+//            return "login";
+//        }
+//    }
 
     @CrossOrigin
     @GetMapping("user/{id}")

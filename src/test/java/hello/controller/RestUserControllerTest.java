@@ -38,8 +38,6 @@ public class RestUserControllerTest {
     @Autowired
     private WebApplicationContext wac;
 
-
-
     @Before
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
@@ -217,12 +215,12 @@ public class RestUserControllerTest {
         JSONArray userArray=JSONArray.fromObject(jsn.get("data"));
         JSONObject userObject=JSONObject.fromObject(userArray.getJSONObject(0));
 
-
-        System.out.println(userObject);
-
         assertEquals(updatedName, userObject.get("name"));
-        //etc
-
+        assertEquals(updatedSurname, userObject.get("surname"));
+        assertEquals(updatedGender, userObject.get("gender"));
+        assertEquals(updatedBirth, userObject.get("birth"));
+        assertEquals(updatedTelephone, userObject.get("telephone"));
+        assertEquals(updatedEmail, userObject.get("email"));
 
     }
 }
