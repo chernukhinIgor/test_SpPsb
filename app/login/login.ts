@@ -24,9 +24,9 @@ export class LoginComponent {
         private authenticationService: AuthenticationService) { }
 
     ngOnInit() {
-        if(localStorage.getItem('currentUser') !== null) {
-            this.router.navigate(['/']);
-        }
+        // if(localStorage.getItem('currentUser') !== null) {
+        //     this.router.navigate(['/']);
+        // }
         this.user = new LoginUser;
     }
 

@@ -1,13 +1,13 @@
 <div class="card card-container">
     <p id="profile-name" class="profile-name-card">Register</p>
-    <form class="form-signin">
+    <form #f="ngForm" (ngSubmit)="register()" class="form-signin">
         <span id="reauth-email" class="reauth-email"></span>
-        <input type="text" id="name" class="form-control" placeholder="Name" required autofocus>
-        <input type="text" id="surname" class="form-control" placeholder="Surname" required>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="onSubmit();activateTokenModal.show();">Sign up</button>
+        <input name="name" [disabled]="loading" [(ngModel)]="user.name" type="text" id="name" class="form-control" placeholder="Name" required autofocus>
+        <input name="surname" [disabled]="loading" [(ngModel)]="user.surname" type="text" id="surname" class="form-control" placeholder="Surname" required>
+        <input name="email" [disabled]="loading" [(ngModel)]="user.email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus email>
+        <input name="password" [disabled]="loading" [(ngModel)]="user.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required minlength="6">
+        <input name="confirmPassword" [disabled]="loading" [(ngModel)]="confirmPassword" type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required minlength="6" (keyup)="passwordsMatch()">
+        <button [disabled]="loading || !f.form.valid || !passMatch" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="register()">Sign up</button>
     </form>
     <a href="/login" class="forgot-password">
         Or sign in
@@ -15,8 +15,9 @@
 </div>
 
 <modal #activateTokenModal id="activate"
-       [show-modal]="isModalOpen"
-       [title]="'Activate account'">
+       [show-modal]="true"
+       [title]="'Activate account'" *ngIf="showModal">
+    <div class="modal-background"></div>
     <div class="popup-content">
         <p>We sent you an activation code. Check your email for activate your account.</p>
     </div>
