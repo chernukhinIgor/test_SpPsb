@@ -22,3 +22,7 @@ export class LoginUser {
     password: string;
     rememberMe: boolean;
 }
+
+export class Account {
+    name: string;
+}

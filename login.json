@@ -2,6 +2,7 @@
   "success": true,
   "user": {
     "userID": "2",
-    "token": "34tyq8queiwbjfdos78gf3yhf2qbwcgesuigfbadstgv347hred"
+    "token": "34tyq8queiwbjfdos78gf3yhf2qbwcgesuigfbadstgv347hred",
+    "name": "Jon doe"
   }
 }
