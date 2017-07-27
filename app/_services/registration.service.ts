@@ -22,4 +22,18 @@ export class RegistrationService {
                 }
             });
     }
+
+    forgotPassword(email: string): Observable<boolean> {
+        // return this.http.post('/api/forgotpassword', JSON.stringify({ email: email }))
+        return this.http.get('task.json')
+            .map((response: Response) => {
+                let resp = response.json()
+                if (resp.success == true) {
+                    return true;
+                } else {
+                    // return false to indicate failed registration
+                    return false;
+                }
+            });
+    }
 }

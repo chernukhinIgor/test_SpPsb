@@ -14,12 +14,13 @@
     </a>
 </div>
 
-<modal #activateTokenModal id="activate"
+<modal id="activate"
        [show-modal]="true"
-       [title]="'Activate account'" *ngIf="showModal">
+       [title]="'Activate account'"
+       *ngIf="showModal">
     <div class="modal-background"></div>
     <div class="popup-content">
-        <p>We sent you an activation code. Check your email for activate your account.</p>
+        <p>Account creation is successfully</p>
     </div>
     <div class="popup-footer">
         <button type="button" class="btn btn-secondary" (click)="onClick()" aria-label="Close">
