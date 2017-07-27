@@ -4,6 +4,7 @@ import hello.secure.service.TokenAuthenticationService;
 import hello.secure.service.UserDetailsServiceImpl;
 import hello.model.User;
 import hello.service.UserService;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,8 +49,12 @@ public class RestLoginController {
             String tokenForUser = this.authenticationService.tokenHandler.createTokenForUser(uD);
             Map<String, Object> json = new HashMap<>();
             json.put("success", true);
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("email",userByMail.getEmail());
+            jsonObj.put("name",userByMail.getName());
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "application/json; charset=UTF-8");
+            headers.add("data", jsonObj.toString());
             headers.add("X-AUTH-TOKEN", tokenForUser);
             return new ResponseEntity<>(json, headers, HttpStatus.OK);
         } else {
@@ -57,19 +62,5 @@ public class RestLoginController {
             json.put("success", false);
             return new ResponseEntity<>(json, HttpStatus.BAD_REQUEST);
         }
-/*
-        int returnedValue = userService.registerUser(user);
-        if (returnedValue == USER_ALREADY_EXIST_ERROR) {
-            JSONObject jsonError = new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("message", "Error adding user. Mail already exist");
-            return jsonError;
-        }
-        JSONObject data = new JSONObject();
-        data.put("userId", returnedValue);
-        JSONObject jsonResponse = new JSONObject();
-        jsonResponse.put("success", true);
-        jsonResponse.put("data", data);
-        return jsonResponse;*/
     }
 }
