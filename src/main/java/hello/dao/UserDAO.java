@@ -14,7 +14,8 @@ public interface UserDAO {
     int addUser(User user);
     void updateUser(User user);
     int deleteUser(int userId);
-    boolean userExists(int userId);
+    boolean userExistsById(int userId);
+    boolean userExistsByMail(String mail);
     List<Task> getCreatedTasks(int id);
     List<Task> getResponsibleTasks(int id);
     List<Object[]> getParametricUsers(List<String> requestStringParams);

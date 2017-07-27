@@ -59,9 +59,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public int deleteUser(int userId) {
-        if (userExists(userId)) {
+        if (userExistsById(userId)) {
             entityManager.remove(getUserById(userId));
-            if (userExists(userId)) {
+            if (userExistsById(userId)) {
                 return USER_NOT_DELETED_ERROR;
             }
             return USER_DELETED_SUCCESSFULLY;
@@ -71,9 +71,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean userExists(int userId) {
+    public boolean userExistsById(int userId) {
         String hql = "FROM User as usr WHERE usr.userId = ?";
         int count = entityManager.createQuery(hql).setParameter(1, userId).getResultList().size();
+        return count > 0;
+    }
+
+    @Override
+    public boolean userExistsByMail(String mail){
+        String hql = "FROM User as usr WHERE usr.email = ?";
+        int count = entityManager.createQuery(hql).setParameter(1, mail).getResultList().size();
         return count > 0;
     }
 

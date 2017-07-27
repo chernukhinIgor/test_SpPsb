@@ -13,10 +13,12 @@ public class User {
 	private int userId;
 
 	@NotNull
+	@Column(name="email", unique = true)
+	private String email;
+
 	@Column(name="password")
 	private String password;
 
-	@NotNull
 	@Column(name="name")
 	private String name;
 
@@ -25,10 +27,6 @@ public class User {
 
 	@Column(name="telephone")
 	private String telephone;
-
-	@NotNull
-	@Column(name="email")
-	private String email;
 
 	@Column(name="gender")
 	private String gender;

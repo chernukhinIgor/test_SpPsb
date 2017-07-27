@@ -38,11 +38,11 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public int addTask(Task task) {
-        if(!userDAO.userExists(task.getCreatorUserId())){
+        if(!userDAO.userExistsById(task.getCreatorUserId())){
             return CREATOR_USER_ID_NOT_EXIST_ERROR;
-        }else if(!userDAO.userExists(task.getResponsibleUserId())){
+        }else if(!userDAO.userExistsById(task.getResponsibleUserId())){
             return RESPONSIBLE_USER_ID_NOT_EXIST_ERROR;
-        }else{
+        }else {
             entityManager.persist(task);
             entityManager.flush();
             return task.getTaskId();

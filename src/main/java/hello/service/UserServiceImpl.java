@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public synchronized int addUser(User user) {
-        if (userDAO.userExists(user.getUserId())) {
+        if (userDAO.userExistsById(user.getUserId())) {
             return USER_ALREADY_EXIST_ERROR;
         } else {
             return userDAO.addUser(user);
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User user) {
-        if (userDAO.userExists(user.getUserId())) {
+        if (userDAO.userExistsById(user.getUserId())) {
             userDAO.updateUser(user);
             return true;
         } else
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean userExists(int id) {
-        return userDAO.userExists(id);
+        return userDAO.userExistsById(id);
     }
 
     @Override
@@ -69,6 +69,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByMail(String mail) {
         return userDAO.getUserByMail(mail);
+    }
+
+    @Override
+    public int registerUser(User user) {
+        if (userDAO.userExistsByMail(user.getEmail())) {
+            return USER_ALREADY_EXIST_ERROR;
+        } else {
+            return userDAO.addUser(user);
+        }
     }
 
     @Override
