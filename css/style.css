@@ -81,4 +81,5 @@
     right: 50px;
     top: 20px;
     min-width: 611px;
+    z-index: 10000;
 }

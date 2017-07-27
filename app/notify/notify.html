@@ -1,0 +1,12 @@
+<div class="notify-msg">
+    <div *ngFor="let notify of getNotify(); let i = index" [@myAppAnimation] data-notify="container" class="alert alert-success" role="alert">
+        <button (click)="removeNotify(i)" type="button" aria-hidden="true" class="close"
+                data-notify="dismiss">×
+        </button>
+        <span data-notify="icon"></span>
+        <span data-notify="title">{{notify.title}}</span><br>
+        <span data-notify="message">{{notify.message}}</span>
+        <br>
+        <!--<a href="/" target="_blank" data-notify="url">View</a>-->
+    </div>
+</div>

@@ -18,7 +18,7 @@ import { UserComponent }   from './user/user';
 import { ProfileComponent }   from './profile/profile';
 import { UsersComponent }   from './users/users';
 import { myNavbar }   from './navbar/navbar';
-import { Animate }   from './notify/index';
+import { Notify }   from './notify/index';
 import { DeleteDirective }   from './delete.directive';
 import { PagerService } from './pagination_service/index';
 import { AuthGuard } from './_guards/index';
@@ -68,7 +68,7 @@ const appRoutes: Routes =[
         LoginComponent,
         RegisterComponent,
         myNavbar,
-        Animate,
+        Notify,
         ModalDirective,
         ForgotPasswordComponent,
         ProfileComponent

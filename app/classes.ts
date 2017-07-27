@@ -33,3 +33,7 @@ export class LoginUser {
 export class Account {
     name: string;
 }
+export class NotifyMess {
+    title: string;
+    message: string;
+}

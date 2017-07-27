@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
 import { Account } from '../classes';
+import { Notify } from '../notify/index';
 
 @Component({
     selector: 'myNavbar',
@@ -16,12 +17,12 @@ export class myNavbar {
 
     }
 
+    pushNotify() {
+        Notify.appendNotify('title', 'mess');
+    }
+
     logout () {
         this.authenticationService.logout();
         this.router.navigate(['/login']);
-    }
-
-    notify() {
-        console.log($('body'))
     }
 }
