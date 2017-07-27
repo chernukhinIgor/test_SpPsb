@@ -1,6 +1,8 @@
 package hello.secure.filter;
 
 import hello.secure.service.TokenAuthenticationService;
+import io.jsonwebtoken.ExpiredJwtException;
+import net.sf.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -28,27 +30,21 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-//        //hello.model.User userByMail = userService.getUserByMail(username);
-//        Set<GrantedAuthority> roles = new HashSet();
-//        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-//        User usr = new User();
-//        usr.setEmail("2");
-//        usr.setPassword("3");
-//        org.springframework.security.core.userdetails.User uD = new org.springframework.security.core.userdetails.User(
-//                usr.getEmail(),
-//                usr.getPassword(),
-//                true,
-//                true,
-//                true,
-//                true,
-//                roles);
-//        String tokenForUser = this.authenticationService.tokenHandler.createTokenForUser(uD);
-//        UserAuthentication userAuthentication = new UserAuthentication(uD);
-//        authenticationService.addAuthentication(httpResponse,userAuthentication);
-
-        Authentication authentication = authenticationService.getAuthentication(httpRequest);
+        HttpServletResponse httpResponse= (HttpServletResponse) response;
+        Authentication authentication = null;
+        try {
+            authentication = authenticationService.getAuthentication(httpRequest);
+        } catch (ExpiredJwtException e) {
+            JSONObject json = new JSONObject();
+            json.put("success",false);
+            JSONObject error = new JSONObject();
+            error.put("errorMessage","Token expired");
+            error.put("code",99989);
+            json.put("error", error);
+            httpResponse.addHeader("Content-Type","application/json;charset=UTF-8");
+            httpResponse.getWriter().print(json);
+            return;
+        }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
         SecurityContextHolder.getContext().setAuthentication(null);

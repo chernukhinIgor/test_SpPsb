@@ -1,6 +1,7 @@
 package hello.secure;
 
 import hello.secure.service.UserDetailsServiceImpl;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.User;
@@ -12,8 +13,8 @@ import java.util.Date;
  */
 public final class TokenHandler {
 
-    //15 Min
-    static final long EXPIRATION_TIME = 15 * 60 * 1000;
+    //1 Min
+    static final long EXPIRATION_TIME = 60 * 1000;
     private final String secret;
     private final UserDetailsServiceImpl userService;
 
@@ -22,13 +23,18 @@ public final class TokenHandler {
         this.userService = userService;
     }
 
-    public User parseUserFromToken(String token) {
-        String username = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-        return userService.loadUserByUsername(username);
+    public User parseUserFromToken(String token) throws ExpiredJwtException {
+        try {
+            String username = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+            return userService.loadUserByUsername(username);
+        }
+        catch (Exception e){
+            throw e;
+        }
     }
 
     public String createTokenForUser(User user) {

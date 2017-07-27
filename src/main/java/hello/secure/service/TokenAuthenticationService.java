@@ -2,6 +2,7 @@ package hello.secure.service;
 
 import hello.secure.TokenHandler;
 import hello.secure.model.UserAuthentication;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class TokenAuthenticationService {
         response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
     }
 
-    public Authentication getAuthentication(HttpServletRequest request) {
+    public Authentication getAuthentication(HttpServletRequest request) throws ExpiredJwtException {
         final String token = request.getHeader(AUTH_HEADER_NAME);
         if (token != null) {
             final User user = tokenHandler.parseUserFromToken(token);
