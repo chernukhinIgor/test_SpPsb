@@ -20,7 +20,7 @@ import { myNavbar }   from './navbar/navbar';
 import { DeleteDirective }   from './delete.directive';
 import { PagerService } from './pagination_service/index';
 import { AuthGuard } from './_guards/index';
-import { AuthenticationService, UserService } from './_services/index';
+import { AuthenticationService, UserService, RegistrationService } from './_services/index';
 import { ModalDirective } from './modal.directive';
 import { ForgotPasswordComponent } from "./forgot_password/forgot_password";
 
@@ -73,6 +73,7 @@ const appRoutes: Routes =[
         PagerService,
         AuthGuard,
         AuthenticationService,
+        RegistrationService,
     ],
     bootstrap: [
         AppComponent

@@ -43,6 +43,33 @@
 
 }
 
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 9000;
+
+    overflow: auto;
+}
+
+
+.modal-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-color: #000;
+    opacity: 0.75;
+
+    z-index: -1;
+}
+
 .dropdown-toggle img {
     width: 30px;
     height: 30px;
