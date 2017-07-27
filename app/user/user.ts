@@ -2,8 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Response} from '@angular/http';
 import {HttpService} from '../http.service';
-import {User} from '../classes'
-import {Task} from '../classes'
+import {User, Task} from '../classes'
 import {Title} from '@angular/platform-browser';
 
 const route = './app/user/';

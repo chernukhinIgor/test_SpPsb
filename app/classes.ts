@@ -16,3 +16,9 @@ export class User{
     gender: string;
     birth: string;
 }
+
+export class LoginUser {
+    email: string;
+    password: string;
+    rememberMe: boolean;
+}

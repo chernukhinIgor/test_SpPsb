@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../http.service';
 import { AuthenticationService } from '../_services/index';
 import { Router } from '@angular/router';
+import {LoginUser} from '../classes'
 
 const route = './app/login/';
 
@@ -16,6 +17,7 @@ export class LoginComponent {
     model: any = {};
     loading = false;
     error = '';
+    user: LoginUser;
 
     constructor(
         private router: Router,
@@ -25,11 +27,12 @@ export class LoginComponent {
         if(localStorage.getItem('currentUser') !== null) {
             this.router.navigate(['/']);
         }
+        this.user = new LoginUser;
     }
 
     login() {
         this.loading = true;
-        this.authenticationService.login(this.model.username, this.model.password)
+        this.authenticationService.login(this.user.email, this.user.password)
             .subscribe(result => {
                 if (result === true) {
                     this.router.navigate(['/']);

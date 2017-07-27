@@ -1,16 +1,16 @@
 <div class="card card-container">
     <img id="profile-img" class="profile-img-card" src="image/login.png" />
     <p id="profile-name" class="profile-name-card"></p>
-    <form class="form-signin">
+    <form #f="ngForm" (ngSubmit)="login()" class="form-signin">
         <span id="reauth-email" class="reauth-email"></span>
-        <input [disabled]="loading" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <input [disabled]="loading" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input name="email" [disabled]="loading" [(ngModel)]="user.email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus email>
+        <input name="password" [disabled]="loading" [(ngModel)]="user.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required minlength="6">
         <div id="remember" class="checkbox">
             <label>
-                <input [disabled]="loading" type="checkbox" value="remember-me"> Remember me
+                <input [disabled]="loading" name="remember-me" [(ngModel)]="user.rememberMe" type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button (click)="login()" [disabled]="loading" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+        <button (click)="login()" [disabled]="loading || !f.form.valid" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
     </form>
     <a href="/register" class="forgot-password col-sm-5">
         Or sign up
