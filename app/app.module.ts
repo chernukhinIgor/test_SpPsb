@@ -14,6 +14,7 @@ import { TaskComponent }   from './task/task';
 import { TasksComponent }   from './tasks/tasks';
 import { FormsModule }   from '@angular/forms';
 import { UserComponent }   from './user/user';
+import { ProfileComponent }   from './profile/profile';
 import { UsersComponent }   from './users/users';
 import { myNavbar }   from './navbar/navbar';
 import { DeleteDirective }   from './delete.directive';
@@ -31,6 +32,7 @@ const appRoutes: Routes =[
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent },
     { path: 'forgotpassword', component: ForgotPasswordComponent },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'task/edit/:id', component: Edit, canActivate: [AuthGuard] },
     { path: 'task/edit', component: Edit, canActivate: [AuthGuard] },
     { path: 'task/get/:id', component: TaskComponent, canActivate: [AuthGuard] },
@@ -64,7 +66,8 @@ const appRoutes: Routes =[
         RegisterComponent,
         myNavbar,
         ModalDirective,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        ProfileComponent
     ],
     providers: [
         PagerService,

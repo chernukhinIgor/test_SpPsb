@@ -12,13 +12,16 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown" [class.open]="navDropDown">
-                        <a href="javascript:void(0);" (click)="navDropDown=!navDropDown"
+                        <a href="javascript:void(0);" on-mouseover="navDropDown= true" on-mouseleave="navDropDown= false" (click)="navDropDown=!navDropDown"
                            class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false"> {{account.name}} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a  href="javascript:void(0);">View Profile</a></li>
+                           aria-haspopup="true" aria-expanded="false">
+                            <img src="/image/login.png">
+                            {{account.name}} 
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" on-mouseover="navDropDown= true" on-mouseleave="navDropDown= false">
+                            <li><a  href="/profile">View Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
                             <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
                         </ul>
                     </li>
