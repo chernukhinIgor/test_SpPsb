@@ -48,3 +48,10 @@
     height: 30px;
     border-radius: 20px;
 }
+
+.notify-msg {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    min-width: 611px;
+}

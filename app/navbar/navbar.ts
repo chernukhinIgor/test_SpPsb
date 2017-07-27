@@ -20,4 +20,8 @@ export class myNavbar {
         this.authenticationService.logout();
         this.router.navigate(['/login']);
     }
+
+    notify() {
+        console.log($('body'))
+    }
 }

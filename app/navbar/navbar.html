@@ -21,6 +21,7 @@
                         </a>
                         <ul class="dropdown-menu" on-mouseover="navDropDown= true" on-mouseleave="navDropDown= false">
                             <li><a  href="/profile">View Profile</a></li>
+                            <li><a href="javascript:void(0);" (click)="notify()">Notify</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
                         </ul>
@@ -30,3 +31,5 @@
         </div>
     </nav>
 </div>
+
+<app-notify></app-notify>

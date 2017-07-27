@@ -2,6 +2,7 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule }   from '@angular/http';
 import { LoginComponent }   from './login/login';
 import { RegisterComponent }   from './register/register';
@@ -17,6 +18,7 @@ import { UserComponent }   from './user/user';
 import { ProfileComponent }   from './profile/profile';
 import { UsersComponent }   from './users/users';
 import { myNavbar }   from './navbar/navbar';
+import { Animate }   from './notify/index';
 import { DeleteDirective }   from './delete.directive';
 import { PagerService } from './pagination_service/index';
 import { AuthGuard } from './_guards/index';
@@ -48,6 +50,7 @@ const appRoutes: Routes =[
     imports: [
         BrowserModule,
         RouterModule.forRoot(appRoutes),
+        BrowserAnimationsModule,
         HttpModule,
         FormsModule
     ],
@@ -65,6 +68,7 @@ const appRoutes: Routes =[
         LoginComponent,
         RegisterComponent,
         myNavbar,
+        Animate,
         ModalDirective,
         ForgotPasswordComponent,
         ProfileComponent
