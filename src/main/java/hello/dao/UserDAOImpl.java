@@ -6,6 +6,7 @@ package hello.dao;
 
 import hello.model.Task;
 import hello.model.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.StringJoiner;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
 import static hello.service.UserService.USER_NOT_DELETED_ERROR;
@@ -40,6 +43,12 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public int addUser(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String salt=BCrypt.gensalt();
+        user.setSalt(salt);
+        user.setPassword(passwordEncoder.encode(salt+user.getPassword()));
+
         entityManager.persist(user);
         entityManager.flush();
         return user.getUserId();

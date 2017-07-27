@@ -1,6 +1,8 @@
 package hello.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -18,6 +20,17 @@ public class User {
 
 	@Column(name="password")
 	private String password;
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	@Column(name="salt")
+	private String salt;
 
 	@Column(name="name")
 	private String name;

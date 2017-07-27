@@ -29,7 +29,7 @@ public class RestUserController {
     private UserService userService;
 
 //    @Controller
-//    @RequestMapping("/account/login")
+//    @RequestMapping("/*")
 //    public class LoginController {
 //
 //        @RequestMapping(method = RequestMethod.POST)
