@@ -1,14 +1,13 @@
 package hello.controller;
 
+import hello.model.Task;
 import hello.secure.model.UserAuthentication;
+import hello.service.TaskService;
 import hello.websocket.model.Greeting;
 import hello.websocket.model.HelloMessage;
-import org.springframework.messaging.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +20,8 @@ import java.util.Date;
 @RestController
 public class WebSocketController {
 
+    @Autowired
+    private TaskService taskService;
 //    private Map<Integer, String> users = new HashMap<>();
 //    static Integer id = 1;
 
@@ -39,6 +40,13 @@ public class WebSocketController {
         //Thread.sleep(1000); // simulated delay
         //return users;
         return new Greeting(principal + " : " + message.getName() + "  (" + time + ")");
+    }
+
+    @MessageMapping("/userPushedTask")
+    @SendTo("/newTask")
+    public Task taskCreated(Integer taskId) throws Exception {
+        Task taskById = taskService.getTaskById(taskId);
+        return taskById;
     }
 
 
