@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int confirmEmail(int id, String email) {
-        return userDAO.confirmEmail(id,email);
+    public int confirmEmail( String email) {
+        return userDAO.confirmEmail(email);
     }
 
     @Override

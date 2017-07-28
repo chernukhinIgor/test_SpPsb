@@ -2,14 +2,20 @@ package hello.controller;
 
 import hello.mail.EmailServiceImpl;
 import hello.model.User;
+import hello.secure.service.TokenAuthenticationService;
 import hello.service.UserService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
 
@@ -19,6 +25,10 @@ import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
 
 @RestController
 public class RestRegisterController {
+    @Autowired
+    private TokenAuthenticationService authenticationService;
+
+
     @Autowired
     private UserService userService;
 
@@ -36,7 +46,7 @@ public class RestRegisterController {
             return jsonError;
         }
         try{
-            sendTokenAtEmail(returnedValue, user.getEmail());
+            sendTokenAtEmail( user.getEmail());
         }catch (Exception ex){
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
@@ -53,11 +63,23 @@ public class RestRegisterController {
         return jsonResponse;
     }
 
-    private void sendTokenAtEmail(int userId, String userEmail) throws Exception{
-         emailService.sendSimpleMessage(userEmail,"Confirm email",generateToken(userId,userEmail));
+    private void sendTokenAtEmail(String userEmail) throws Exception{
+         emailService.sendSimpleMessage(userEmail,"Confirm email",generateToken(userEmail));
     }
 
-    private String generateToken(int userId, String userEmail){
-        return "http://localhost:8080/confirmEmail?userId="+userId+"&email="+userEmail;
+    private String generateToken(String userEmail){
+        Set<GrantedAuthority> roles = new HashSet();
+        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+        org.springframework.security.core.userdetails.User uD =
+                new org.springframework.security.core.userdetails.User(
+                        userEmail,
+                        "",
+                        true,
+                        true,
+                        true,
+                        true,
+                        roles);
+        String tokenForUser = authenticationService.tokenHandler.createTokenForEmail(uD);
+        return "http://localhost:8080/confirmEmail?token="+tokenForUser;
     }
 }

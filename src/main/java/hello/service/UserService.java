@@ -29,5 +29,5 @@ public interface UserService {
     List<Object[]> getParametricUsers(List<String> requestStringParams);
     User getUserByMail(String mail);
     int registerUser(User user);
-    int confirmEmail(int id, String email);
+    int confirmEmail(String email);
 }

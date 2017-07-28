@@ -29,15 +29,17 @@ import java.util.Set;
 @RestController
 public class RestLoginController {
     private UserDetailsServiceImpl userDetailsService;
-    private final TokenAuthenticationService authenticationService;
+
+    @Autowired
+    private TokenAuthenticationService authenticationService;
 
     @Autowired
     private UserService userService;
 
-    public RestLoginController() {
-        userDetailsService = new UserDetailsServiceImpl();
-        authenticationService = new TokenAuthenticationService("tooManySecrets", userDetailsService);
-    }
+//    public RestLoginController() {
+//        userDetailsService = new UserDetailsServiceImpl();
+//        authenticationService = new TokenAuthenticationService("tooManySecrets", userDetailsService);
+//    }
 
     private boolean checkPassword(User inputUser, User dbUser){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

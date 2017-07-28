@@ -3,6 +3,7 @@ package hello.secure.service;
 import hello.secure.TokenHandler;
 import hello.secure.model.UserAuthentication;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,12 @@ public class TokenAuthenticationService {
 
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
 
-    public final TokenHandler tokenHandler;
+    @Autowired
+    public TokenHandler tokenHandler;
 
-    public TokenAuthenticationService(String secret, UserDetailsServiceImpl userService) {
-        tokenHandler = new TokenHandler(secret, userService);
-    }
+//    public TokenAuthenticationService(String secret, UserDetailsServiceImpl userService) {
+//        tokenHandler = new TokenHandler(secret, userService);
+//    }
 
     public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
         final User user = authentication.getDetails();

@@ -22,5 +22,5 @@ public interface UserDAO {
     int getUserCount();
     List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
     User getUserByMail(String mail);
-    int confirmEmail(int id, String email);
+    int confirmEmail( String email);
 }

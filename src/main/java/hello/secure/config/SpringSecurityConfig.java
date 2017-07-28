@@ -3,6 +3,7 @@ package hello.secure.config;
 import hello.secure.filter.StatelessAuthenticationFilter;
 import hello.secure.service.TokenAuthenticationService;
 import hello.secure.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -22,17 +23,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsServiceImpl userService;
-    private final TokenAuthenticationService tokenAuthenticationService;
+    //private final UserDetailsServiceImpl userService;
 
-    public SpringSecurityConfig() {
-        super(true);
-        this.userService = new UserDetailsServiceImpl();
-        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", userService);
-    }
+    @Autowired
+    private TokenAuthenticationService tokenAuthenticationService;
+
+//    public SpringSecurityConfig() {
+//        super(true);
+//        this.userService = new UserDetailsServiceImpl();
+//        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", userService);
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http
                 .exceptionHandling().and()
                 .anonymous().and()
@@ -74,14 +78,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    @Override
-    public UserDetailsServiceImpl userDetailsService() {
-        return userService;
-    }
-
-    @Bean
-    public TokenAuthenticationService tokenAuthenticationService() {
-        return tokenAuthenticationService;
-    }
+//    @Bean
+//    @Override
+//    public UserDetailsServiceImpl userDetailsService() {
+//        return userService;
+//    }
+//
+//    @Bean
+//    public TokenAuthenticationService tokenAuthenticationService() {
+//        return tokenAuthenticationService;
+//    }
 }

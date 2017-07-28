@@ -142,13 +142,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public int confirmEmail(int id, String email) {
-        if(!userExistsById(id)){
-            return USER_NOT_EXIST_ERROR;
-        }else if(!userExistsByMail(email)){
+    public int confirmEmail( String email) {
+        if(!userExistsByMail(email)){
             return USER_EMAIL_NOT_EXIST_ERROR;
         }else{
-            User usr = getUserById(id);
+            User usr = getUserByMail(email);
             usr.setConfirmedEmail(true);
             entityManager.flush();
             return EMAIL_CONFIRMED_SUCCESSFULLY;
