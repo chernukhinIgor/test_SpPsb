@@ -30,6 +30,7 @@ public final class TokenHandler {
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
+
             return userService.loadUserByUsername(username);
         }
         catch (Exception e){

@@ -1,5 +1,6 @@
 package hello.controller;
 
+import hello.mail.EmailServiceImpl;
 import hello.model.Task;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
@@ -7,7 +8,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import hello.model.User;
@@ -86,6 +86,7 @@ public class RestUserController {
     @CrossOrigin
     @GetMapping("users")
     public JSONObject getAllUsers(@RequestParam(required = false, value="params") List<String> columns){
+
         if (columns != null) {
             List<Object[]> allUsersAsObjects = userService.getParametricUsers(columns);
             JSONArray array = getJsonArrayFromObjects(columns, allUsersAsObjects);

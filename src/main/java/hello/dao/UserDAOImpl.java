@@ -18,9 +18,7 @@ import java.util.StringJoiner;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
-import static hello.service.UserService.USER_NOT_DELETED_ERROR;
-import static hello.service.UserService.USER_NOT_EXIST_ERROR;
+import static hello.service.UserService.*;
 
 @Transactional
 @Repository
@@ -141,6 +139,20 @@ public class UserDAOImpl implements UserDAO {
             return us;
         }
         return null;
+    }
+
+    @Override
+    public int confirmEmail(int id, String email) {
+        if(!userExistsById(id)){
+            return USER_NOT_EXIST_ERROR;
+        }else if(!userExistsByMail(email)){
+            return USER_EMAIL_NOT_EXIST_ERROR;
+        }else{
+            User usr = getUserById(id);
+            usr.setConfirmedEmail(true);
+            entityManager.flush();
+            return EMAIL_CONFIRMED_SUCCESSFULLY;
+        }
     }
 
 }

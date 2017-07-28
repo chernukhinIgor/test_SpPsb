@@ -58,8 +58,13 @@ public class RestLoginController {
             json.put("message", "Email does not exists");
 
             return new ResponseEntity<>(json, HttpStatus.UNAUTHORIZED);
-        }
-        else if (checkPassword(user,userByMail)) {
+        }else if(!userByMail.isConfirmedEmail()){
+            Map<String, Object> json = new HashMap<>();
+            json.put("success", false);
+            json.put("message", "Email does not confirmed");
+
+            return new ResponseEntity<>(json, HttpStatus.UNAUTHORIZED);
+        }else if (checkPassword(user,userByMail)) {
             Set<GrantedAuthority> roles = new HashSet();
             roles.add(new SimpleGrantedAuthority("ROLE_USER"));
             org.springframework.security.core.userdetails.User uD = new org.springframework.security.core.userdetails.User(userByMail.getEmail(), userByMail.getPassword(), true, true, true, true, roles);

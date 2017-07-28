@@ -18,18 +18,16 @@ public class User {
 	@Column(name="email", unique = true)
 	private String email;
 
+	@Column(name="confirmedEmail", columnDefinition = "boolean default false")
+	@NotNull
+	private boolean confirmedEmail=false;
+
 	@Column(name="password")
+	@NotNull
 	private String password;
 
-	public String getSalt() {
-		return salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
 	@Column(name="salt")
+	@NotNull
 	private String salt;
 
 	@Column(name="name")
@@ -46,6 +44,22 @@ public class User {
 
 	@Column(name="datebirth")
 	private String birth;
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public boolean isConfirmedEmail() {
+		return confirmedEmail;
+	}
+
+	public void setConfirmedEmail(boolean confirmedEmail) {
+		this.confirmedEmail = confirmedEmail;
+	}
 
 	public String getPassword() {
 		return password;
@@ -102,7 +116,6 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public String getBirth() {
 		return birth;
