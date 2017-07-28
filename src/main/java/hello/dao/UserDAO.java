@@ -9,7 +9,7 @@ import hello.model.User;
 import java.util.List;
 
 public interface UserDAO {
-    List<User> getAllUsers();
+    List<Object[]> getAllUsers();
     User getUserById(int userId);
     int addUser(User user);
     void updateUser(User user);

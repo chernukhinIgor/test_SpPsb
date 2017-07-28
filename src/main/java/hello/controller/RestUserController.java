@@ -13,6 +13,7 @@ import hello.model.User;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import hello.utils.ReplyCodes;
@@ -78,9 +79,11 @@ public class RestUserController {
             JSONArray array = getJsonArrayFromObjects(columns, allUsersAsObjects);
             return JsonWrapper.wrapList(array);
         } else {
-            List<User> allUsers = userService.getAllUsers();
-            List<Object> objectList = new ArrayList<>(allUsers);
-            return JsonWrapper.wrapList(objectList);
+            columns = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
+
+            List<Object[]> allUsers = userService.getAllUsers();
+            JSONArray array = getJsonArrayFromObjects(columns, allUsers);
+            return JsonWrapper.wrapList(array);
         }
     }
 

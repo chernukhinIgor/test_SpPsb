@@ -30,13 +30,14 @@ public class UserDAOImpl implements UserDAO {
     @SuppressWarnings("unchecked")
 
     @Override
-    public List<User> getAllUsers() {
-        String hql = "FROM User as usr ORDER BY usr.userId";
+    public List<Object[]> getAllUsers() {
+        String hql = "SELECT u.userId, u.name, u.surname, u.gender, u.email, u.birth, u.telephone, u.confirmedEmail FROM User u";
         return entityManager.createQuery(hql).getResultList();
     }
 
     @Override
     public User getUserById(int userId) {
+        //String hql = "SELECT u.userId, u.name, u.surname, u.gender, u.email, u.birth, u.telephone, u.confirmedEmail FROM User u WHERE";
         return entityManager.find(User.class, userId);
     }
 
