@@ -37,7 +37,6 @@ public class WebSocketController {
         } else
             System.out.println("null =(((");
         String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        //Thread.sleep(1000); // simulated delay
         //return users;
         return new Greeting(principal + " : " + message.getName() + "  (" + time + ")");
     }
@@ -48,17 +47,4 @@ public class WebSocketController {
         Task taskById = taskService.getTaskById(taskId);
         return taskById;
     }
-
-
-//    @CrossOrigin
-//    @MessageMapping("/chat")
-//    @SendTo("/topic/messages")
-//    public JSONObject send(Message message) throws Exception {
-//        String time = new SimpleDateFormat("HH:mm").format(new Date());
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("message",message);
-//        jsonObject.put("time",time);
-//        return jsonObject;
-//        //return new OutputMessage(message.getFrom(), message.getText(), time);
-//    }
 }
