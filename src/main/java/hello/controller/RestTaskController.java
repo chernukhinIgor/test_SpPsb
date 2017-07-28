@@ -2,6 +2,7 @@ package hello.controller;
 
 import hello.model.Task;
 import hello.model.User;
+import hello.secure.model.UserAuthentication;
 import hello.service.TaskService;
 import hello.utils.JsonWrapper;
 import hello.utils.ReplyCodes;
@@ -9,6 +10,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -64,6 +66,9 @@ public class RestTaskController {
     @CrossOrigin
     @GetMapping("tasks")
     public JSONObject getAllTasks(@RequestParam(required = false, value="params") List<String> columns) {
+        UserAuthentication authentication = (UserAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        System.out.println("Principal: " + principal);
         if (columns != null) {
             List<Object[]> allTasksAsObjects = taskService.getParametricTasks(columns);
             JSONArray array = getJsonArrayFromObjects(columns, allTasksAsObjects);

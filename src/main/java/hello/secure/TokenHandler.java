@@ -5,6 +5,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,8 +23,8 @@ import java.util.Set;
 @Service
 public final class TokenHandler {
 
-    //1 Min
-    static final long EXPIRATION_TIME = 60 * 1000;
+    //100 Min
+    static final long EXPIRATION_TIME = 100 * 60 * 1000;
 
     // 24 hours to confirm email
     static final long CONFIRM_EMAIL_TIME = 24 * 60 * 60 * 1000;
@@ -35,7 +36,7 @@ public final class TokenHandler {
 
 //    public TokenHandler(String secret, UserDetailsServiceImpl userService) {
 //        this.secret = secret;
-//        this.userService = userService;
+//        //this.userService = userService;
 //    }
 
     public User parseUserFromToken(String token) throws ExpiredJwtException {

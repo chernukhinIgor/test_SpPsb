@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -22,8 +23,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//    @Autowired
+//    private final UserDetailsServiceImpl userService;
 
-    //private final UserDetailsServiceImpl userService;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
@@ -31,17 +34,23 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //    public SpringSecurityConfig() {
 //        super(true);
 //        this.userService = new UserDetailsServiceImpl();
-//        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", userService);
-//    }
+//        //tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", userService);
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
         http
-                .exceptionHandling().and()
-                .anonymous().and()
-                .servletApi().and()
-                .headers().cacheControl().and()
+            .csrf().disable()
+            .exceptionHandling()
+            .and()
+                .anonymous()
+            .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+                .servletApi()
+            .and()
+                .headers().cacheControl()
+            .and()
                 .authorizeRequests()
 
                 // Allow anonymous resource requests
@@ -58,6 +67,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/confirmEmail").permitAll()
                 .antMatchers("/users").permitAll()
+                .antMatchers("/ws/**").permitAll()
 
                 // All other request need to be authenticated
                 .anyRequest().authenticated().and()
@@ -66,6 +76,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService),
                         UsernamePasswordAuthenticationFilter.class);
     }
+
+
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -87,5 +100,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Bean
 //    public TokenAuthenticationService tokenAuthenticationService() {
 //        return tokenAuthenticationService;
+//    }
+//
+//    @Bean
+//    public String secret() {
+//        return "tooManySecrets";
 //    }
 }

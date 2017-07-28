@@ -1,12 +1,15 @@
 package hello.controller;
 
 import hello.model.Task;
+import hello.secure.model.UserAuthentication;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import hello.model.User;

@@ -32,7 +32,7 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse= (HttpServletResponse) response;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         Authentication authentication = null;
         try {
             authentication = authenticationService.getAuthentication(httpRequest);

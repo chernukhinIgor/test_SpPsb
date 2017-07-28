@@ -38,6 +38,11 @@ public class RestLoginController {
     @Autowired
     private UserService userService;
 
+//    public RestLoginController() {
+//        userDetailsService = new UserDetailsServiceImpl();
+//        authenticationService = new TokenAuthenticationService("tooManySecrets", userDetailsService);
+//    }
+
     private boolean checkPassword(User inputUser, User dbUser){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String salt=dbUser.getSalt();
