@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import hello.utils.ReplyCodes;
 
 @Service("taskService")
 public class TaskServiceImpl implements TaskService {
@@ -27,7 +28,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public int addTask(Task task) {
         if (taskDAO.taskExists(task.getTaskId())) {
-            return TASK_ALREADY_EXIST_ERROR;
+            return ReplyCodes.TASK_ALREADY_EXIST_ERROR;
         } else {
             return taskDAO.addTask(task);
         }

@@ -16,9 +16,10 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.StringJoiner;
 
+import hello.utils.ReplyCodes;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static hello.service.UserService.*;
 
 @Transactional
 @Repository
@@ -69,11 +70,11 @@ public class UserDAOImpl implements UserDAO {
         if (userExistsById(userId)) {
             entityManager.remove(getUserById(userId));
             if (userExistsById(userId)) {
-                return USER_NOT_DELETED_ERROR;
+                return ReplyCodes.USER_NOT_DELETED_ERROR;
             }
-            return USER_DELETED_SUCCESSFULLY;
+            return ReplyCodes.USER_DELETED_SUCCESSFULLY;
         } else {
-            return USER_NOT_EXIST_ERROR;
+            return ReplyCodes.USER_NOT_EXIST_ERROR;
         }
     }
 
@@ -144,12 +145,12 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public int confirmEmail( String email) {
         if(!userExistsByMail(email)){
-            return USER_EMAIL_NOT_EXIST_ERROR;
+            return ReplyCodes.USER_EMAIL_NOT_EXIST_ERROR;
         }else{
             User usr = getUserByMail(email);
             usr.setConfirmedEmail(true);
             entityManager.flush();
-            return EMAIL_CONFIRMED_SUCCESSFULLY;
+            return ReplyCodes.EMAIL_CONFIRMED_SUCCESSFULLY;
         }
     }
 

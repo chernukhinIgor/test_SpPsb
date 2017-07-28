@@ -4,6 +4,7 @@ import hello.model.Task;
 import hello.model.User;
 import hello.service.TaskService;
 import hello.utils.JsonWrapper;
+import hello.utils.ReplyCodes;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import hello.utils.ReplyCodes;
 
 import static hello.service.TaskService.*;
 import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
@@ -33,7 +35,7 @@ public class RestTaskController {
         }else{
             JSONObject jsonError=new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "Task not found");
+            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.TASK_NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -54,7 +56,7 @@ public class RestTaskController {
         }catch (Exception ex){
             JSONObject jsonError=new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "ERROR. Not valid params");
+            jsonError.put("error", JsonWrapper.wrapError("Not valid pagination params", ReplyCodes.NOT_VALID_PAGINATION_PARAMS_ERROR));
             return jsonError;
         }
     }
@@ -83,8 +85,6 @@ public class RestTaskController {
         return response;
     }
 
-
-
     @CrossOrigin
     @PostMapping("task")
     public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {
@@ -92,17 +92,17 @@ public class RestTaskController {
 
         JSONObject response=new JSONObject();
         switch (i){
-            case TASK_ALREADY_EXIST_ERROR:
+            case ReplyCodes.TASK_ALREADY_EXIST_ERROR:
                 response.put("success", false);
-                response.put("message", "ERROR. Creating task failed. Id already exists");
+                response.put("error", JsonWrapper.wrapError("Creating task failed. Id already exists", ReplyCodes.TASK_ALREADY_EXIST_ERROR));
                 break;
-            case CREATOR_USER_ID_NOT_EXIST_ERROR:
+            case ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("message", "ERROR. Creator user id not exists");
+                response.put("error", JsonWrapper.wrapError("Creator user id not exists", ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR));
                 break;
-            case RESPONSIBLE_USER_ID_NOT_EXIST_ERROR:
+            case ReplyCodes.RESPONSIBLE_USER_ID_NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("message", "ERROR. Responsible user id not exists");
+                response.put("error", JsonWrapper.wrapError("Responsible user id not exists", ReplyCodes.RESPONSIBLE_USER_ID_NOT_EXIST_ERROR));
                 break;
             default:
                 response.put("success", true);
@@ -121,13 +121,11 @@ public class RestTaskController {
             JSONObject jsonSuccess=new JSONObject();
             jsonSuccess.put("success", true);
             jsonSuccess.put("message", "Task updated succesfully");
-
             return jsonSuccess;
         }else {
             JSONObject jsonError=new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "ERROR. Task not found");
-
+            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.TASK_NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -138,15 +136,15 @@ public class RestTaskController {
         int i = taskService.deleteTaskById(id);
         JSONObject response=new JSONObject();
         switch (i){
-            case TASK_NOT_EXIST_ERROR:
+            case ReplyCodes.TASK_NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("message", "ERROR. Task does not exist");
+                response.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.TASK_NOT_EXIST_ERROR));
                 break;
-            case TASK_NOT_DELETED_ERROR:
+            case ReplyCodes.TASK_NOT_DELETED_ERROR:
                 response.put("success", false);
-                response.put("message", "ERROR. Task not deleted");
+                response.put("error", JsonWrapper.wrapError("Task not deleted", ReplyCodes.TASK_NOT_DELETED_ERROR));
                 break;
-            case TASK_DELETED_SUCCESSFULLY:
+            case ReplyCodes.TASK_DELETED_SUCCESSFULLY:
                 response.put("success", true);
                 response.put("message", "Task deleted succesfully");
                 break;

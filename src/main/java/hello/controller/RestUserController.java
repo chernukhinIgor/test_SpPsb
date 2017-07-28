@@ -1,6 +1,5 @@
 package hello.controller;
 
-import hello.mail.EmailServiceImpl;
 import hello.model.Task;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
@@ -16,10 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static hello.service.UserService.USER_DELETED_SUCCESSFULLY;
-import static hello.service.UserService.USER_NOT_DELETED_ERROR;
-import static hello.service.UserService.USER_NOT_EXIST_ERROR;
-import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
+import hello.utils.ReplyCodes;
 import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
 
 @RestController
@@ -27,16 +23,6 @@ public class RestUserController {
 
     @Autowired
     private UserService userService;
-
-//    @Controller
-//    @RequestMapping("/*")
-//    public class LoginController {
-//
-//        @RequestMapping(method = RequestMethod.POST)
-//        public String login() {
-//            return "login";
-//        }
-//    }
 
     @CrossOrigin
     @GetMapping("user/{id}")
@@ -47,7 +33,7 @@ public class RestUserController {
         else {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "user not found");
+            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -68,7 +54,7 @@ public class RestUserController {
         } catch (Exception ex) {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "ERROR. Not valid params");
+            jsonError.put("error", JsonWrapper.wrapError("Not valid pagination params", ReplyCodes.NOT_VALID_PAGINATION_PARAMS_ERROR));
             return jsonError;
         }
     }
@@ -108,7 +94,7 @@ public class RestUserController {
         } else {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "user not found");
+            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -123,7 +109,7 @@ public class RestUserController {
         } else {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "user not found");
+            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -132,10 +118,10 @@ public class RestUserController {
     @PostMapping("user")
     public JSONObject addUser(@RequestBody User user, UriComponentsBuilder builder) {
         int returnedValue = userService.addUser(user);
-        if (returnedValue == USER_ALREADY_EXIST_ERROR) {
+        if (returnedValue == ReplyCodes.USER_ALREADY_EXIST_ERROR) {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "ERROR. Adding user failed. ID already exist");
+            jsonError.put("error", JsonWrapper.wrapError("Adding user failed. ID already exist", ReplyCodes.USER_ALREADY_EXIST_ERROR));
             return jsonError;
         }
         JSONObject data = new JSONObject();
@@ -156,7 +142,7 @@ public class RestUserController {
         } else {
             JSONObject error = new JSONObject();
             error.put("success", false);
-            error.put("message", "ERROR. Adding user failed. ID already exist");
+            error.put("error", JsonWrapper.wrapError("Updating user failed. ID does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
             return error;
         }
     }
@@ -167,15 +153,15 @@ public class RestUserController {
         int deleteResult = userService.deleteUserById(id);
         JSONObject jsonResponse = new JSONObject();
         switch (deleteResult) {
-            case USER_NOT_EXIST_ERROR:
+            case ReplyCodes.USER_NOT_EXIST_ERROR:
                 jsonResponse.put("success", false);
-                jsonResponse.put("message", "ERROR. User not exist");
+                jsonResponse.put("error", JsonWrapper.wrapError("User not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
                 break;
-            case USER_NOT_DELETED_ERROR:
+            case ReplyCodes.USER_NOT_DELETED_ERROR:
                 jsonResponse.put("success", false);
-                jsonResponse.put("message", "ERROR. ???");
+                jsonResponse.put("error", JsonWrapper.wrapError("User not deleted", ReplyCodes.USER_NOT_DELETED_ERROR));
                 break;
-            case USER_DELETED_SUCCESSFULLY:
+            case ReplyCodes.USER_DELETED_SUCCESSFULLY:
                 jsonResponse.put("success", true);
                 break;
             default:

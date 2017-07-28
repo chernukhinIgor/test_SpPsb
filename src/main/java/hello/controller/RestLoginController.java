@@ -4,6 +4,8 @@ import hello.secure.service.TokenAuthenticationService;
 import hello.secure.service.UserDetailsServiceImpl;
 import hello.model.User;
 import hello.service.UserService;
+import hello.utils.JsonWrapper;
+import hello.utils.ReplyCodes;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,11 +38,6 @@ public class RestLoginController {
     @Autowired
     private UserService userService;
 
-//    public RestLoginController() {
-//        userDetailsService = new UserDetailsServiceImpl();
-//        authenticationService = new TokenAuthenticationService("tooManySecrets", userDetailsService);
-//    }
-
     private boolean checkPassword(User inputUser, User dbUser){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String salt=dbUser.getSalt();
@@ -57,15 +54,15 @@ public class RestLoginController {
         if(userByMail==null){
             Map<String, Object> json = new HashMap<>();
             json.put("success", false);
-            json.put("message", "Email does not exists");
-
+            json.put("error", JsonWrapper.wrapError("Wrong email or password", ReplyCodes.EMAIL_OR_PASSWORD_ERROR));
             return new ResponseEntity<>(json, HttpStatus.UNAUTHORIZED);
+
         }else if(!userByMail.isConfirmedEmail()){
             Map<String, Object> json = new HashMap<>();
             json.put("success", false);
-            json.put("message", "Email does not confirmed");
-
+            json.put("error", JsonWrapper.wrapError("Email does not confirmed", ReplyCodes.EMAIL_NOT_CONFIRMED_ERROR));
             return new ResponseEntity<>(json, HttpStatus.UNAUTHORIZED);
+
         }else if (checkPassword(user,userByMail)) {
             Set<GrantedAuthority> roles = new HashSet();
             roles.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -81,13 +78,12 @@ public class RestLoginController {
             headers.add("Content-Type", "application/json; charset=UTF-8");
             headers.add("data", jsonObj.toString());
             headers.add("X-AUTH-TOKEN", tokenForUser);
-
             return new ResponseEntity<>(json, headers, HttpStatus.OK);
+
         } else {
             Map<String, Object> json = new HashMap<>();
             json.put("success", false);
-            json.put("message", "Wrong password");
-
+            json.put("error", JsonWrapper.wrapError("Wrong email or password", ReplyCodes.EMAIL_OR_PASSWORD_ERROR));
             return new ResponseEntity<>(json, HttpStatus.UNAUTHORIZED);
         }
     }

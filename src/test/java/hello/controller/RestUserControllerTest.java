@@ -56,6 +56,7 @@ public class RestUserControllerTest {
             User user = new User();
             user.setName("testUser");
             user.setSurname("testUser");
+            user.setEmail("email@gmail.com");
             String json = new Gson().toJson(user);
 
             mockMvc.perform(MockMvcRequestBuilders

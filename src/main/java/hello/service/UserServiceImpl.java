@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import hello.utils.ReplyCodes;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public synchronized int addUser(User user) {
         if (userDAO.userExistsById(user.getUserId())) {
-            return USER_ALREADY_EXIST_ERROR;
+            return ReplyCodes.USER_ALREADY_EXIST_ERROR;
         } else {
             return userDAO.addUser(user);
         }
@@ -74,7 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int registerUser(User user) {
         if (userDAO.userExistsByMail(user.getEmail())) {
-            return USER_ALREADY_EXIST_ERROR;
+            return ReplyCodes.USER_ALREADY_EXIST_ERROR;
         } else {
             return userDAO.addUser(user);
         }

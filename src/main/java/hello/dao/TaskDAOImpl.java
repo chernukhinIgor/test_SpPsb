@@ -13,6 +13,8 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.StringJoiner;
 
+import hello.utils.ReplyCodes;
+
 import static hello.service.TaskService.*;
 
 @Transactional
@@ -39,9 +41,9 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public int addTask(Task task) {
         if(!userDAO.userExistsById(task.getCreatorUserId())){
-            return CREATOR_USER_ID_NOT_EXIST_ERROR;
+            return ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR;
         }else if(!userDAO.userExistsById(task.getResponsibleUserId())){
-            return RESPONSIBLE_USER_ID_NOT_EXIST_ERROR;
+            return ReplyCodes.RESPONSIBLE_USER_ID_NOT_EXIST_ERROR;
         }else {
             entityManager.persist(task);
             entityManager.flush();
@@ -65,11 +67,11 @@ public class TaskDAOImpl implements TaskDAO {
         if(taskExists(taskId)){
             entityManager.remove(getTaskById(taskId));
             if(taskExists(taskId)){
-                return TASK_NOT_DELETED_ERROR;
+                return ReplyCodes.TASK_NOT_DELETED_ERROR;
             }
-            return TASK_DELETED_SUCCESSFULLY;
+            return ReplyCodes.TASK_DELETED_SUCCESSFULLY;
         }else{
-            return TASK_NOT_EXIST_ERROR;
+            return ReplyCodes.TASK_NOT_EXIST_ERROR;
         }
 
     }

@@ -4,6 +4,7 @@ import hello.mail.EmailServiceImpl;
 import hello.model.User;
 import hello.secure.service.TokenAuthenticationService;
 import hello.service.UserService;
+import hello.utils.JsonWrapper;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,8 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
-import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
-
+import hello.utils.ReplyCodes;
 /**
  * Created by Tom on 27.07.2017.
  */
@@ -27,7 +27,6 @@ import static hello.service.UserService.USER_ALREADY_EXIST_ERROR;
 public class RestRegisterController {
     @Autowired
     private TokenAuthenticationService authenticationService;
-
 
     @Autowired
     private UserService userService;
@@ -39,10 +38,10 @@ public class RestRegisterController {
     @PostMapping("register")
     public JSONObject registerUser(@RequestBody User user, UriComponentsBuilder builder) {
         int returnedValue = userService.registerUser(user);
-        if (returnedValue == USER_ALREADY_EXIST_ERROR) {
+        if (returnedValue == ReplyCodes.USER_ALREADY_EXIST_ERROR) {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "Error adding user. Mail already exist");
+            jsonError.put("error", JsonWrapper.wrapError("User with entered email already exist", ReplyCodes.USER_ALREADY_EXIST_ERROR));
             return jsonError;
         }
         try{
@@ -50,7 +49,7 @@ public class RestRegisterController {
         }catch (Exception ex){
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("message", "Error adding user. Can't send email.");
+            jsonError.put("error", JsonWrapper.wrapError("Cant send email", ReplyCodes.CANT_SEND_EMAIL_ERROR));
             userService.deleteUserById(returnedValue);
             return jsonError;
         }

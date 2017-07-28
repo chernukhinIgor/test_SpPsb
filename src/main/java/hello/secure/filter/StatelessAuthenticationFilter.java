@@ -1,6 +1,8 @@
 package hello.secure.filter;
 
 import hello.secure.service.TokenAuthenticationService;
+import hello.utils.JsonWrapper;
+import hello.utils.ReplyCodes;
 import io.jsonwebtoken.ExpiredJwtException;
 import net.sf.json.JSONObject;
 import org.springframework.security.core.Authentication;
@@ -37,10 +39,7 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
         } catch (ExpiredJwtException e) {
             JSONObject json = new JSONObject();
             json.put("success",false);
-            JSONObject error = new JSONObject();
-            error.put("errorMessage","Token expired");
-            error.put("code",99989);
-            json.put("error", error);
+            json.put("error", JsonWrapper.wrapError("Token expired", ReplyCodes.TOKEN_EXPIRED_ERROR));
             httpResponse.addHeader("Content-Type","application/json;charset=UTF-8");
             httpResponse.getWriter().print(json);
             return;
