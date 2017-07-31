@@ -5,6 +5,7 @@ import hello.model.User;
 import hello.secure.service.TokenAuthenticationService;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
+import hello.utils.TokenType;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -78,7 +79,7 @@ public class RestRegisterController {
                         true,
                         true,
                         roles);
-        String tokenForUser = authenticationService.tokenHandler.createTokenForEmail(uD);
+        String tokenForUser = authenticationService.tokenHandler.createTokenForUser(uD, TokenType.EMAIL_CONFIRM);
         return "http://localhost:8080/confirmEmail?token="+tokenForUser;
     }
 }

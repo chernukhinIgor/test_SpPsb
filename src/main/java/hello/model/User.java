@@ -18,13 +18,13 @@ public class User {
 	@Column(name="email", unique = true)
 	private String email;
 
-	@Column(name="confirmedEmail", columnDefinition = "boolean default false")
-	@NotNull
-	private boolean confirmedEmail=false;
-
 	@Column(name="password")
 	@NotNull
 	private String password;
+
+	@Column(name="confirmedEmail", columnDefinition = "boolean default false")
+	@NotNull
+	private boolean confirmedEmail=false;
 
 	@Column(name="salt")
 	@NotNull

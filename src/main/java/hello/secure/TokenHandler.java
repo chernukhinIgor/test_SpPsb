@@ -1,6 +1,7 @@
 package hello.secure;
 
 import hello.secure.service.UserDetailsServiceImpl;
+import hello.utils.TokenType;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,12 +23,13 @@ import java.util.Set;
  */
 @Service
 public final class TokenHandler {
+    private long EXPIRATION_TIME;
 
     //100 Min
-    static final long EXPIRATION_TIME = 100 * 60 * 1000;
+   // static final long EXPIRATION_TIME = 100 * 60 * 1000;
 
     // 24 hours to confirm email
-    static final long CONFIRM_EMAIL_TIME = 24 * 60 * 60 * 1000;
+    //static final long CONFIRM_EMAIL_TIME = 24 * 60 * 60 * 1000;
 
     private final String secret="tooManySecrets";
 
@@ -59,7 +61,14 @@ public final class TokenHandler {
         }
     }
 
-    public String createTokenForUser(User user) {
+    public String createTokenForUser(User user, TokenType tokenType) {
+        if(tokenType==TokenType.REMEMBER_ME){
+            EXPIRATION_TIME = 365 * 24 * 60 * 60 * 1000;// 1 year
+        }else if(tokenType==TokenType.EMAIL_CONFIRM){
+            EXPIRATION_TIME = 24 * 60 * 60 * 1000;// 24 hours
+        }else {
+            EXPIRATION_TIME = 100 * 60 * 1000;// 100 min
+        }
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setExpiration(new Date(System.currentTimeMillis()+ EXPIRATION_TIME))
@@ -67,11 +76,11 @@ public final class TokenHandler {
                 .compact();
     }
 
-    public String createTokenForEmail(User user) {
-        return Jwts.builder()
-                .setSubject(user.getUsername())
-                .setExpiration(new Date(System.currentTimeMillis()+ CONFIRM_EMAIL_TIME))
-                .signWith(SignatureAlgorithm.HS512, secret)
-                .compact();
-    }
+//    public String createTokenForEmail(User user) {
+//        return Jwts.builder()
+//                .setSubject(user.getUsername())
+//                .setExpiration(new Date(System.currentTimeMillis()+ CONFIRM_EMAIL_TIME))
+//                .signWith(SignatureAlgorithm.HS512, secret)
+//                .compact();
+//    }
 }

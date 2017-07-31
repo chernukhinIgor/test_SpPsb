@@ -36,7 +36,7 @@ public class RestEmailConfirmController {
             return response;
         }catch (Exception ex){
             response.put("success", false);
-            response.put("error", JsonWrapper.wrapError("Unknown error",ReplyCodes.TOKEN_UNKNOWN_ERROR));
+            response.put("error", JsonWrapper.wrapError("Token not valid",ReplyCodes.TOKEN_UNKNOWN_ERROR));
             return response;
         }
 

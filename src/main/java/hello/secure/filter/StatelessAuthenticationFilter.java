@@ -43,6 +43,13 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
             httpResponse.addHeader("Content-Type","application/json;charset=UTF-8");
             httpResponse.getWriter().print(json);
             return;
+        }catch (Exception e){
+            JSONObject json = new JSONObject();
+            json.put("success",false);
+            json.put("error", JsonWrapper.wrapError("Invalid token", ReplyCodes.TOKEN_INVALID_ERROR));
+            httpResponse.addHeader("Content-Type","application/json;charset=UTF-8");
+            httpResponse.getWriter().print(json);
+            return;
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);

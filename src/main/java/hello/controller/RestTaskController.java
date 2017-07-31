@@ -97,10 +97,10 @@ public class RestTaskController {
 
         JSONObject response=new JSONObject();
         switch (i){
-            case ReplyCodes.TASK_ALREADY_EXIST_ERROR:
-                response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Creating task failed. Id already exists", ReplyCodes.TASK_ALREADY_EXIST_ERROR));
-                break;
+//            case ReplyCodes.TASK_ALREADY_EXIST_ERROR:
+//                response.put("success", false);
+//                response.put("error", JsonWrapper.wrapError("Creating task failed. Id already exists", ReplyCodes.TASK_ALREADY_EXIST_ERROR));
+//                break;
             case ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR:
                 response.put("success", false);
                 response.put("error", JsonWrapper.wrapError("Creator user id not exists", ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR));

@@ -28,10 +28,10 @@ public class TokenAuthenticationService {
 //        tokenHandler = new TokenHandler(secret, userService);
 //    }
 
-    public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
-        final User user = authentication.getDetails();
-        response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
-    }
+//    public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
+//        final User user = authentication.getDetails();
+//        response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
+//    }
 
     public Authentication getAuthentication(HttpServletRequest request) throws ExpiredJwtException {
         final String token = request.getHeader(AUTH_HEADER_NAME);

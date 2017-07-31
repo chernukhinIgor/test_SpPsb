@@ -6,6 +6,7 @@ import hello.model.User;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
 import hello.utils.ReplyCodes;
+import hello.utils.TokenType;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
@@ -54,7 +52,7 @@ public class RestLoginController {
 
     @CrossOrigin
     @PostMapping("login")
-    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody User user, /*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody User user, @RequestParam(required = true) boolean rememberMe,/*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
         User userByMail = userService.getUserByMail(user.getEmail());
         if(userByMail==null){
             Map<String, Object> json = new HashMap<>();
@@ -72,13 +70,20 @@ public class RestLoginController {
             Set<GrantedAuthority> roles = new HashSet();
             roles.add(new SimpleGrantedAuthority("ROLE_USER"));
             org.springframework.security.core.userdetails.User uD = new org.springframework.security.core.userdetails.User(userByMail.getEmail(), userByMail.getPassword(), true, true, true, true, roles);
-            String tokenForUser = this.authenticationService.tokenHandler.createTokenForUser(uD);
+            String tokenForUser;
+            if(rememberMe){
+                tokenForUser= this.authenticationService.tokenHandler.createTokenForUser(uD, TokenType.REMEMBER_ME);
+            }else{
+                tokenForUser= this.authenticationService.tokenHandler.createTokenForUser(uD, TokenType.REGULAR);
+            }
+
             Map<String, Object> json = new HashMap<>();
             json.put("success", true);
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("email",userByMail.getEmail());
             jsonObj.put("name",userByMail.getName());
             jsonObj.put("userId", userByMail.getUserId());
+            json.put("data", jsonObj);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "application/json; charset=UTF-8");
             headers.add("data", jsonObj.toString());
