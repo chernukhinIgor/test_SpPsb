@@ -19,7 +19,7 @@ export class RegisterVerifiedComponent {
                 private httpService: HttpService) {}
 
     ngOnInit(){
-        this.activatedRoute.params.subscribe((params: Params) => {
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
             if(params['id'] && params['token']) {
                 if(params['id'].match(/[^0-9]/) == null ){
                     this.id = params['id'];
@@ -28,7 +28,8 @@ export class RegisterVerifiedComponent {
                     alert('ID is invalid');
                     this.router.navigate(['/login']);
                 }
-                if(params['token'].match(/[^A-Za-z0-9-]/) == null ) {
+
+                if(params['token'].match(/[^A-Za-z0-9-.]/) == null ) {
                     this.token = params['token'];
                 }
                 else {

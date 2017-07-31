@@ -39,7 +39,7 @@ const appRoutes: Routes =[
     { path: 'register', component: RegisterComponent },
     { path: 'forgotpassword', component: ForgotPasswordComponent },
     { path: 'newpassword/:id', component: NewPasswordComponent },
-    { path: 'registerverified/:id/:token', component: RegisterVerifiedComponent },
+    { path: 'registerverified', component: RegisterVerifiedComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'task/edit/:id', component: Edit, canActivate: [AuthGuard] },
     { path: 'task/edit', component: Edit, canActivate: [AuthGuard] },
