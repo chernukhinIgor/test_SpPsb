@@ -1,0 +1,15 @@
+<div class="center-block panel panel-default width50">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4 *ngIf="verifiedResult">Verification done</h4>
+                <h4 *ngIf="!verifiedResult">Verification failed</h4>
+            </div>
+            <div class="col-lg-6">
+                <a *ngIf="verifiedResult" href="login/" class="btn btn-default pull-right">Go login</a>
+                <a *ngIf="!verifiedResult" href="login/" class="btn btn-default pull-right">Try again</a>
+            </div>
+        </div>
+    </div>
+</div>
+

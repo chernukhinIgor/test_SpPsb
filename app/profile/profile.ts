@@ -17,9 +17,12 @@ const route = './app/profile/';
 export class ProfileComponent implements OnInit {
 
     user: User;
-    tasks: Task[];
+    createdTasks: Task[];
+    responsibleTasks: Task[];
 
-    public isCollapsed:boolean = false;
+    public isCollapsedCreated:boolean = false;
+    public isCollapsedResponsible:boolean = false;
+
     constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService) {
     }
 
@@ -43,7 +46,16 @@ export class ProfileComponent implements OnInit {
             this.httpService.getData('tasks.json', null).subscribe((data: Response) => {
                 //this.httpService.getData('userCreatedTasks/' + params['id'], null).subscribe((data: Response) => {
                 if (data.json().success == true) {
-                    this.tasks = data.json().data;
+                    this.createdTasks = data.json().data;
+                } else {
+                    alert(data.json().message);
+                }
+            });
+
+            this.httpService.getData('tasks.json', null).subscribe((data: Response) => {
+                //this.httpService.getData('userResponsibleTasks/' + params['id'], null).subscribe((data: Response) => {
+                if (data.json().success == true) {
+                    this.responsibleTasks = data.json().data;
                 } else {
                     alert(data.json().message);
                 }

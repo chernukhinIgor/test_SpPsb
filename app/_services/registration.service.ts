@@ -17,7 +17,6 @@ export class RegistrationService {
                 if (resp.success == true) {
                     return true;
                 } else {
-                    // return false to indicate failed registration
                     return false;
                 }
             });
@@ -31,7 +30,19 @@ export class RegistrationService {
                 if (resp.success == true) {
                     return true;
                 } else {
-                    // return false to indicate failed registration
+                    return false;
+                }
+            });
+    }
+
+    newPassword(email: string, password: string): Observable<boolean> {
+        // return this.http.post('/api/newpassword', JSON.stringify({ email: email, password: string}))
+        return this.http.get('task.json')
+            .map((response: Response) => {
+                let resp = response.json()
+                if (resp.success == true) {
+                    return true;
+                } else {
                     return false;
                 }
             });
