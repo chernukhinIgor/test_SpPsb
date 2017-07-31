@@ -21,7 +21,7 @@ public interface UserDAO {
     List<Task> getResponsibleTasks(int id);
     List<Object[]> getParametricUsers(List<String> requestStringParams);
     int getUserCount();
-    List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
+    List<Object[]> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
     User getUserByMail(String mail);
     int confirmEmail( String email);
     void updatePassword(User user);

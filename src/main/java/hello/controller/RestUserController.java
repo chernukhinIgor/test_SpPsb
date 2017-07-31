@@ -57,16 +57,16 @@ public class RestUserController {
     @CrossOrigin
     @GetMapping("userPagination")
     public JSONObject getPaginationUsers(
-            // default value or error
             @RequestParam(required = true) String orderBy,
             @RequestParam(required = true) String sortBy,
             @RequestParam(required = true) int page,
             @RequestParam(required = true) int pageLimit
     ) {
         try {
-            List<User> paginationTasks = userService.getPaginationUsers(orderBy, sortBy, page, pageLimit);
-            List<Object> objectList = new ArrayList<>(paginationTasks);
-            return JsonWrapper.wrapList(objectList);
+            List<String> columns = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
+            List<Object[]> allUsers = userService.getPaginationUsers(orderBy, sortBy, page, pageLimit);
+            JSONArray array = getJsonArrayFromObjects(columns, allUsers);
+            return JsonWrapper.wrapList(array);
         } catch (Exception ex) {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);

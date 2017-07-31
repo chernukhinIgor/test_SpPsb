@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
+    public List<Object[]> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
         return userDAO.getPaginationUsers(orderBy,sortBy,page,pageLimit);
     }
 }

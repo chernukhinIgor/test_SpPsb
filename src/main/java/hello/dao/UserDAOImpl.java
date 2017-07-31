@@ -140,9 +140,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
-        String hql = "FROM User as usr ORDER BY usr."+orderBy+" "+sortBy;
-        return (List<User>) entityManager.createQuery(hql)
+    public List<Object[]>  getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit) {
+        String hql = "SELECT u.userId, u.name, u.surname, u.gender, u.email, u.birth, u.telephone, u.confirmedEmail FROM User u ORDER BY u."+orderBy+" "+sortBy;
+        return entityManager.createQuery(hql)
                 .setFirstResult(page*pageLimit-pageLimit)
                 .setMaxResults(pageLimit)
                 .getResultList();
