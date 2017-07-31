@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../http.service';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 import { RegistrationService } from '../_services/index';
-import { RegisterUser} from '../classes';
 
 const route = './app/new_password/';
 

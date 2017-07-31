@@ -25,6 +25,9 @@ import { AuthGuard } from './_guards/index';
 import { AuthenticationService, UserService, RegistrationService } from './_services/index';
 import { ModalDirective } from './modal.directive';
 import { ForgotPasswordComponent } from "./forgot_password/forgot_password";
+import { RegisterVerifiedComponent } from "./register_verified/register_verified";
+import { NewPasswordComponent} from "./new_password/new_password";
+
 import { Collapse } from "./collapse"
 
 import * as _ from 'underscore';
@@ -35,6 +38,8 @@ const appRoutes: Routes =[
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent },
     { path: 'forgotpassword', component: ForgotPasswordComponent },
+    { path: 'newpassword/:id', component: NewPasswordComponent },
+    { path: 'registerverified/:id/:token', component: RegisterVerifiedComponent },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'task/edit/:id', component: Edit, canActivate: [AuthGuard] },
     { path: 'task/edit', component: Edit, canActivate: [AuthGuard] },
@@ -73,6 +78,8 @@ const appRoutes: Routes =[
         ModalDirective,
         ForgotPasswordComponent,
         ProfileComponent,
+        NewPasswordComponent,
+        RegisterVerifiedComponent,
         Collapse
     ],
     providers: [
