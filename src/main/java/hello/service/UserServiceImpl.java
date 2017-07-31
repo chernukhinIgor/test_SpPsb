@@ -25,6 +25,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Object[]> getUserListById(int id) {
+        return userDAO.getUserListById(id);
+    }
+
+    @Override
     public synchronized int addUser(User user) {
         if (userDAO.userExistsById(user.getUserId())) {
             return ReplyCodes.USER_ALREADY_EXIST_ERROR;

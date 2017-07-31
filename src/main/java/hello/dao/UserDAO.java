@@ -11,6 +11,7 @@ import java.util.List;
 public interface UserDAO {
     List<Object[]> getAllUsers();
     User getUserById(int userId);
+    List<Object[]> getUserListById(int userId);
     int addUser(User user);
     void updateUser(User user);
     int deleteUser(int userId);

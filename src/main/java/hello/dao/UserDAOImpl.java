@@ -36,8 +36,14 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public List<Object[]> getUserListById(int userId) {
+        String hql = "SELECT u.userId, u.name, u.surname, u.gender, u.email, u.birth, u.telephone, u.confirmedEmail FROM User u WHERE u.userId = ?";
+        return entityManager.createQuery(hql).setParameter(1, userId).getResultList();
+       // return entityManager.find(User.class, userId);
+    }
+
+    @Override
     public User getUserById(int userId) {
-        //String hql = "SELECT u.userId, u.name, u.surname, u.gender, u.email, u.birth, u.telephone, u.confirmedEmail FROM User u WHERE";
         return entityManager.find(User.class, userId);
     }
 

@@ -31,15 +31,27 @@ public class RestUserController {
     @CrossOrigin
     @GetMapping("user/{id}")
     public JSONObject getUserById(@PathVariable("id") Integer id) {
-        User user = userService.getUserById(id);
-        if (user != null)
-            return JsonWrapper.wrapObject(user);
-        else {
+        List<String> columns = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
+        List<Object[]> user = userService.getUserListById(id);
+        if(user.isEmpty()){
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
             jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return jsonError;
+        }else{
+            JSONArray array = getJsonArrayFromObjects(columns, user);
+            return JsonWrapper.wrapList(array);
         }
+
+
+//        if (user != null)
+//            return JsonWrapper.wrapObject(user);
+//        else {
+//            JSONObject jsonError = new JSONObject();
+//            jsonError.put("success", false);
+//            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
+//            return jsonError;
+//        }
     }
 
     @CrossOrigin
