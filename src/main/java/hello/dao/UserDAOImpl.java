@@ -55,6 +55,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void updatePassword(User user){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String salt=BCrypt.gensalt();
+        user.setSalt(salt);
+        user.setPassword(passwordEncoder.encode(salt+user.getPassword()));
+
+        entityManager.flush();
+    }
+
+    @Override
     public void updateUser(User user) {
         User usr = getUserById(user.getUserId());
         usr.setName(user.getName());
@@ -146,7 +157,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public int confirmEmail( String email) {
         if(!userExistsByMail(email)){
-            return ReplyCodes.USER_EMAIL_NOT_EXIST_ERROR;
+            return ReplyCodes.NOT_EXIST_ERROR;
         }else{
             User usr = getUserByMail(email);
             usr.setConfirmedEmail(true);

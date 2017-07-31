@@ -43,6 +43,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean updatePassword(User user) {
+        if (userDAO.userExistsById(user.getUserId())) {
+            userDAO.updatePassword(user);
+            return true;
+        } else
+            return false;
+    }
+
+
+    @Override
     public boolean userExists(int id) {
         return userDAO.userExistsById(id);
     }

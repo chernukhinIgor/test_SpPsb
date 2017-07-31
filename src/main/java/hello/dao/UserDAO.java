@@ -23,4 +23,5 @@ public interface UserDAO {
     List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
     User getUserByMail(String mail);
     int confirmEmail( String email);
+    void updatePassword(User user);
 }

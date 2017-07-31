@@ -42,7 +42,7 @@ public class RestRegisterController {
         if (returnedValue == ReplyCodes.USER_ALREADY_EXIST_ERROR) {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User with entered email already exist", ReplyCodes.USER_ALREADY_EXIST_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("User with entered email already exist", ReplyCodes.ALREADY_EXIST_ERROR));
             return jsonError;
         }
         try{

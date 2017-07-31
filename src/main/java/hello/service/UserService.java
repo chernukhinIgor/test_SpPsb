@@ -22,4 +22,5 @@ public interface UserService {
     User getUserByMail(String mail);
     int registerUser(User user);
     int confirmEmail(String email);
+    boolean updatePassword(User user);
 }

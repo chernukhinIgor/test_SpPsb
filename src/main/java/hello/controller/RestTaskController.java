@@ -37,7 +37,7 @@ public class RestTaskController {
         }else{
             JSONObject jsonError=new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.TASK_NOT_EXIST_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -58,7 +58,7 @@ public class RestTaskController {
         }catch (Exception ex){
             JSONObject jsonError=new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("Not valid pagination params", ReplyCodes.NOT_VALID_PAGINATION_PARAMS_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("Not valid pagination params", ReplyCodes.NOT_VALID_PARAMS_ERROR));
             return jsonError;
         }
     }
@@ -103,11 +103,11 @@ public class RestTaskController {
 //                break;
             case ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Creator user id not exists", ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR));
+                response.put("error", JsonWrapper.wrapError("Creator user id not exists", ReplyCodes.NOT_EXIST_ERROR));
                 break;
             case ReplyCodes.RESPONSIBLE_USER_ID_NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Responsible user id not exists", ReplyCodes.RESPONSIBLE_USER_ID_NOT_EXIST_ERROR));
+                response.put("error", JsonWrapper.wrapError("Responsible user id not exists", ReplyCodes.NOT_EXIST_ERROR));
                 break;
             default:
                 response.put("success", true);
@@ -130,7 +130,7 @@ public class RestTaskController {
         }else {
             JSONObject jsonError=new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.TASK_NOT_EXIST_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -143,11 +143,11 @@ public class RestTaskController {
         switch (i){
             case ReplyCodes.TASK_NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.TASK_NOT_EXIST_ERROR));
+                response.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR));
                 break;
             case ReplyCodes.TASK_NOT_DELETED_ERROR:
                 response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Task not deleted", ReplyCodes.TASK_NOT_DELETED_ERROR));
+                response.put("error", JsonWrapper.wrapError("Task not deleted", ReplyCodes.NOT_DELETED_ERROR));
                 break;
             case ReplyCodes.TASK_DELETED_SUCCESSFULLY:
                 response.put("success", true);

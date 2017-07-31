@@ -37,7 +37,7 @@ public class RestUserController {
         else {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -100,7 +100,7 @@ public class RestUserController {
         } else {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -115,7 +115,7 @@ public class RestUserController {
         } else {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return jsonError;
         }
     }
@@ -127,7 +127,7 @@ public class RestUserController {
         if (returnedValue == ReplyCodes.USER_ALREADY_EXIST_ERROR) {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User with entered email already exist", ReplyCodes.USER_ALREADY_EXIST_ERROR));
+            jsonError.put("error", JsonWrapper.wrapError("User with entered email already exist", ReplyCodes.ALREADY_EXIST_ERROR));
             return jsonError;
         }
         JSONObject data = new JSONObject();
@@ -148,7 +148,7 @@ public class RestUserController {
         } else {
             JSONObject error = new JSONObject();
             error.put("success", false);
-            error.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
+            error.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return error;
         }
     }
@@ -161,11 +161,11 @@ public class RestUserController {
         switch (deleteResult) {
             case ReplyCodes.USER_NOT_EXIST_ERROR:
                 jsonResponse.put("success", false);
-                jsonResponse.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.USER_NOT_EXIST_ERROR));
+                jsonResponse.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
                 break;
             case ReplyCodes.USER_NOT_DELETED_ERROR:
                 jsonResponse.put("success", false);
-                jsonResponse.put("error", JsonWrapper.wrapError("User not deleted", ReplyCodes.USER_NOT_DELETED_ERROR));
+                jsonResponse.put("error", JsonWrapper.wrapError("User not deleted", ReplyCodes.NOT_DELETED_ERROR));
                 break;
             case ReplyCodes.USER_DELETED_SUCCESSFULLY:
                 jsonResponse.put("success", true);
