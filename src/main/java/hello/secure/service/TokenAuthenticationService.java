@@ -2,6 +2,7 @@ package hello.secure.service;
 
 import hello.secure.TokenHandler;
 import hello.secure.model.UserAuthentication;
+import hello.secure.model.UserSecured;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -10,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Tom on 27.07.2017.
@@ -36,7 +36,8 @@ public class TokenAuthenticationService {
     public Authentication getAuthentication(HttpServletRequest request) throws ExpiredJwtException {
         final String token = request.getHeader(AUTH_HEADER_NAME);
         if (token != null) {
-            final User user = tokenHandler.parseUserFromToken(token);
+            //final User user = tokenHandler.parseUserFromToken(token);
+            final UserSecured user = (UserSecured) tokenHandler.parseUserFromToken(token);
             if (user != null) {
                 return new UserAuthentication(user);
             }
@@ -46,7 +47,8 @@ public class TokenAuthenticationService {
     public Authentication getAuthentication(StompHeaderAccessor accessor) throws ExpiredJwtException {
         final String token = accessor.getFirstNativeHeader(AUTH_HEADER_NAME);
         if (token != null) {
-            final User user = tokenHandler.parseUserFromToken(token);
+            //final User user = tokenHandler.parseUserFromToken(token);
+            final UserSecured user = (UserSecured) tokenHandler.parseUserFromToken(token);
             if (user != null) {
                 return new UserAuthentication(user);
             }

@@ -12,12 +12,18 @@ import java.util.Collection;
 
 public class UserAuthentication implements Authentication {
 
-    private final User user;
+    private final UserSecured user;
     private boolean authenticated = true;
 
-    public UserAuthentication(User user) {
+    public UserSecured getUser() {
+        return user;
+    }
+
+    public UserAuthentication(UserSecured user) {
         this.user = user;
     }
+
+    public Integer getUserId(){return user.getUserId();}
 
     @Override
     public String getName() {

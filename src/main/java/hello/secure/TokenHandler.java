@@ -1,12 +1,12 @@
 package hello.secure;
 
-import hello.secure.service.UserDetailsServiceImpl;
+import hello.secure.model.UserSecured;
+import hello.service.UserService;
 import hello.utils.TokenType;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -34,11 +34,14 @@ public final class TokenHandler {
     private final String secret="tooManySecrets";
 
     @Autowired
-    private UserDetailsService userService;
+    private UserDetailsService userDetailsService;
 
-//    public TokenHandler(String secret, UserDetailsServiceImpl userService) {
+    @Autowired
+    private UserService userService;
+
+//    public TokenHandler(String secret, UserDetailsServiceImpl userDetailsService) {
 //        this.secret = secret;
-//        //this.userService = userService;
+//        //this.userDetailsService = userDetailsService;
 //    }
 
     public User parseUserFromToken(String token) throws ExpiredJwtException {
@@ -48,13 +51,17 @@ public final class TokenHandler {
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
-            UserDetails userDetails=userService.loadUserByUsername(username);
+            UserDetails userDetails= userDetailsService.loadUserByUsername(username);
+            hello.model.User userByMail = userService.getUserByMail(username);
             Set<GrantedAuthority> roles=new HashSet();
             roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-            User usr=new User(userDetails.getUsername(),userDetails.getPassword(),true,true,true,true,roles);
-            return usr;
+//            User usr=new User(userDetails.getUsername(),userDetails.getPassword(),true,true,
+//                    true,true,roles);
+            UserSecured uc = new UserSecured(userDetails.getUsername(),userDetails.getPassword(),true,true,
+                    true,true,roles, userByMail.getUserId());
+            return uc;
 
-            //return userService.loadUserByUsername(username);
+            //return userDetailsService.loadUserByUsername(username);
         }
         catch (Exception e){
             throw e;

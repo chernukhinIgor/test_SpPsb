@@ -84,12 +84,12 @@ public class RestLoginController {
             jsonObj.put("email",userByMail.getEmail());
             jsonObj.put("name",userByMail.getName());
             jsonObj.put("userId", userByMail.getUserId());
-            
+            jsonObj.put("X-AUTH-TOKEN", tokenForUser);
             json.put("data", jsonObj);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "application/json; charset=UTF-8");
             headers.add("data", jsonObj.toString());
-            headers.add("X-AUTH-TOKEN", tokenForUser);
+            //headers.add("X-AUTH-TOKEN", tokenForUser);
             return new ResponseEntity<>(json, headers, HttpStatus.OK);
 
         } else {

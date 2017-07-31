@@ -1,8 +1,5 @@
 package hello.model;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-
 public class loginUser {
 
     public String getEmail() {
@@ -33,3 +30,4 @@ public class loginUser {
     private String password;
     private boolean remeberMe;
 }
+

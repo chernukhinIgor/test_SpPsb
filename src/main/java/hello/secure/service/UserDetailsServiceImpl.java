@@ -1,5 +1,6 @@
 package hello.secure.service;
 
+import hello.secure.model.UserSecured;
 import hello.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
@@ -34,10 +35,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority("ROLE_USER"));
-        User usr = new User(userByMail.getEmail(),userByMail.getPassword(),true,true,true,true,
-                roles);
+//        User usr = new User(userByMail.getEmail(),userByMail.getPassword(),true,true,true,true,
+//                roles);
+        UserSecured uc = new UserSecured(userByMail.getEmail(),userByMail.getPassword(),true,true,true,true,
+                roles,userByMail.getUserId());
 
         //detailsChecker.check(usr);
-        return usr;
+        return uc;
     }
 }
