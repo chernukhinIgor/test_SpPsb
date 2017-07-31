@@ -27,11 +27,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public int addTask(Task task) {
-        if (taskDAO.taskExists(task.getTaskId())) {
-            return ReplyCodes.TASK_ALREADY_EXIST_ERROR;
-        } else {
+//        if (taskDAO.taskExists(task.getTaskId())) {
+//            return ReplyCodes.TASK_ALREADY_EXIST_ERROR;
+//        } else {
             return taskDAO.addTask(task);
-        }
+ //       }
     }
 
     @Override
