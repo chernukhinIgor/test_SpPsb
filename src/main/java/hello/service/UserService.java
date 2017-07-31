@@ -10,6 +10,7 @@ public interface UserService {
 
     List<Object[]> getAllUsers();
     User getUserById(int id);
+    List<Object[]> getUserListById(int id);
     int addUser(@Valid User user);
     boolean updateUser(User user);
     boolean userExists(int id);
@@ -22,4 +23,5 @@ public interface UserService {
     User getUserByMail(String mail);
     int registerUser(User user);
     int confirmEmail(String email);
+    boolean updatePassword(User user);
 }

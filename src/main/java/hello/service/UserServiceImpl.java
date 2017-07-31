@@ -25,6 +25,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Object[]> getUserListById(int id) {
+        return userDAO.getUserListById(id);
+    }
+
+    @Override
     public synchronized int addUser(User user) {
         if (userDAO.userExistsById(user.getUserId())) {
             return ReplyCodes.USER_ALREADY_EXIST_ERROR;
@@ -41,6 +46,16 @@ public class UserServiceImpl implements UserService {
         } else
             return false;
     }
+
+    @Override
+    public boolean updatePassword(User user) {
+        if (userDAO.userExistsById(user.getUserId())) {
+            userDAO.updatePassword(user);
+            return true;
+        } else
+            return false;
+    }
+
 
     @Override
     public boolean userExists(int id) {

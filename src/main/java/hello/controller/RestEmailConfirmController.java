@@ -36,7 +36,7 @@ public class RestEmailConfirmController {
             return response;
         }catch (Exception ex){
             response.put("success", false);
-            response.put("error", JsonWrapper.wrapError("Token not valid",ReplyCodes.TOKEN_UNKNOWN_ERROR));
+            response.put("error", JsonWrapper.wrapError("Token not valid",ReplyCodes.TOKEN_INVALID_ERROR));
             return response;
         }
 
@@ -47,14 +47,14 @@ public class RestEmailConfirmController {
                 response.put("success", true);
                 break;
 
-            case ReplyCodes.USER_EMAIL_NOT_EXIST_ERROR:
+            case ReplyCodes.NOT_EXIST_ERROR:
                 response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Confirming email failed. User email not exists",ReplyCodes.USER_EMAIL_NOT_EXIST_ERROR));
+                response.put("error", JsonWrapper.wrapError("Confirming email failed. User email not exists", ReplyCodes.NOT_EXIST_ERROR));
                 break;
 
             default:
                 response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Unknown error",ReplyCodes.TOKEN_UNKNOWN_ERROR));
+                response.put("error", JsonWrapper.wrapError("Unknown error",ReplyCodes.UNKNOWN_ERROR));
                 break;
         }
         return response;

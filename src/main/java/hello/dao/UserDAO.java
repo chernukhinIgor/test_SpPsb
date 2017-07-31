@@ -11,6 +11,7 @@ import java.util.List;
 public interface UserDAO {
     List<Object[]> getAllUsers();
     User getUserById(int userId);
+    List<Object[]> getUserListById(int userId);
     int addUser(User user);
     void updateUser(User user);
     int deleteUser(int userId);
@@ -23,4 +24,5 @@ public interface UserDAO {
     List<User>getPaginationUsers(String orderBy, String sortBy, int page, int pageLimit);
     User getUserByMail(String mail);
     int confirmEmail( String email);
+    void updatePassword(User user);
 }

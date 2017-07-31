@@ -1,5 +1,6 @@
 package hello.controller;
 
+import hello.model.loginUser;
 import hello.secure.service.TokenAuthenticationService;
 import hello.secure.service.UserDetailsServiceImpl;
 import hello.model.User;
@@ -41,7 +42,7 @@ public class RestLoginController {
 //        authenticationService = new TokenAuthenticationService("tooManySecrets", userDetailsService);
 //    }
 
-    private boolean checkPassword(User inputUser, User dbUser){
+    private boolean checkPassword(loginUser inputUser, User dbUser){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String salt=dbUser.getSalt();
         if(passwordEncoder.matches(salt+inputUser.getPassword(),dbUser.getPassword())) {
@@ -52,7 +53,7 @@ public class RestLoginController {
 
     @CrossOrigin
     @PostMapping("login")
-    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody User user, @RequestParam(required = true) boolean rememberMe,/*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody loginUser user,/*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
         User userByMail = userService.getUserByMail(user.getEmail());
         if(userByMail==null){
             Map<String, Object> json = new HashMap<>();
@@ -71,7 +72,7 @@ public class RestLoginController {
             roles.add(new SimpleGrantedAuthority("ROLE_USER"));
             org.springframework.security.core.userdetails.User uD = new org.springframework.security.core.userdetails.User(userByMail.getEmail(), userByMail.getPassword(), true, true, true, true, roles);
             String tokenForUser;
-            if(rememberMe){
+            if(user.isRemeberMe()){
                 tokenForUser= this.authenticationService.tokenHandler.createTokenForUser(uD, TokenType.REMEMBER_ME);
             }else{
                 tokenForUser= this.authenticationService.tokenHandler.createTokenForUser(uD, TokenType.REGULAR);
@@ -83,6 +84,7 @@ public class RestLoginController {
             jsonObj.put("email",userByMail.getEmail());
             jsonObj.put("name",userByMail.getName());
             jsonObj.put("userId", userByMail.getUserId());
+            
             json.put("data", jsonObj);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "application/json; charset=UTF-8");

@@ -36,8 +36,14 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public List<Object[]> getUserListById(int userId) {
+        String hql = "SELECT u.userId, u.name, u.surname, u.gender, u.email, u.birth, u.telephone, u.confirmedEmail FROM User u WHERE u.userId = ?";
+        return entityManager.createQuery(hql).setParameter(1, userId).getResultList();
+       // return entityManager.find(User.class, userId);
+    }
+
+    @Override
     public User getUserById(int userId) {
-        //String hql = "SELECT u.userId, u.name, u.surname, u.gender, u.email, u.birth, u.telephone, u.confirmedEmail FROM User u WHERE";
         return entityManager.find(User.class, userId);
     }
 
@@ -52,6 +58,17 @@ public class UserDAOImpl implements UserDAO {
         entityManager.persist(user);
         entityManager.flush();
         return user.getUserId();
+    }
+
+    @Override
+    public void updatePassword(User user){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String salt=BCrypt.gensalt();
+        user.setSalt(salt);
+        user.setPassword(passwordEncoder.encode(salt+user.getPassword()));
+
+        entityManager.flush();
     }
 
     @Override
@@ -146,7 +163,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public int confirmEmail( String email) {
         if(!userExistsByMail(email)){
-            return ReplyCodes.USER_EMAIL_NOT_EXIST_ERROR;
+            return ReplyCodes.NOT_EXIST_ERROR;
         }else{
             User usr = getUserByMail(email);
             usr.setConfirmedEmail(true);
