@@ -3,21 +3,25 @@ import { ActivatedRoute, Params} from '@angular/router';
 import { Response} from '@angular/http';
 import { HttpService} from '../http.service';
 import { Title } from '@angular/platform-browser';
+import { WebSocketService }       from "../_services/websocket.service";
 import { Task, User} from '../classes'
 const route = './app/home/';
 
 @Component({
     selector: 'home-app',
     templateUrl: route + 'home.html',
-    providers: [HttpService]
+    providers: [HttpService, WebSocketService]
 })
 export class HomeComponent implements OnInit{
     page = 'home';
     tasks: Task[];
     users: User[];
-    constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService) {}
+    constructor(private activatedRoute: ActivatedRoute, private httpService: HttpService, private webSocketService: WebSocketService) {}
 
     ngOnInit(){
+
+         //this.webSocketService.start( 'ws://localhost:3000/cable' );
+
         let title = new Title('');
         title.setTitle('Dashboard');
         this.getNewTasks();
