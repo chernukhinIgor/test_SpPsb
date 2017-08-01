@@ -1,8 +1,10 @@
 package hello.secure.config;
 
+import hello.redis.SessionService;
 import hello.secure.filter.StatelessAuthenticationFilter;
 import hello.secure.service.TokenAuthenticationService;
 import hello.secure.service.UserDetailsServiceImpl;
+import hello.service.LogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 /**
  * Created by Tom on 27.07.2017.
@@ -27,6 +30,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Autowired
 //    private final UserDetailsServiceImpl userService;
 
+    @Autowired
+    SessionService sessionService;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
@@ -49,6 +54,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .servletApi()
             .and()
+                .logout().logoutSuccessHandler(new LogoutSuccessHandler(sessionService)).permitAll()
+            .and()
                 .headers().cacheControl()
             .and()
                 .authorizeRequests()
@@ -61,6 +68,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("**/*.js").permitAll()
 
                 // Allow anonymous logins
+
 
 
 
