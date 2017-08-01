@@ -1,6 +1,5 @@
 package hello.websocket.config;
 
-import hello.secure.TokenHandler;
 import hello.secure.service.TokenAuthenticationService;
 import hello.websocket.filter.WebSocketChannelInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.user.DefaultUserDestinationResolver;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.messaging.simp.user.UserDestinationResolver;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -23,7 +21,8 @@ import org.springframework.web.socket.messaging.DefaultSimpUserRegistry;
  */
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class WebSocketStompConfig extends AbstractWebSocketMessageBrokerConfigurer {
+                            /* or implements WebSocketMessageBrokerConfigurer */
 
     private DefaultSimpUserRegistry userRegistry = new DefaultSimpUserRegistry();
     private DefaultUserDestinationResolver resolver = new DefaultUserDestinationResolver(userRegistry);
@@ -41,29 +40,25 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     }
 
     @Autowired
-    private TokenHandler tokenHandler;
-
-    @Autowired
     private TokenAuthenticationService authenticationService;
 
-    //
+
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);
-        registration.setInterceptors(new WebSocketChannelInterceptor(tokenHandler,authenticationService,userRegistry));
-        //registration.setInterceptors(new WebSocketChannelFilter(tokenHandler,authenticationService));
+        //SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);
+        registration.setInterceptors(new WebSocketChannelInterceptor(authenticationService/*,userRegistry*/));
     }
 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
-        stompEndpointRegistry.addEndpoint("/ws");
-        stompEndpointRegistry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
+        stompEndpointRegistry.addEndpoint("/ws").setAllowedOrigins("*");
+        //stompEndpointRegistry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-//        config.enableSimpleBroker("/notifications");
-        config.setApplicationDestinationPrefixes("/wsApp");
+//        config.enableSimpleBroker("/topic");
+//        config.setApplicationDestinationPrefixes("/wsApp");
     }
 }

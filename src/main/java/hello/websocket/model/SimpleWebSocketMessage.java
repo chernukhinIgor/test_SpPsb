@@ -4,14 +4,14 @@ package hello.websocket.model;
  * Created by Tom on 28.07.2017.
  */
 
-public class Greeting {
+public class SimpleWebSocketMessage {
+
+    public SimpleWebSocketMessage() {
+    }
 
     private String content;
 
-    public Greeting() {
-    }
-
-    public Greeting(String content) {
+    public SimpleWebSocketMessage(String content) {
         this.content = content;
     }
 

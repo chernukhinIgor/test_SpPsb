@@ -42,22 +42,21 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
 //        httpResponse.setHeader("Access-Control-Allow-Headers", "*");
 
 
-
         Authentication authentication = null;
         try {
             authentication = authenticationService.getAuthentication(httpRequest);
         } catch (ExpiredJwtException e) {
             JSONObject json = new JSONObject();
-            json.put("success",false);
+            json.put("success", false);
             json.put("error", JsonWrapper.wrapError("Token expired", ReplyCodes.TOKEN_EXPIRED_ERROR));
-            httpResponse.addHeader("Content-Type","application/json;charset=UTF-8");
+            httpResponse.addHeader("Content-Type", "application/json;charset=UTF-8");
             httpResponse.getWriter().print(json);
             return;
-        }catch (Exception e){
+        } catch (Exception e) {
             JSONObject json = new JSONObject();
-            json.put("success",false);
+            json.put("success", false);
             json.put("error", JsonWrapper.wrapError("Invalid token", ReplyCodes.TOKEN_INVALID_ERROR));
-            httpResponse.addHeader("Content-Type","application/json;charset=UTF-8");
+            httpResponse.addHeader("Content-Type", "application/json;charset=UTF-8");
             httpResponse.getWriter().print(json);
             return;
         }

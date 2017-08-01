@@ -1,29 +1,32 @@
 package hello.controller;
 
 import hello.model.Task;
-import hello.model.User;
 import hello.secure.model.UserAuthentication;
 import hello.service.TaskService;
 import hello.utils.JsonWrapper;
 import hello.utils.ReplyCodes;
+import hello.websocket.handler.SimpleWebSocketHandler;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
-import hello.utils.ReplyCodes;
 
-import static hello.service.TaskService.*;
 import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
 
 @RestController
 public class RestTaskController {
+
+    @Autowired
+    SimpleWebSocketHandler simpleWebSocketHandler;
+
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @Autowired
     private TaskService taskService;
@@ -114,6 +117,14 @@ public class RestTaskController {
                 JSONObject data=new JSONObject();
                 data.put("taskId", i);
                 response.put("data", data);
+
+                Task taskById = taskService.getTaskById(i);
+                UserAuthentication authentication = (UserAuthentication) SecurityContextHolder.getContext().getAuthentication();
+                if (authentication != null) {
+                    int responsibleUserId = taskById.getResponsibleUserId();
+                    template.convertAndSend("/channel/" + responsibleUserId, taskById);
+                    simpleWebSocketHandler.taskCreated("/simpleChannel/" + responsibleUserId, taskById);
+                }
                 break;
         }
         return response;
@@ -125,7 +136,7 @@ public class RestTaskController {
         if (taskService.updateTask(task)) {
             JSONObject jsonSuccess=new JSONObject();
             jsonSuccess.put("success", true);
-            jsonSuccess.put("message", "Task updated succesfully");
+            jsonSuccess.put("message", "Task updated successfully");
             return jsonSuccess;
         }else {
             JSONObject jsonError=new JSONObject();
@@ -151,7 +162,7 @@ public class RestTaskController {
                 break;
             case ReplyCodes.TASK_DELETED_SUCCESSFULLY:
                 response.put("success", true);
-                response.put("message", "Task deleted succesfully");
+                response.put("message", "Task deleted successfully");
                 break;
             default:
                 break;
