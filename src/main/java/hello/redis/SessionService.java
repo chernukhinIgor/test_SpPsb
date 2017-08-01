@@ -9,7 +9,5 @@ public interface SessionService {
     Session getByToken(String token);
     Session saveOrUpdate(Session session);
     void delete(String id);
-    void deleteByEmail(String email);
-    void deleteByToken(String token);
     void deleteAll();
 }

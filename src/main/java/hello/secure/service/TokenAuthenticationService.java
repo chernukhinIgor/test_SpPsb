@@ -42,13 +42,16 @@ public class TokenAuthenticationService {
         if (token != null) {
             try {
                 UserSecured user = (UserSecured) tokenHandler.parseUserFromToken(token);
+                if(sessionService.getByToken(token)==null){
+                    throw new ExpiredJwtException("Expired");
+                }
                 if (user != null) {
                     return new UserAuthentication(user);
                 }
             }catch (ExpiredJwtException ex){
                 if(sessionService.getByToken(token)!=null)
                     sessionService.delete(sessionService.getByToken(token).getId());
-                throw new ExpiredJwtException("msg");
+                throw new ExpiredJwtException("Expired");
             }
 
         }

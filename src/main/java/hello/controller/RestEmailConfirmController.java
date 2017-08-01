@@ -36,8 +36,8 @@ public class RestEmailConfirmController {
         try{
             usr=authenticationService.tokenHandler.parseUserFromToken(token);
         }catch (ExpiredJwtException ex){
-            if(sessionService.getByToken(token)!=null)
-                sessionService.delete(sessionService.getByToken(token).getId());
+            //if(sessionService.getByToken(token)!=null)
+                //sessionService.delete(sessionService.getByToken(token).getId());
 
             response.put("success", false);
             response.put("error", JsonWrapper.wrapError("Token expired",ReplyCodes.TOKEN_EXPIRED_ERROR));

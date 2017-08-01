@@ -31,11 +31,6 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session getByEmail(String email) {
-//        List<Session> session=new ArrayList<>();
-//        session=sessionRepository.findByEmail(email);
-//        if(!session.isEmpty())
-//            return session.get(0);
-//        return null;
         return sessionRepository.findByEmail(email);
     }
 
@@ -54,16 +49,6 @@ public class SessionServiceImpl implements SessionService {
     public void delete(String id) {
         sessionRepository.delete(id);
 
-    }
-
-    @Override
-    public void deleteByEmail(String email) {
-        sessionRepository.deleteByEmail(email);
-    }
-
-    @Override
-    public void deleteByToken(String token) {
-        sessionRepository.deleteByToken(token);
     }
 
     @Override

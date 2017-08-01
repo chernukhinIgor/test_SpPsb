@@ -88,7 +88,7 @@ public class RestLoginController {
 
     @CrossOrigin
     @PostMapping("login")
-    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody loginUser user,/*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody loginUser user,/*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
         User userByMail = userService.getUserByMail(user.getEmail());
         if(userByMail==null){
             Map<String, Object> json = new HashMap<>();
