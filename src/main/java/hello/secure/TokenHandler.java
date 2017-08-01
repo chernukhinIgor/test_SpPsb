@@ -45,6 +45,7 @@ public final class TokenHandler {
 //    }
 
     public User parseUserFromToken(String token) throws ExpiredJwtException {
+        //Jwts.parser().parseClaimsJws(token);
         try {
             String username = Jwts.parser()
                     .setSigningKey(secret)
@@ -83,11 +84,4 @@ public final class TokenHandler {
                 .compact();
     }
 
-//    public String createTokenForEmail(User user) {
-//        return Jwts.builder()
-//                .setSubject(user.getUsername())
-//                .setExpiration(new Date(System.currentTimeMillis()+ CONFIRM_EMAIL_TIME))
-//                .signWith(SignatureAlgorithm.HS512, secret)
-//                .compact();
-//    }
 }

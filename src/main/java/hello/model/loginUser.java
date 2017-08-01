@@ -18,16 +18,16 @@ public class loginUser {
         this.password = password;
     }
 
-    public boolean isRemeberMe() {
-        return remeberMe;
+    public boolean isRememberMe() {
+        return rememberMe;
     }
 
-    public void setRemeberMe(boolean remeberMe) {
-        this.remeberMe = remeberMe;
+    public void setRememberMe(boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 
     private String email;
     private String password;
-    private boolean remeberMe;
+    private boolean rememberMe;
 }
 

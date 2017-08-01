@@ -2,6 +2,7 @@ package hello.controller;
 
 import hello.mail.EmailServiceImpl;
 import hello.model.User;
+import hello.redis.SessionService;
 import hello.secure.service.TokenAuthenticationService;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
@@ -32,6 +33,9 @@ public class RestForgotPassword {
 
     @Autowired
     public EmailServiceImpl emailService;
+
+    @Autowired
+    private SessionService sessionService;
 
     @CrossOrigin
     @GetMapping("forgotPassword")
@@ -91,6 +95,9 @@ public class RestForgotPassword {
         try{
             usr=authenticationService.tokenHandler.parseUserFromToken(token);
         }catch (ExpiredJwtException ex){
+            if(sessionService.getByToken(token)!=null)
+                sessionService.delete(sessionService.getByToken(token).getId());
+
             response.put("success", false);
             response.put("error", JsonWrapper.wrapError("Token expired",ReplyCodes.TOKEN_EXPIRED_ERROR));
             return response;

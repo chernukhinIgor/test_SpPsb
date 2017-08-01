@@ -1,10 +1,12 @@
 package hello.secure.filter;
 
+import hello.redis.SessionService;
 import hello.secure.service.TokenAuthenticationService;
 import hello.utils.JsonWrapper;
 import hello.utils.ReplyCodes;
 import io.jsonwebtoken.ExpiredJwtException;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;

@@ -1,5 +1,7 @@
 package hello.controller;
 
+import hello.redis.Session;
+import hello.redis.SessionService;
 import hello.secure.service.TokenAuthenticationService;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
@@ -23,6 +25,9 @@ public class RestEmailConfirmController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SessionService sessionService;
+
     @CrossOrigin
     @GetMapping("confirmEmail")
     public JSONObject getPaginationUsers(@RequestParam(required = true) String token){
@@ -31,6 +36,9 @@ public class RestEmailConfirmController {
         try{
             usr=authenticationService.tokenHandler.parseUserFromToken(token);
         }catch (ExpiredJwtException ex){
+            if(sessionService.getByToken(token)!=null)
+                sessionService.delete(sessionService.getByToken(token).getId());
+
             response.put("success", false);
             response.put("error", JsonWrapper.wrapError("Token expired",ReplyCodes.TOKEN_EXPIRED_ERROR));
             return response;

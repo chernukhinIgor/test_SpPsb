@@ -1,5 +1,6 @@
 package hello.secure.service;
 
+import hello.redis.SessionService;
 import hello.secure.TokenHandler;
 import hello.secure.model.UserAuthentication;
 import hello.secure.model.UserSecured;
@@ -19,10 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 @Service("tokenAuthenticationService")
 public class TokenAuthenticationService {
 
-        private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
+    private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
 
     @Autowired
     public TokenHandler tokenHandler;
+
+    @Autowired
+    private SessionService sessionService;
 
 //    public TokenAuthenticationService(String secret, UserDetailsServiceImpl userService) {
 //        tokenHandler = new TokenHandler(secret, userService);
@@ -36,14 +40,21 @@ public class TokenAuthenticationService {
     public Authentication getAuthentication(HttpServletRequest request) throws ExpiredJwtException {
         final String token = request.getHeader(AUTH_HEADER_NAME);
         if (token != null) {
-            //final User user = tokenHandler.parseUserFromToken(token);
-            final UserSecured user = (UserSecured) tokenHandler.parseUserFromToken(token);
-            if (user != null) {
-                return new UserAuthentication(user);
+            try {
+                UserSecured user = (UserSecured) tokenHandler.parseUserFromToken(token);
+                if (user != null) {
+                    return new UserAuthentication(user);
+                }
+            }catch (ExpiredJwtException ex){
+                if(sessionService.getByToken(token)!=null)
+                    sessionService.delete(sessionService.getByToken(token).getId());
+                throw new ExpiredJwtException("msg");
             }
+
         }
         return null;
     }
+
     public Authentication getAuthentication(StompHeaderAccessor accessor) throws ExpiredJwtException {
         final String token = accessor.getFirstNativeHeader(AUTH_HEADER_NAME);
         if (token != null) {
