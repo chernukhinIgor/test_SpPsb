@@ -1,6 +1,7 @@
 package hello.controller;
 
 import hello.mail.EmailServiceImpl;
+import hello.model.LoginUser;
 import hello.model.User;
 import hello.redis.SessionService;
 import hello.secure.service.TokenAuthenticationService;
@@ -11,16 +12,12 @@ import hello.utils.TokenType;
 import io.jsonwebtoken.ExpiredJwtException;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -88,12 +85,12 @@ public class RestForgotPassword {
 
     @CrossOrigin
     @PostMapping("updatePassword")
-    public JSONObject changePassword(@RequestBody User user, @RequestParam(required = true) String token, UriComponentsBuilder builder) {
+    public JSONObject changePassword(@RequestBody LoginUser user, UriComponentsBuilder builder) {
 
         JSONObject response=new JSONObject();
         org.springframework.security.core.userdetails.User usr;
         try{
-            usr=authenticationService.tokenHandler.parseUserFromToken(token);
+            usr=authenticationService.tokenHandler.parseUserFromToken(user.getToken());
         }catch (ExpiredJwtException ex){
   //          if(sessionService.getByToken(token)!=null)
     //            sessionService.delete(sessionService.getByToken(token).getId());

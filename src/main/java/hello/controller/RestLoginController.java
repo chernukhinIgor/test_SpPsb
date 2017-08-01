@@ -1,6 +1,6 @@
 package hello.controller;
 
-import hello.model.loginUser;
+import hello.model.LoginUser;
 import hello.redis.Session;
 import hello.redis.SessionService;
 import hello.secure.service.TokenAuthenticationService;
@@ -48,7 +48,7 @@ public class RestLoginController {
 //        authenticationService = new TokenAuthenticationService("tooManySecrets", userDetailsService);
 //    }
 
-    private boolean checkPassword(loginUser inputUser, User dbUser) {
+    private boolean checkPassword(LoginUser inputUser, User dbUser){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String salt = dbUser.getSalt();
         if (passwordEncoder.matches(salt + inputUser.getPassword(), dbUser.getPassword())) {
@@ -68,7 +68,7 @@ public class RestLoginController {
         return true;
     }
 
-    private void setNewToken(JSONObject jsonObj, loginUser user, Session session, User userByMail) {
+    private void setNewToken(JSONObject jsonObj, LoginUser user, Session session, User userByMail){
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         org.springframework.security.core.userdetails.User uD = new org.springframework.security.core.userdetails.User(userByMail.getEmail(), userByMail.getPassword(), true, true, true, true, roles);
@@ -88,7 +88,7 @@ public class RestLoginController {
 
     @CrossOrigin
     @PostMapping("login")
-    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody loginUser user,/*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody LoginUser user,/*@RequestBody String email, @RequestBody String password,*/ UriComponentsBuilder builder) {
         User userByMail = userService.getUserByMail(user.getEmail());
         if (userByMail == null) {
             Map<String, Object> json = new HashMap<>();

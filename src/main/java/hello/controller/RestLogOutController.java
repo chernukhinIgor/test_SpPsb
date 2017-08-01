@@ -1,11 +1,7 @@
 package hello.controller;
 
-import hello.model.User;
-import hello.model.loginUser;
+import hello.model.LoginUser;
 import hello.redis.SessionService;
-import hello.service.UserService;
-import hello.utils.JsonWrapper;
-import hello.utils.ReplyCodes;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +14,7 @@ public class RestLogOutController {
 
     @CrossOrigin
     @PostMapping("/userLogout")
-    public JSONObject logOut(@RequestBody loginUser user, UriComponentsBuilder builder) {
+    public JSONObject logOut(@RequestBody LoginUser user, UriComponentsBuilder builder) {
         JSONObject jsonResponse = new JSONObject();
         if(sessionService.getByEmail(user.getEmail())!=null){
             sessionService.delete(sessionService.getByEmail(user.getEmail()).getId());

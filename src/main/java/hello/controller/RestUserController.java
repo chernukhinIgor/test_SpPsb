@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import hello.utils.ReplyCodes;
+
 import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
 
 @RestController
@@ -33,12 +34,12 @@ public class RestUserController {
     public JSONObject getUserById(@PathVariable("id") Integer id) {
         List<String> columns = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
         List<Object[]> user = userService.getUserListById(id);
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             JSONObject jsonError = new JSONObject();
             jsonError.put("success", false);
             jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
             return jsonError;
-        }else{
+        } else {
             JSONArray array = getJsonArrayFromObjects(columns, user);
             return JsonWrapper.wrapList(array);
         }
@@ -87,9 +88,9 @@ public class RestUserController {
 
     @CrossOrigin
     @GetMapping("users")
-    public JSONObject getAllUsers(@RequestParam(required = false, value="params") List<String> columns){
+    public JSONObject getAllUsers(@RequestParam(required = false, value = "params") List<String> columns) {
 
-        if (columns != null) {
+        if(columns != null) {
             List<Object[]> allUsersAsObjects = userService.getParametricUsers(columns);
             JSONArray array = getJsonArrayFromObjects(columns, allUsersAsObjects);
             return JsonWrapper.wrapList(array);

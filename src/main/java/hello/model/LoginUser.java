@@ -1,6 +1,10 @@
 package hello.model;
 
-public class loginUser {
+public class LoginUser {
+    private String email;
+    private String password;
+    private String token;
+    private boolean rememberMe;
 
     public String getEmail() {
         return email;
@@ -26,8 +30,14 @@ public class loginUser {
         this.rememberMe = rememberMe;
     }
 
-    private String email;
-    private String password;
-    private boolean rememberMe;
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+
 }
 

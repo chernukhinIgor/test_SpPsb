@@ -21,7 +21,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import net.minidev.json.parser.JSONParser;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -33,7 +36,6 @@ public class RestUserControllerTest {
 
     private MockMvc mockMvc;
     private int USER_COUNT=3;
-
 
     @Autowired
     private WebApplicationContext wac;
@@ -57,6 +59,9 @@ public class RestUserControllerTest {
             user.setName("testUser");
             user.setSurname("testUser");
             user.setEmail("email"+i+"@gmail.com");
+            user.setGender("male");
+            user.setBirth("123");
+            user.setTelephone("12345");
             String json = new Gson().toJson(user);
 
             mockMvc.perform(MockMvcRequestBuilders
@@ -67,8 +72,28 @@ public class RestUserControllerTest {
         }
     }
 
+    private void deleteAllTestValues() throws Exception{
+        MvcResult result = mockMvc.perform(
+                get("/users")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        JSONObject jsn = toJSONObject(result.getResponse().getContentAsString());
+
+        JSONArray userArray=JSONArray.fromObject(jsn.get("data"));
+        for(int i=0;i<userArray.size();i++){
+            JSONObject userObject=JSONObject.fromObject(userArray.getJSONObject(i));
+            mockMvc.perform(MockMvcRequestBuilders
+                    .delete("/user/"+userObject.get("userId"))
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON));
+        }
+    }
+
     @Test
     public void getUsersCount() throws Exception{
+        deleteAllTestValues();
         initializeTestValues();
 
         MvcResult result = mockMvc.perform(
@@ -84,6 +109,8 @@ public class RestUserControllerTest {
 
     @Test
     public void getAllUsers() throws Exception {
+        deleteAllTestValues();
+        initializeTestValues();
 
         MvcResult result = mockMvc.perform(
                 get("/users")
@@ -97,6 +124,31 @@ public class RestUserControllerTest {
 
         // If result is success
         assertEquals(true, jsn.get("success"));
+    }
+
+    @Test
+    public void paginationTest()throws Exception{
+        deleteAllTestValues();
+        initializeTestValues();
+
+        for(int i=1;i<=USER_COUNT;i++){
+            MvcResult result = mockMvc.perform(
+                    get("/userPagination?orderBy=name&sortBy=desc&page="+i+"&pageLimit=1")
+                            .accept(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andReturn();
+            JSONObject jsn = toJSONObject(result.getResponse().getContentAsString());
+            JSONArray userArray=JSONArray.fromObject(jsn.get("data"));
+            JSONObject userObject=JSONObject.fromObject(userArray.getJSONObject(0));
+
+            assertNotNull(userObject.get("name"));
+            assertNotNull(userObject.get("surname"));
+            assertNotNull(userObject.get("gender"));
+            assertNotNull(userObject.get("birth"));
+            assertNotNull(userObject.get("telephone"));
+            assertNotNull(userObject.get("email"));
+        }
+
     }
 
     @Test
@@ -153,7 +205,7 @@ public class RestUserControllerTest {
     }
 
     @Test
-    public void updateUser() throws Exception{
+    public void createUpdateUser() throws Exception{
         String updatedName="updatedName";
         String updatedSurname="updatedSurname";
         String updatedGender="female";
