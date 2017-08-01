@@ -15,7 +15,7 @@ export class HttpService{
 
     getData(url: string, params: any) {
         console.log(this.initHeader());
-        var jsonObject = this.http.get(apiUrl + url, this.initHeader());
+        var jsonObject = this.http.get(url, this.initHeader());
         return jsonObject;
     }
 

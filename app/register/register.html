@@ -1,29 +1,23 @@
 <div class="card card-container">
     <p id="profile-name" class="profile-name-card">Register</p>
-    <form #f="ngForm" (ngSubmit)="register()" class="form-signin">
+    <form #f="ngForm" (ngSubmit)="register()" class="k-form">
         <span id="reauth-email" class="reauth-email"></span>
-        <input name="name" [disabled]="loading" [(ngModel)]="user.name" type="text" id="name" class="form-control" placeholder="Name" required autofocus>
-        <input name="surname" [disabled]="loading" [(ngModel)]="user.surname" type="text" id="surname" class="form-control" placeholder="Surname" required>
-        <input name="email" [disabled]="loading" [(ngModel)]="user.email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus email>
-        <input name="password" [disabled]="loading" [(ngModel)]="user.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required minlength="6">
-        <input name="confirmPassword" [disabled]="loading" [(ngModel)]="confirmPassword" type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required minlength="6" (keyup)="passwordsMatch()">
-        <button [disabled]="loading || !f.form.valid || !passMatch" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="register()">Sign up</button>
+        <label class="k-form-field"><input name="name" [disabled]="loading" [(ngModel)]="user.name" type="text" id="name" class="k-textbox" placeholder="Name" required autofocus></label>
+        <label class="k-form-field"><input name="surname" [disabled]="loading" [(ngModel)]="user.surname" type="text" id="surname" class="k-textbox" placeholder="Surname" required></label>
+        <label class="k-form-field"><input name="email" [disabled]="loading" [(ngModel)]="user.email" type="email" id="inputEmail" class="k-textbox" placeholder="Email address" required autofocus email></label>
+        <label class="k-form-field"><input name="password" [disabled]="loading" [(ngModel)]="user.password" type="password" id="inputPassword" class="k-textbox" placeholder="Password" required minlength="6"></label>
+        <label class="k-form-field"><input name="confirmPassword" [disabled]="loading" [(ngModel)]="confirmPassword" type="password" id="confirmPassword" class="k-textbox" placeholder="Confirm password" required minlength="6" (keyup)="passwordsMatch()"></label>
+        <button kendoButton [icon]="'check'" [disabled]="loading || !f.form.valid || !passMatch" [primary]=true type="submit" (click)="register()">Sign up</button>
     </form>
     <a href="/login" class="forgot-password">
         Or sign in
     </a>
 </div>
 
-<modal id="activate"
-       [show-modal]="true"
+
+<modal [show-modal]="true"
        [title]="'Activate account'"
+       [content]="'Account creation is successfully'"
        *ngIf="showModal">
-    <div class="popup-content">
-        <p>Account creation is successfully</p>
-    </div>
-    <div class="popup-footer">
-        <button type="button" class="btn btn-secondary" (click)="onClick()" aria-label="Close">
-            OK
-        </button>
-    </div>
+    <button kendoButton (click)="onClick()" primary="true">OK</button>
 </modal>

@@ -1,21 +1,22 @@
 <div class="card card-container">
     <img id="profile-img" class="profile-img-card" src="image/login.png" />
     <p id="profile-name" class="profile-name-card"></p>
-    <form #f="ngForm" (ngSubmit)="login()" class="form-signin">
+    <form #f="ngForm" (ngSubmit)="login()" class="k-form">
         <span id="reauth-email" class="reauth-email"></span>
-        <input name="email" [disabled]="loading" [(ngModel)]="user.email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus email>
-        <input name="password" [disabled]="loading" [(ngModel)]="user.password" type="password" id="inputPassword" class="form-control" placeholder="Password" required minlength="6">
-        <div id="remember" class="checkbox">
-            <label>
-                <input [disabled]="loading" name="remember-me" [(ngModel)]="user.rememberMe" type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button (click)="login()" [disabled]="loading || !f.form.valid" class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+        <label class="k-form-field">
+            <input name="email" [disabled]="loading" [(ngModel)]="user.email" type="email" id="inputEmail" class="k-textbox" placeholder="Email address" required autofocus email>
+        </label>
+        <label class="k-form-field">
+            <input name="password" [disabled]="loading" [(ngModel)]="user.password" type="password" id="inputPassword" class="k-textbox" placeholder="Password" required minlength="6">
+        </label>
+        <label class="k-form-field">
+            <input [disabled]="loading" [(ngModel)]="user.rememberMe" type="checkbox" name="remember-me" id="auth-2fa" class="k-checkbox" checked="checked">
+            <label class="k-checkbox-label" for="auth-2fa">Remember me</label>
+        </label>
+        <button kendoButton (click)="login()" [disabled]="loading || !f.form.valid" [primary]=true type="submit">Sign in</button>
     </form>
-    <a href="/register" class="forgot-password col-sm-5">
-        Or sign up
-    </a>
-    <a href="/forgotpassword" class="forgot-password col-sm-pull-6">
-        Forgot the password?
-    </a>
+    <div class="sign-or-forgot">
+        <span class="sign"><a href="/register" >Or sign up</a></span>
+        <span class="forgot"><a href="/forgotpassword">Forgot the password?</a></span>
+    </div>
 </div>

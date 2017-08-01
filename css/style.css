@@ -39,6 +39,10 @@
     width: 50%;
 }
 
+.width80 {
+    width: 80%;
+}
+
 .edit-block {
 
 }
@@ -83,3 +87,34 @@
     min-width: 611px;
     z-index: 10000;
 }
+
+.ra {
+    text-align: right;
+}
+
+.navbar-element {
+    background-color: #f8f8f8;
+    height: 55px;
+    border-radius: 5px;
+}
+
+.navbar-element .navbar-name{
+    padding: 15px;
+}
+
+.navbar-element .k-button {
+    height: 100%;
+    background-image: none;
+    border-radius: 5px;
+}
+
+.k-dropdown-button.k-state-focused>.k-button, .k-dropdown-button:focus>.k-button,
+.k-list .k-item.k-state-focused,
+.k-list .k-item:focus {
+    box-shadow: none !important;
+}
+
+.k-list-optionlabel, .k-list .k-item {
+    padding: 5px 19px!important;
+}
+

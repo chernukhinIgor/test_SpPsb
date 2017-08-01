@@ -133,3 +133,17 @@ body, html {
 .forgot-password:focus{
     color: rgb(12, 97, 33);
 }
+
+.sign-or-forgot {
+    display:table;
+    width:100%;
+}
+
+.sign {
+    display:table-cell;
+    width:45%;
+}
+
+.forgot{
+    display:table-cell;
+}

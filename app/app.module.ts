@@ -1,6 +1,15 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// Import the Animations module
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// Import the ButtonsModule
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { LayoutModule } from '@progress/kendo-angular-layout';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { PopupModule } from '@progress/kendo-angular-popup';
+
 import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule }   from '@angular/http';
@@ -28,6 +37,7 @@ import { ForgotPasswordComponent } from "./forgot_password/forgot_password";
 import { RegisterVerifiedComponent } from "./register_verified/register_verified";
 import { NewPasswordComponent} from "./new_password/new_password";
 
+
 import { Collapse } from "./collapse"
 
 import * as _ from 'underscore';
@@ -54,6 +64,11 @@ const appRoutes: Routes =[
 
 @NgModule({
     imports: [
+        BrowserAnimationsModule,
+        ButtonsModule,
+        LayoutModule,
+        DialogModule,
+        PopupModule,
         BrowserModule,
         RouterModule.forRoot(appRoutes),
         BrowserAnimationsModule,

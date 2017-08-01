@@ -1,35 +1,17 @@
 <div>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Test-PSB</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li [ngClass]="{'active': page == '/'}"><a href="/">Home</a></li>
-                    <li [ngClass]="{'active': page == '/users'}"><a href="/users">Users</a></li>
-                    <li [ngClass]="{'active': page == '/tasks'}"><a href="/tasks">Tasks</a></li>
-                    <li><a href="javascript:void(0);" (click)="pushNotify()">Test Notify</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown" [class.open]="navDropDown">
-                        <a href="javascript:void(0);" on-mouseover="navDropDown= true" on-mouseleave="navDropDown= false" (click)="navDropDown=!navDropDown"
-                           class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-haspopup="true" aria-expanded="false">
-                            <img src="/image/login.png">
-                            {{account.name}} 
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" on-mouseover="navDropDown= true" on-mouseleave="navDropDown= false">
-                            <li><a  href="/profile">View Profile</a></li>
-
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);" (click)="logout()">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+    <nav class="navbar-element">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">PSB-Test</a>
         </div>
+        <button kendoButton [bare]="true" [ngClass]="{'active': page == '/'}" onclick="this.router.navigate(['./']);">Home</button>
+        <button kendoButton [bare]="true" [ngClass]="{'active': page == '/usert'}" (click)="this.router.navigate(['./users']);">Users</button>
+        <button kendoButton [bare]="true" [ngClass]="{'active': page == '/tasks'}" (click)="this.router.navigate(['./tasks']);">Tasks</button>
+        <button kendoButton [bare]="true" [ngClass]="{'active': page == '/tasks'}" (click)="pushNotify()">Test Notify</button>
+        <kendo-dropdownbutton class="navbar-right" [data]="dropDownButtonItems"  (itemClick)="onSplitButtonItemClick($event)" aria-haspopup="true" aria-expanded="false">
+            <i class="material-icons" >person_outline</i>
+            {{account.name}}
+            <span class="caret"></span>
+        </kendo-dropdownbutton>
     </nav>
 </div>
 

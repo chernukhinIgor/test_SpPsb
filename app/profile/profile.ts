@@ -30,10 +30,7 @@ export class ProfileComponent implements OnInit {
         let title = new Title('');
         title.setTitle('View Profile');
 
-        let options: URLSearchParams = new URLSearchParams();
-
         this.activatedRoute.params.subscribe((params: Params) => {
-            options.set('id', params['id']);
             //this.httpService.getData( 'user/' + params['id'], null).subscribe((data: Response) => {
             this.httpService.getData( 'user.json', null).subscribe((data: Response) => {
                 if (data.json().success == true) {

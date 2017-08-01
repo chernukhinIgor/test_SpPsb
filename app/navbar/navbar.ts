@@ -11,7 +11,15 @@ import { Notify } from '../notify/index';
 export class myNavbar {
     navDropDown = false;
     account: Account;
+    dropDownButtonItems: Array<any> = [{
+        text: 'My Profile',
+    }, {
+        text: 'Logout'
+    }];
+
     constructor (private router: Router, private authenticationService: AuthenticationService) {}
+
+
     ngOnInit() {
         this.account = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -24,5 +32,16 @@ export class myNavbar {
     logout () {
         this.authenticationService.logout();
         this.router.navigate(['/login']);
+    }
+
+    onSplitButtonItemClick(dataItem: any) {
+        console.log(dataItem.text);
+        if (dataItem.text == 'My Profile') {
+            console.log(this.router);
+            this.router.navigate(['profile']);
+        }
+        else {
+            this.logout();
+        }
     }
 }
