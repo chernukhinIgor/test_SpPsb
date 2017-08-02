@@ -1,31 +1,18 @@
 package hello.websocket.filter;
 
-import hello.Application;
-import hello.secure.TokenHandler;
 import hello.secure.model.UserAuthentication;
-import hello.secure.model.UserSecured;
 import hello.secure.service.TokenAuthenticationService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.simp.SimpMessageType;
-import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptorAdapter;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.messaging.*;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Tom on 28.07.2017.

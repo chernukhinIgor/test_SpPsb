@@ -10,6 +10,19 @@ import java.util.List;
  */
 public class JsonWrapper {
 
+    public static JSONObject jsonErrorObject(String errorMessage, int errorCode){
+        JSONObject jsonError = new JSONObject();
+        jsonError.put("success", false);
+        jsonError.put("error", JsonWrapper.wrapError(errorMessage, errorCode));
+        return jsonError;
+    }
+
+    public static JSONObject jsonSuccessObject(Object ojbs){
+        JSONObject response = new JSONObject();
+        response.put("success",true);
+        response.element("data",ojbs);
+        return response;
+    }
 
     public static JSONObject wrapError(String errorMessage, int errorCode){
         JSONObject response = new JSONObject();
@@ -26,12 +39,7 @@ public class JsonWrapper {
         response.element("data",userJsonArray);
         return response;
     }
-    public static JSONObject wrapList(List<Object> ojbs){
-        JSONObject response = new JSONObject();
-        response.put("success",true);
-        response.element("data",ojbs);
-        return response;
-    }
+
 
     public static JSONObject returnJsonFromObjectWithMultipleRows(List<String> columns, Object[] row) {
         JSONObject data = new JSONObject();
@@ -43,8 +51,8 @@ public class JsonWrapper {
 
     public static JSONObject returnJsonFromObjectWithSingleRow(List<String> columns, Object row) {
         JSONObject data = new JSONObject();
-        for (int i = 0; i < columns.size(); i++) {
-            data.element(columns.get(i), row);
+        for (String column : columns) {
+            data.element(column, row);
         }
         return data;
     }

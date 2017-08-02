@@ -1,7 +1,5 @@
 package hello.controller;
 
-import hello.redis.Session;
-import hello.redis.SessionService;
 import hello.secure.service.TokenAuthenticationService;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;

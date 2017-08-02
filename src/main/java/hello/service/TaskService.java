@@ -1,7 +1,6 @@
 package hello.service;
 
 import hello.model.Task;
-import hello.model.User;
 
 import javax.validation.Valid;
 import java.util.List;

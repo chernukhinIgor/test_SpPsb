@@ -18,8 +18,6 @@ import org.springframework.stereotype.Controller;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Tom on 28.07.2017.

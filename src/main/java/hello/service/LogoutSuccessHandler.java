@@ -1,13 +1,10 @@
 package hello.service;
 
 import hello.redis.SessionService;
-import hello.secure.model.UserAuthentication;
 import hello.utils.JsonWrapper;
 import hello.utils.ReplyCodes;
 import net.sf.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

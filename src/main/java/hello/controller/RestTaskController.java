@@ -9,12 +9,15 @@ import hello.websocket.handler.SimpleWebSocketHandler;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
@@ -31,38 +34,35 @@ public class RestTaskController {
     @Autowired
     private TaskService taskService;
 
+    private List<String> COLUMNS = Arrays.asList("taskId", "name", "creatorUserId", "responsibleUserId", "description", "status");
+
+    private List<String> SORT_TYPE = Arrays.asList("desc", "asc");
+
     @CrossOrigin
     @GetMapping("task/{id}")
-    public JSONObject getTaskByID(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getTaskByID(@PathVariable("id") Integer id) {
         Task task = taskService.getTaskById(id);
         if(task!=null){
-            return JsonWrapper.wrapObject(task);
+            JSONObject response=JsonWrapper.wrapObject(task);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }else{
-            JSONObject jsonError=new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR));
-            return jsonError;
+            JSONObject jsonError=JsonWrapper.jsonErrorObject("Task does not exist",ReplyCodes.NOT_EXIST_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.NOT_FOUND);
         }
     }
 
     @CrossOrigin
     @GetMapping("taskPagination")
-    public JSONObject getPaginationTasks(
-            // default value or error
-            @RequestParam(required = true) String orderBy,
-            @RequestParam(required = true) String sortBy,
-            @RequestParam(required = true) int page,
-            @RequestParam(required = true) int pageLimit
-    ){
-        try{
+    public ResponseEntity<?> getPaginationTasks(
+            @RequestParam(required = true) String orderBy, @RequestParam(required = true) String sortBy,
+            @RequestParam(required = true) int page, @RequestParam(required = true) int pageLimit){
+        if(!COLUMNS.contains(orderBy)||!SORT_TYPE.contains(sortBy)||page<=0){
+            JSONObject jsonError=JsonWrapper.jsonErrorObject("Not valid pagination params",ReplyCodes.NOT_VALID_PAGINATION_PARAMS_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.BAD_REQUEST);
+        }else{
             List<Task> paginationTasks = taskService.getPaginationTasks(orderBy, sortBy,page,pageLimit);
-            List<Object> objectList = new ArrayList<>(paginationTasks);
-            return JsonWrapper.wrapList(objectList);
-        }catch (Exception ex){
-            JSONObject jsonError=new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("Not valid pagination params", ReplyCodes.NOT_VALID_PARAMS_ERROR));
-            return jsonError;
+            JSONObject response=JsonWrapper.jsonSuccessObject(paginationTasks);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
@@ -75,11 +75,11 @@ public class RestTaskController {
         if (columns != null) {
             List<Object[]> allTasksAsObjects = taskService.getParametricTasks(columns);
             JSONArray array = getJsonArrayFromObjects(columns, allTasksAsObjects);
-            return JsonWrapper.wrapList(array);
+            return JsonWrapper.jsonSuccessObject(array);
         } else {
             List<Task> allTasks = taskService.getAllTasks();
             List<Object> objectList = new ArrayList<>(allTasks);
-            return JsonWrapper.wrapList(objectList);
+            return JsonWrapper.jsonSuccessObject(objectList);
         }
     }
 

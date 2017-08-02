@@ -1,9 +1,5 @@
 package hello.dao;
 
-/**
- * Created by Tom on 21.07.2017.
- */
-
 import hello.model.Task;
 import hello.model.User;
 import java.util.List;
