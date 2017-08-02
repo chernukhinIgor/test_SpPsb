@@ -1,10 +1,12 @@
 package hello.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
@@ -63,4 +65,9 @@ public class EmailServiceImpl implements EmailService {
             e.printStackTrace();
         }
     }
+
+//    @Bean
+//    public JavaMailSender emailSender() {
+//        return new JavaMailSenderImpl();
+//    }
 }

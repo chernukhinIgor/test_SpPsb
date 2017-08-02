@@ -7,11 +7,22 @@ import javax.validation.constraints.Size;
 @Entity
 public class Task {
 
+    public Task() {
+    }
+
     public enum statusStates{
         accepted,
         canceled,
         finished,
         created
+    }
+
+    public Task(int creatorUserId, String name, int responsibleUserId, String description, statusStates status) {
+        this.creatorUserId = creatorUserId;
+        this.name = name;
+        this.responsibleUserId = responsibleUserId;
+        this.description = description;
+        this.status = status;
     }
 
     @Id

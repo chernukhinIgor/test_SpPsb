@@ -97,14 +97,8 @@ public class RestLoginControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andReturn();
-
         JSONObject jsn = toJSONObject(result.getResponse().getContentAsString());
-
         // If result is success
         assertEquals(true, jsn.get("success"));
-
-
-
-
     }
 }

@@ -1,5 +1,6 @@
 package hello.utils;
 
+import hello.model.Task;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -25,9 +26,25 @@ public class JsonWrapper {
     }
 
     public static JSONObject wrapError(String errorMessage, int errorCode){
+        JSONObject error = new JSONObject();
+        error.put("errorMessage",errorMessage);
+        error.put("code",errorCode);
+        return error;
+    }
+
+    public static JSONObject wrapSuccessIntegerInData(Integer i){
         JSONObject response = new JSONObject();
-        response.put("errorMessage",errorMessage);
-        response.put("code",errorCode);
+        response.put("success",true);
+        response.put("data",i);
+        return response;
+    }
+
+    public static JSONObject wrapSuccessIntegerInTaskId(Integer i){
+        JSONObject response = new JSONObject();
+        response.put("success", true);
+        JSONObject data = new JSONObject();
+        data.put("taskId", i);
+        response.put("data", data);
         return response;
     }
 
@@ -40,6 +57,20 @@ public class JsonWrapper {
         return response;
     }
 
+
+    public static JSONObject wrapList(List<Object> ojbs){
+        JSONObject response = new JSONObject();
+        response.put("success",true);
+        response.element("data",ojbs);
+        return response;
+    }
+
+    public static JSONObject wrapTasks(List<Task> tasks){
+        JSONObject response = new JSONObject();
+        response.put("success",true);
+        response.element("data",tasks);
+        return response;
+    }
 
     public static JSONObject returnJsonFromObjectWithMultipleRows(List<String> columns, Object[] row) {
         JSONObject data = new JSONObject();

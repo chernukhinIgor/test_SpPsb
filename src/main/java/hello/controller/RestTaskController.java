@@ -68,14 +68,15 @@ public class RestTaskController {
 
     @CrossOrigin
     @GetMapping("tasks")
-    public JSONObject getAllTasks(@RequestParam(required = false, value="params") List<String> columns) {
-        UserAuthentication authentication = (UserAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getName();
-        System.out.println("Principal: " + principal);
+    public JSONObject getAllTasks(@RequestParam(required = false, value = "params") List<String> columns) {
+//        UserAuthentication authentication = (UserAuthentication) SecurityContextHolder.getContext().getAuthentication();
+//        Object principal = authentication.getPrincipal();
+//        System.out.println("Principal: " + principal);
         if (columns != null) {
-            List<Object[]> allTasksAsObjects = taskService.getParametricTasks(columns);
-            JSONArray array = getJsonArrayFromObjects(columns, allTasksAsObjects);
-            return JsonWrapper.jsonSuccessObject(array);
+            List<String> checkedColumns = checkColumns(columns);
+            List<Object[]> allTasksAsObjects = taskService.getParametricTasks(checkedColumns);
+            JSONArray array = getJsonArrayFromObjects(checkedColumns, allTasksAsObjects);
+            return JsonWrapper.wrapList(array);
         } else {
             List<Task> allTasks = taskService.getAllTasks();
             List<Object> objectList = new ArrayList<>(allTasks);
@@ -83,14 +84,55 @@ public class RestTaskController {
         }
     }
 
+    private List<String> checkColumns(List<String> columns) {
+        List<String> checkedColumnList = new ArrayList<>();
+        for (int i = 0; i < columns.size(); i++) {
+            String column = columns.get(i);
+            switch (column) {
+                case "taskId":
+                case "taskid":
+                case "TaskId":
+                case "TASKID":
+                    checkedColumnList.add("taskId");
+                    break;
+                case "NAME":
+                case "name":
+                    checkedColumnList.add("name");
+                    break;
+                case "creatorUserId":
+                case "creatoruserid":
+                case "CreatorUserId":
+                case "CREATORUSERID":
+                    checkedColumnList.add("creatorUserId");
+                    break;
+                case "description":
+                case "Description":
+                case "DESCRIPTION":
+                    checkedColumnList.add("description");
+                    break;
+                case "responsibleUserId":
+                case "responsibleuserid":
+                case "ResponsibleUserId":
+                case "RESPONSIBLEUSERID":
+                    checkedColumnList.add("responsibleUserId");
+                    break;
+                case "status":
+                case "Status":
+                case "STATUS":
+                    checkedColumnList.add("status");
+                    break;
+                default:
+                    break;
+            }
+        }
+        return checkedColumnList;
+    }
+
     @CrossOrigin
     @GetMapping("taskCount")
     public JSONObject getTaskCount() {
-        int taskCount=taskService.getTaskCount();
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("data",taskCount);
-        return response;
+        int taskCount = taskService.getTaskCount();
+        return JsonWrapper.wrapSuccessIntegerInData(taskCount);
     }
 
     @CrossOrigin
@@ -98,26 +140,20 @@ public class RestTaskController {
     public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {
         int i = taskService.addTask(task);
 
-        JSONObject response=new JSONObject();
-        switch (i){
+        JSONObject response = new JSONObject();
+        switch (i) {
 //            case ReplyCodes.TASK_ALREADY_EXIST_ERROR:
 //                response.put("success", false);
 //                response.put("error", JsonWrapper.wrapError("Creating task failed. Id already exists", ReplyCodes.TASK_ALREADY_EXIST_ERROR));
 //                break;
             case ReplyCodes.CREATOR_USER_ID_NOT_EXIST_ERROR:
-                response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Creator user id not exists", ReplyCodes.NOT_EXIST_ERROR));
+                response = JsonWrapper.wrapError("Creator user id not exists", ReplyCodes.NOT_EXIST_ERROR);
                 break;
             case ReplyCodes.RESPONSIBLE_USER_ID_NOT_EXIST_ERROR:
-                response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Responsible user id not exists", ReplyCodes.NOT_EXIST_ERROR));
+                response = JsonWrapper.wrapError("Responsible user id not exists", ReplyCodes.NOT_EXIST_ERROR);
                 break;
             default:
-                response.put("success", true);
-                JSONObject data=new JSONObject();
-                data.put("taskId", i);
-                response.put("data", data);
-
+                response = JsonWrapper.wrapSuccessIntegerInTaskId(i);
                 Task taskById = taskService.getTaskById(i);
                 UserAuthentication authentication = (UserAuthentication) SecurityContextHolder.getContext().getAuthentication();
                 if (authentication != null) {
@@ -132,17 +168,14 @@ public class RestTaskController {
 
     @CrossOrigin
     @PutMapping("task")
-    public JSONObject updateTask (@RequestBody Task task) {
+    public JSONObject updateTask(@RequestBody Task task) {
         if (taskService.updateTask(task)) {
-            JSONObject jsonSuccess=new JSONObject();
+            JSONObject jsonSuccess = new JSONObject();
             jsonSuccess.put("success", true);
             jsonSuccess.put("message", "Task updated successfully");
             return jsonSuccess;
-        }else {
-            JSONObject jsonError=new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR));
-            return jsonError;
+        } else {
+            return JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR);
         }
     }
 
@@ -150,15 +183,13 @@ public class RestTaskController {
     @DeleteMapping("task/{id}")
     public JSONObject deleteTask(@PathVariable("id") Integer id) {
         int i = taskService.deleteTaskById(id);
-        JSONObject response=new JSONObject();
-        switch (i){
+        JSONObject response = new JSONObject();
+        switch (i) {
             case ReplyCodes.TASK_NOT_EXIST_ERROR:
-                response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR));
+                response = JsonWrapper.wrapError("Task does not exist", ReplyCodes.NOT_EXIST_ERROR);
                 break;
             case ReplyCodes.TASK_NOT_DELETED_ERROR:
-                response.put("success", false);
-                response.put("error", JsonWrapper.wrapError("Task not deleted", ReplyCodes.NOT_DELETED_ERROR));
+                response = JsonWrapper.wrapError("Task not deleted", ReplyCodes.NOT_DELETED_ERROR);
                 break;
             case ReplyCodes.TASK_DELETED_SUCCESSFULLY:
                 response.put("success", true);
@@ -167,7 +198,6 @@ public class RestTaskController {
             default:
                 break;
         }
-
         return response;
     }
 }

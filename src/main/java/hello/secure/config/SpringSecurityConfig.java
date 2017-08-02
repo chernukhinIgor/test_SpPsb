@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    SessionService sessionService;
+    private SessionService sessionService;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;

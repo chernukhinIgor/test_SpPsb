@@ -2,10 +2,16 @@ package hello.service;
 
 import hello.dao.TaskDAO;
 import hello.model.Task;
+import hello.utils.JsonWrapper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
 
 @Service("taskService")
 public class TaskServiceImpl implements TaskService {
@@ -28,8 +34,8 @@ public class TaskServiceImpl implements TaskService {
 //        if (taskDAO.taskExists(task.getTaskId())) {
 //            return ReplyCodes.TASK_ALREADY_EXIST_ERROR;
 //        } else {
-            return taskDAO.addTask(task);
- //       }
+        return taskDAO.addTask(task);
+        //       }
     }
 
     @Override
@@ -54,7 +60,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getPaginationTasks(String orderBy, String sortBy, int page, int pageLimit) {
-        return taskDAO.getPaginationTasks(orderBy,sortBy,page,pageLimit);
+        return taskDAO.getPaginationTasks(orderBy, sortBy, page, pageLimit);
     }
 
     @Override

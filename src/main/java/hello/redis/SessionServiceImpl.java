@@ -12,13 +12,13 @@ public class SessionServiceImpl implements SessionService {
     private SessionRepository sessionRepository;
 
     @Autowired
-    public SessionServiceImpl(SessionRepository sessionRepository){
-        this.sessionRepository=sessionRepository;
+    public SessionServiceImpl(SessionRepository sessionRepository) {
+        this.sessionRepository = sessionRepository;
     }
 
     @Override
     public List<Session> listAll() {
-        List<Session> sessions=new ArrayList<>();
+        List<Session> sessions = new ArrayList<>();
         sessionRepository.findAll().forEach(sessions::add);
         return sessions;
     }
