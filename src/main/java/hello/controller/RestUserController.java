@@ -1,18 +1,13 @@
 package hello.controller;
 
-import hello.model.Task;
-import hello.secure.model.UserAuthentication;
-import hello.service.UserService;
-import hello.utils.JsonWrapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import hello.model.User;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
@@ -20,6 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import hello.utils.ReplyCodes;
+import hello.utils.JsonWrapper;
+import hello.model.Task;
+import hello.model.User;
+import hello.service.UserService;
 
 import static hello.utils.JsonWrapper.getJsonArrayFromObjects;
 
@@ -29,156 +28,178 @@ public class RestUserController {
     @Autowired
     private UserService userService;
 
+    private List<String> COLUMNS = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
+
+    private List<String> SORT_TYPE = Arrays.asList("desc", "asc");
+
+    private int MIN_PASSWORD_LENGTH=6;
+
+    private JSONObject jsonErrorObject(String errorMessage, int errorCode){
+        JSONObject jsonError = new JSONObject();
+        jsonError.put("success", false);
+        jsonError.put("error", JsonWrapper.wrapError(errorMessage, errorCode));
+        return jsonError;
+    }
+
+    private JSONObject jsonSuccessObject(Object data){
+        JSONObject response = new JSONObject();
+        response.put("success", true);
+        response.put("data", data);
+        return response;
+    }
+
+    private boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
     @CrossOrigin
     @GetMapping("user/{id}")
-    public JSONObject getUserById(@PathVariable("id") Integer id) {
-        List<String> columns = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
+    public ResponseEntity<?> getUserById(@PathVariable("id") Integer id) {
         List<Object[]> user = userService.getUserListById(id);
         if (user.isEmpty()) {
-            JSONObject jsonError = new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
-            return jsonError;
+            JSONObject jsonError=jsonErrorObject("User does not exist",ReplyCodes.NOT_EXIST_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.NOT_FOUND);
         } else {
-            JSONArray array = getJsonArrayFromObjects(columns, user);
-            return JsonWrapper.wrapList(array);
+            JSONArray userData = getJsonArrayFromObjects(COLUMNS, user);
+            JSONObject response=jsonSuccessObject(userData);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-
-
-//        if (user != null)
-//            return JsonWrapper.wrapObject(user);
-//        else {
-//            JSONObject jsonError = new JSONObject();
-//            jsonError.put("success", false);
-//            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
-//            return jsonError;
-//        }
     }
 
     @CrossOrigin
     @GetMapping("userPagination")
-    public JSONObject getPaginationUsers(
-            @RequestParam(required = true) String orderBy,
-            @RequestParam(required = true) String sortBy,
-            @RequestParam(required = true) int page,
-            @RequestParam(required = true) int pageLimit
-    ) {
-        try {
-            List<String> columns = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
+    public ResponseEntity<?> getPaginationUsers(
+            @RequestParam(required = true) String orderBy, @RequestParam(required = true) String sortBy,
+            @RequestParam(required = true) int page, @RequestParam(required = true) int pageLimit) {
+        if(!COLUMNS.contains(orderBy)||!SORT_TYPE.contains(sortBy)||page<=0){
+            JSONObject jsonError=jsonErrorObject("Not valid pagination params",ReplyCodes.NOT_VALID_PAGINATION_PARAMS_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.BAD_REQUEST);
+        }else {
             List<Object[]> allUsers = userService.getPaginationUsers(orderBy, sortBy, page, pageLimit);
-            JSONArray array = getJsonArrayFromObjects(columns, allUsers);
-            return JsonWrapper.wrapList(array);
-        } catch (Exception ex) {
-            JSONObject jsonError = new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("Not valid pagination params", ReplyCodes.NOT_VALID_PAGINATION_PARAMS_ERROR));
-            return jsonError;
+            JSONArray usersData = getJsonArrayFromObjects(COLUMNS, allUsers);
+            JSONObject response=jsonSuccessObject(usersData);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
     @CrossOrigin
     @GetMapping("userCount")
-    public JSONObject getUserCount() {
+    public ResponseEntity<?> getUserCount() {
         int userCount = userService.getUserCount();
-        JSONObject response = new JSONObject();
-        response.put("success", true);
-        response.put("data", userCount);
-        return response;
+        JSONObject response = jsonSuccessObject(userCount);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("users")
-    public JSONObject getAllUsers(@RequestParam(required = false, value = "params") List<String> columns) {
-
+    public ResponseEntity<?> getAllUsers(@RequestParam(required = false, value = "params") List<String> columns) {
+        List<Object[]> allUsers;
+        JSONArray usersData;
+        JSONObject response;
         if(columns != null) {
-            List<Object[]> allUsersAsObjects = userService.getParametricUsers(columns);
-            JSONArray array = getJsonArrayFromObjects(columns, allUsersAsObjects);
-            return JsonWrapper.wrapList(array);
+            if(COLUMNS.containsAll(columns)){
+                allUsers = userService.getParametricUsers(columns);
+            }else {
+                response=jsonErrorObject("Not valid params",ReplyCodes.NOT_VALID_PARAMS_ERROR);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            usersData = getJsonArrayFromObjects(columns, allUsers);
+            response=jsonSuccessObject(usersData);
         } else {
-            columns = Arrays.asList("userId", "name", "surname", "gender", "email", "birth", "telephone", "confirmedEmail");
-
-            List<Object[]> allUsers = userService.getAllUsers();
-            JSONArray array = getJsonArrayFromObjects(columns, allUsers);
-            return JsonWrapper.wrapList(array);
+            allUsers = userService.getAllUsers();
+            usersData = getJsonArrayFromObjects(COLUMNS, allUsers);
+            response=jsonSuccessObject(usersData);
         }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @CrossOrigin
     @GetMapping("userCreatedTasks/{id}")
-    public JSONObject getAllCreatedTasks(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getAllCreatedTasks(@PathVariable("id") Integer id) {
         if (userService.userExists(id)) {
             List<Task> allCreatedTasks = userService.getCreatedTasks(id);
             List<Object> objectList = new ArrayList<>(allCreatedTasks);
-            return JsonWrapper.wrapList(objectList);
+            JSONObject response = JsonWrapper.wrapList(objectList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            JSONObject jsonError = new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
-            return jsonError;
+            JSONObject jsonError=jsonErrorObject("User does not exist",ReplyCodes.NOT_EXIST_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.OK);
         }
     }
 
     @CrossOrigin
     @GetMapping("userResponsibleTasks/{id}")
-    public JSONObject getAllResponsibleTasks(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> getAllResponsibleTasks(@PathVariable("id") Integer id) {
         if (userService.userExists(id)) {
             List<Task> allResponsibleTasks = userService.getResponsibleTasks(id);
             List<Object> objectList = new ArrayList<>(allResponsibleTasks);
-            return JsonWrapper.wrapList(objectList);
+            JSONObject response = JsonWrapper.wrapList(objectList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            JSONObject jsonError = new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
-            return jsonError;
+            JSONObject jsonError=jsonErrorObject("User does not exist",ReplyCodes.NOT_EXIST_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.OK);
         }
     }
 
     @CrossOrigin
     @PostMapping("user")
-    public JSONObject addUser(@RequestBody User user, UriComponentsBuilder builder) {
+    public ResponseEntity<?> addUser(@RequestBody User user, UriComponentsBuilder builder) {
+        if(user.getEmail()==null||user.getPassword()==null){
+            JSONObject jsonError=jsonErrorObject("Email or password not entered",ReplyCodes.EMAIL_OR_PASSWORD_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.OK);
+        }else if(user.getPassword().length()<MIN_PASSWORD_LENGTH||!isValidEmailAddress(user.getEmail())){
+            JSONObject jsonError=jsonErrorObject("Email or password not valid. Min password length is "+
+                    MIN_PASSWORD_LENGTH+" symbols",ReplyCodes.EMAIL_OR_PASSWORD_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.OK);
+        }else if(user.getUserId()!=0){
+            JSONObject jsonError=jsonErrorObject("User id not needed",ReplyCodes.NOT_VALID_PARAMS_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.OK);
+        }
+
         int returnedValue = userService.registerUser(user);
         if (returnedValue == ReplyCodes.USER_ALREADY_EXIST_ERROR) {
-            JSONObject jsonError = new JSONObject();
-            jsonError.put("success", false);
-            jsonError.put("error", JsonWrapper.wrapError("User with entered email already exist", ReplyCodes.ALREADY_EXIST_ERROR));
-            return jsonError;
+            JSONObject jsonError=jsonErrorObject("User with entered email already exist",ReplyCodes.ALREADY_EXIST_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.OK);
         }
         JSONObject data = new JSONObject();
         data.put("userId", returnedValue);
-        JSONObject jsonResponse = new JSONObject();
-        jsonResponse.put("success", true);
-        jsonResponse.put("data", data);
-        return jsonResponse;
+        JSONObject response = jsonSuccessObject(data);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * This method can not update password, salt, emailConfirm
+     * @param user - new user data, must contain exist userId
+     * @return responseEntity with result
+     */
     @CrossOrigin
     @PutMapping("user")
-    public JSONObject updateUser(@RequestBody User user) {
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
         if (userService.updateUser(user)) {
             JSONObject response = new JSONObject();
             response.put("success", true);
-            return response;
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            JSONObject error = new JSONObject();
-            error.put("success", false);
-            error.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
-            return error;
+            JSONObject jsonError=jsonErrorObject("User does not exist",ReplyCodes.NOT_EXIST_ERROR);
+            return new ResponseEntity<>(jsonError, HttpStatus.OK);
         }
     }
 
+    // TODO: Role access, allow only admin do this.
     @CrossOrigin
     @DeleteMapping("user/{id}")
-    public JSONObject deleteUser(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
         int deleteResult = userService.deleteUserById(id);
         JSONObject jsonResponse = new JSONObject();
         switch (deleteResult) {
             case ReplyCodes.USER_NOT_EXIST_ERROR:
-                jsonResponse.put("success", false);
-                jsonResponse.put("error", JsonWrapper.wrapError("User does not exist", ReplyCodes.NOT_EXIST_ERROR));
+                jsonResponse=jsonErrorObject("User does not exist",ReplyCodes.NOT_EXIST_ERROR);
                 break;
             case ReplyCodes.USER_NOT_DELETED_ERROR:
-                jsonResponse.put("success", false);
-                jsonResponse.put("error", JsonWrapper.wrapError("User not deleted", ReplyCodes.NOT_DELETED_ERROR));
+                jsonResponse=jsonErrorObject("User not deleted",ReplyCodes.NOT_DELETED_ERROR);
                 break;
             case ReplyCodes.USER_DELETED_SUCCESSFULLY:
                 jsonResponse.put("success", true);
@@ -186,7 +207,6 @@ public class RestUserController {
             default:
                 break;
         }
-        return jsonResponse;
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
-
 }

@@ -26,7 +26,7 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         String token = httpServletRequest.getHeader("X-AUTH-TOKEN");
         JSONObject json = new JSONObject();
-        if(sessionService.getByToken(token)!=null){
+        if(token!=null&&sessionService.getByToken(token)!=null){
             sessionService.delete(sessionService.getByToken(token).getId());
             json.put("success", true);
         }else{

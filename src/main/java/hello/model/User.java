@@ -23,11 +23,11 @@ public class User {
 	private String password;
 
 	@Column(name="confirmedEmail", columnDefinition = "boolean default false")
-	@NotNull
+//	@NotNull
 	private boolean confirmedEmail=false;
 
 	@Column(name="salt")
-	@NotNull
+//	@NotNull
 	private String salt;
 
 	@Column(name="name")

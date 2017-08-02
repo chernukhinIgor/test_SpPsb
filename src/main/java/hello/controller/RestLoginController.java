@@ -124,9 +124,6 @@ public class RestLoginController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", "application/json; charset=UTF-8");
             // headers.add("data", jsonObj.toString());
-
-//            sessionService.deleteAll();
-
             //headers.add("X-AUTH-TOKEN", tokenForUser);
             return new ResponseEntity<>(json, headers, HttpStatus.OK);
 

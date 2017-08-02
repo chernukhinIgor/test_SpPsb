@@ -54,6 +54,7 @@ public class UserDAOImpl implements UserDAO {
         String salt=BCrypt.gensalt();
         user.setSalt(salt);
         user.setPassword(passwordEncoder.encode(salt+user.getPassword()));
+        user.setConfirmedEmail(false);
 
         entityManager.persist(user);
         entityManager.flush();
@@ -77,7 +78,6 @@ public class UserDAOImpl implements UserDAO {
         usr.setName(user.getName());
         usr.setSurname(user.getSurname());
         usr.setBirth(user.getBirth());
-        usr.setEmail(user.getEmail());
         usr.setGender(user.getGender());
         usr.setTelephone(user.getTelephone());
         entityManager.flush();

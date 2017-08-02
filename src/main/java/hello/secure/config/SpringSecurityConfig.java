@@ -54,7 +54,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .servletApi()
             .and()
-                .logout().logoutSuccessHandler(new LogoutSuccessHandler(sessionService)).permitAll()
+                .logout().logoutSuccessHandler(new LogoutSuccessHandler(sessionService))
             .and()
                 .headers().cacheControl()
             .and()
@@ -67,8 +67,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("**/*.css").permitAll()
 //                .antMatchers("**/*.js").permitAll()
 
-                // Allow anonymous logins
-
+                // Allow anonymous login
 
 
 
