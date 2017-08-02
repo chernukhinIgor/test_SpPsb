@@ -129,8 +129,7 @@ public class UserDAOImpl implements UserDAO {
             stringJoiner.add(param);
         }
         Query query = entityManager.createQuery("select "+stringJoiner.toString()+" FROM User as usr ORDER BY usr.userId");
-        List<Object[]> rows = query.getResultList();
-        return rows;
+        return (List<Object[]>) query.getResultList();
     }
 
     @Override
@@ -154,8 +153,7 @@ public class UserDAOImpl implements UserDAO {
         String hql = "FROM User as usr WHERE usr.email = ?";
         List<User> resultList = entityManager.createQuery(hql).setParameter(1, mail).getResultList();
         if (resultList.size() == 1) {
-            User us = resultList.get(0);
-            return us;
+            return resultList.get(0);
         }
         return null;
     }

@@ -4,7 +4,6 @@ import hello.model.LoginUser;
 import hello.redis.Session;
 import hello.redis.SessionService;
 import hello.secure.service.TokenAuthenticationService;
-import hello.secure.service.UserDetailsServiceImpl;
 import hello.model.User;
 import hello.service.UserService;
 import hello.utils.JsonWrapper;
@@ -32,7 +31,6 @@ import java.util.Set;
  */
 @RestController
 public class RestLoginController {
-    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private TokenAuthenticationService authenticationService;
@@ -43,10 +41,6 @@ public class RestLoginController {
     @Autowired
     private SessionService sessionService;
 
-//    public RestLoginController() {
-//        userDetailsService = new UserDetailsServiceImpl();
-//        authenticationService = new TokenAuthenticationService("tooManySecrets", userDetailsService);
-//    }
 
     private boolean checkPassword(LoginUser inputUser, User dbUser){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -68,7 +62,7 @@ public class RestLoginController {
         return true;
     }
 
-    private void setNewToken(JSONObject jsonObj, LoginUser user, Session session, User userByMail){
+    private void setNewToken(JSONObject jsonObj, LoginUser user, User userByMail){
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         org.springframework.security.core.userdetails.User uD = new org.springframework.security.core.userdetails.User(userByMail.getEmail(), userByMail.getPassword(), true, true, true, true, roles);
@@ -79,7 +73,7 @@ public class RestLoginController {
             tokenForUser = this.authenticationService.tokenHandler.createTokenForUser(uD, TokenType.REGULAR);
         }
         jsonObj.put("X-AUTH-TOKEN", tokenForUser);
-        session = new Session();
+        Session session = new Session();
         session.setToken(tokenForUser);
         session.setEmail(userByMail.getEmail());
         sessionService.saveOrUpdate(session);
@@ -112,10 +106,10 @@ public class RestLoginController {
                     jsonObj.put("X-AUTH-TOKEN", session.getToken());
                 } else {
                     sessionService.delete(sessionService.getByEmail(userByMail.getEmail()).getId());
-                    setNewToken(jsonObj, user, session, userByMail);
+                    setNewToken(jsonObj, user, userByMail);
                 }
             } else {
-                setNewToken(jsonObj, user, session, userByMail);
+                setNewToken(jsonObj, user, userByMail);
             }
             jsonObj.put("email", userByMail.getEmail());
             jsonObj.put("name", userByMail.getName());

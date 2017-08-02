@@ -9,6 +9,8 @@ import java.util.List;
  * Created by Tom on 24.07.2017.
  */
 public class JsonWrapper {
+
+
     public static JSONObject wrapError(String errorMessage, int errorCode){
         JSONObject response = new JSONObject();
         response.put("errorMessage",errorMessage);

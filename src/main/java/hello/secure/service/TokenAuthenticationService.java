@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,17 +29,14 @@ public class TokenAuthenticationService {
     @Autowired
     private SessionService sessionService;
 
-//    public TokenAuthenticationService(String secret, UserDetailsServiceImpl userService) {
-//        tokenHandler = new TokenHandler(secret, userService);
-//    }
+    private void deleteRedisSession(String token){
+        // Need to delete session in REDIS
+        if(sessionService.getByToken(token)!=null)
+            sessionService.delete(sessionService.getByToken(token).getId());
+    }
 
-//    public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
-//        final User user = authentication.getDetails();
-//        response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
-//    }
-
-    public Authentication getAuthentication(HttpServletRequest request) throws ExpiredJwtException {
-        final String token = request.getHeader(AUTH_HEADER_NAME);
+    public Authentication getAuthentication(HttpServletRequest request) throws ExpiredJwtException, UsernameNotFoundException {
+        String token = request.getHeader(AUTH_HEADER_NAME);
         if (token != null) {
             try {
                 UserSecured user = (UserSecured) tokenHandler.parseUserFromToken(token);
@@ -49,11 +47,12 @@ public class TokenAuthenticationService {
                     return new UserAuthentication(user);
                 }
             }catch (ExpiredJwtException ex){
-                if(sessionService.getByToken(token)!=null)
-                    sessionService.delete(sessionService.getByToken(token).getId());
-                throw new ExpiredJwtException("Expired");
+                deleteRedisSession(token);
+                throw new ExpiredJwtException("Token expired");
+            }catch (UsernameNotFoundException ex){
+                deleteRedisSession(token);
+                throw new UsernameNotFoundException("Not founed in db");
             }
-
         }
         return null;
     }

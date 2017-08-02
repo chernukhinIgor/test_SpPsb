@@ -3,7 +3,6 @@ package hello.secure.config;
 import hello.redis.SessionService;
 import hello.secure.filter.StatelessAuthenticationFilter;
 import hello.secure.service.TokenAuthenticationService;
-import hello.secure.service.UserDetailsServiceImpl;
 import hello.service.LogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,11 +23,7 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
  */
 @Configuration
 @EnableWebSecurity
-@Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//    @Autowired
-//    private final UserDetailsServiceImpl userService;
 
     @Autowired
     SessionService sessionService;
@@ -36,18 +31,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
 
-//    public SpringSecurityConfig() {
-//        super(true);
-//        this.userService = new UserDetailsServiceImpl();
-//        //tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", userService);
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
             .exceptionHandling()
-            .and()
-                .anonymous()
+//            .and()
+//                .anonymous()
             .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -60,25 +50,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
 
-                // Allow anonymous resource requests
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/favicon.ico").permitAll()
-//                .antMatchers("**/*.html").permitAll()
-//                .antMatchers("**/*.css").permitAll()
-//                .antMatchers("**/*.js").permitAll()
-
-                // Allow anonymous login
-
-
-
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/confirmEmail").permitAll()
                 .antMatchers("/forgotPassword").permitAll()
                 .antMatchers("/updatePassword").permitAll()
 
-                //.antMatchers("/users").permitAll()//
-                //.antMatchers("/user/**").permitAll()//
                 .antMatchers("/simpleChannel/**").permitAll()//
                 .antMatchers("/channel/**").permitAll()//
                 .antMatchers("/ws/**").permitAll()
@@ -91,9 +68,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class);
     }
 
-
-//    }
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
@@ -104,20 +78,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-//    @Bean
-//    @Override
-//    public UserDetailsServiceImpl userDetailsService() {
-//        return userService;
-//    }
-//
-//    @Bean
-//    public TokenAuthenticationService tokenAuthenticationService() {
-//        return tokenAuthenticationService;
-//    }
-//
-//    @Bean
-//    public String secret() {
-//        return "tooManySecrets";
-//    }
 }

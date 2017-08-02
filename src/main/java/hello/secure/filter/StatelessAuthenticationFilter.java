@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -30,34 +31,41 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
         this.authenticationService = authenticationService;
     }
 
+    private JSONObject jsonErrorObject(String errorMessage, int errorCode){
+        JSONObject jsonError = new JSONObject();
+        jsonError.put("success", false);
+        jsonError.put("error", JsonWrapper.wrapError(errorMessage, errorCode));
+        return jsonError;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        httpResponse.addHeader("Content-Type", "application/json;charset=UTF-8");
+
 //        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
 //        httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
 //        httpResponse.setHeader("Access-Control-Max-Age", "3600");
 //        httpResponse.setHeader("Access-Control-Allow-Headers", "*");
 
+        Authentication authentication;
 
-        Authentication authentication = null;
         try {
             authentication = authenticationService.getAuthentication(httpRequest);
         } catch (ExpiredJwtException e) {
-            JSONObject json = new JSONObject();
-            json.put("success", false);
-            json.put("error", JsonWrapper.wrapError("Token expired", ReplyCodes.TOKEN_EXPIRED_ERROR));
-            httpResponse.addHeader("Content-Type", "application/json;charset=UTF-8");
-            httpResponse.getWriter().print(json);
+            JSONObject jsonError = jsonErrorObject("Token expired",ReplyCodes.TOKEN_EXPIRED_ERROR);
+            httpResponse.getWriter().print(jsonError);
+            return;
+        } catch (UsernameNotFoundException e){
+            JSONObject jsonError = jsonErrorObject("User not exist. Token deleted",ReplyCodes.USER_NOT_EXIST_ERROR);
+            httpResponse.getWriter().print(jsonError);
             return;
         } catch (Exception e) {
-            JSONObject json = new JSONObject();
-            json.put("success", false);
-            json.put("error", JsonWrapper.wrapError("Invalid token", ReplyCodes.TOKEN_INVALID_ERROR));
-            httpResponse.addHeader("Content-Type", "application/json;charset=UTF-8");
-            httpResponse.getWriter().print(json);
+            JSONObject jsonError = jsonErrorObject("Invalid token",ReplyCodes.TOKEN_INVALID_ERROR);
+            httpResponse.getWriter().print(jsonError);
             return;
         }
         SecurityContextHolder.getContext().setAuthentication(authentication);

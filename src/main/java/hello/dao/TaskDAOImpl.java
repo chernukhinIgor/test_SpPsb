@@ -81,7 +81,7 @@ public class TaskDAOImpl implements TaskDAO {
         String hql = "FROM Task as tsk WHERE tsk.taskId = ?";
         int count = entityManager.createQuery(hql).setParameter(1, taskId)
                 .getResultList().size();
-        return count > 0 ? true : false;
+        return count > 0;
     }
 
     @Override

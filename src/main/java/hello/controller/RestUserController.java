@@ -32,8 +32,6 @@ public class RestUserController {
 
     private List<String> SORT_TYPE = Arrays.asList("desc", "asc");
 
-    private int MIN_PASSWORD_LENGTH=6;
-
     private JSONObject jsonErrorObject(String errorMessage, int errorCode){
         JSONObject jsonError = new JSONObject();
         jsonError.put("success", false);
@@ -147,12 +145,13 @@ public class RestUserController {
     @CrossOrigin
     @PostMapping("user")
     public ResponseEntity<?> addUser(@RequestBody User user, UriComponentsBuilder builder) {
+        int MIN_PASSWORD_LENGTH = 6;
         if(user.getEmail()==null||user.getPassword()==null){
             JSONObject jsonError=jsonErrorObject("Email or password not entered",ReplyCodes.EMAIL_OR_PASSWORD_ERROR);
             return new ResponseEntity<>(jsonError, HttpStatus.OK);
-        }else if(user.getPassword().length()<MIN_PASSWORD_LENGTH||!isValidEmailAddress(user.getEmail())){
+        }else if(user.getPassword().length()< MIN_PASSWORD_LENGTH ||!isValidEmailAddress(user.getEmail())){
             JSONObject jsonError=jsonErrorObject("Email or password not valid. Min password length is "+
-                    MIN_PASSWORD_LENGTH+" symbols",ReplyCodes.EMAIL_OR_PASSWORD_ERROR);
+                    MIN_PASSWORD_LENGTH +" symbols",ReplyCodes.EMAIL_OR_PASSWORD_ERROR);
             return new ResponseEntity<>(jsonError, HttpStatus.OK);
         }else if(user.getUserId()!=0){
             JSONObject jsonError=jsonErrorObject("User id not needed",ReplyCodes.NOT_VALID_PARAMS_ERROR);

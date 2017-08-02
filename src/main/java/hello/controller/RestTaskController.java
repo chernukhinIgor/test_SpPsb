@@ -70,7 +70,7 @@ public class RestTaskController {
     @GetMapping("tasks")
     public JSONObject getAllTasks(@RequestParam(required = false, value="params") List<String> columns) {
         UserAuthentication authentication = (UserAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        Object principal = authentication.getPrincipal();
+        Object principal = authentication.getName();
         System.out.println("Principal: " + principal);
         if (columns != null) {
             List<Object[]> allTasksAsObjects = taskService.getParametricTasks(columns);
