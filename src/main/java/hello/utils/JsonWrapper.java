@@ -18,10 +18,10 @@ public class JsonWrapper {
         return jsonError;
     }
 
-    public static JSONObject jsonSuccessObject(Object ojbs){
+    public static JSONObject jsonSuccessObject(Object ojb){
         JSONObject response = new JSONObject();
         response.put("success",true);
-        response.element("data",ojbs);
+        response.element("data",ojb);
         return response;
     }
 
@@ -32,12 +32,12 @@ public class JsonWrapper {
         return error;
     }
 
-    public static JSONObject wrapSuccessIntegerInData(Integer i){
-        JSONObject response = new JSONObject();
-        response.put("success",true);
-        response.put("data",i);
-        return response;
-    }
+
+
+
+
+
+
 
     public static JSONObject wrapSuccessIntegerInTaskId(Integer i){
         JSONObject response = new JSONObject();
@@ -57,7 +57,6 @@ public class JsonWrapper {
         return response;
     }
 
-
     public static JSONObject wrapList(List<Object> ojbs){
         JSONObject response = new JSONObject();
         response.put("success",true);
@@ -70,6 +69,27 @@ public class JsonWrapper {
         response.put("success",true);
         response.element("data",tasks);
         return response;
+    }
+
+
+
+
+
+
+
+
+    public static JSONArray getJsonArrayFromObjects(List<String> columns, List<Object[]> allTasksAsObjects) {
+        JSONArray array = new JSONArray();
+        if (columns.size() == 1) {
+            for (Object row : allTasksAsObjects) {
+                array.add(JsonWrapper.returnJsonFromObjectWithSingleRow(columns, row));
+            }
+        } else {
+            for (Object[] row : allTasksAsObjects) {
+                array.add(JsonWrapper.returnJsonFromObjectWithMultipleRows(columns, row));
+            }
+        }
+        return array;
     }
 
     public static JSONObject returnJsonFromObjectWithMultipleRows(List<String> columns, Object[] row) {
@@ -88,17 +108,4 @@ public class JsonWrapper {
         return data;
     }
 
-    public static JSONArray getJsonArrayFromObjects(List<String> columns, List<Object[]> allTasksAsObjects) {
-        JSONArray array = new JSONArray();
-        if (columns.size() == 1) {
-            for (Object row : allTasksAsObjects) {
-                array.add(JsonWrapper.returnJsonFromObjectWithSingleRow(columns, row));
-            }
-        } else {
-            for (Object[] row : allTasksAsObjects) {
-                array.add(JsonWrapper.returnJsonFromObjectWithMultipleRows(columns, row));
-            }
-        }
-        return array;
-    }
 }

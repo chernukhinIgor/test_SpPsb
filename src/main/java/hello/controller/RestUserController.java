@@ -80,7 +80,7 @@ public class RestUserController {
 
     @CrossOrigin
     @GetMapping("users")
-    public ResponseEntity<?> getAllUsers(@RequestParam(required = false, value = "params") List<String> columns) {
+    public ResponseEntity getAllUsers(@RequestParam(required = false, value = "params") List<String> columns) {
         List<Object[]> allUsers;
         JSONArray usersData;
         JSONObject response;
@@ -89,7 +89,7 @@ public class RestUserController {
                 allUsers = userService.getParametricUsers(columns);
             }else {
                 response=JsonWrapper.jsonErrorObject("Not valid params",ReplyCodes.NOT_VALID_PARAMS_ERROR);
-                return new ResponseEntity<>(response, HttpStatus.OK);
+                return new ResponseEntity(response, HttpStatus.OK);
             }
             usersData = getJsonArrayFromObjects(columns, allUsers);
             response=JsonWrapper.jsonSuccessObject(usersData);
@@ -98,7 +98,7 @@ public class RestUserController {
             usersData = getJsonArrayFromObjects(COLUMNS, allUsers);
             response=JsonWrapper.jsonSuccessObject(usersData);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @CrossOrigin

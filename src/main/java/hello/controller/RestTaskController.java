@@ -40,29 +40,29 @@ public class RestTaskController {
 
     @CrossOrigin
     @GetMapping("task/{id}")
-    public ResponseEntity<?> getTaskByID(@PathVariable("id") Integer id) {
+    public ResponseEntity getTaskByID(@PathVariable("id") Integer id) {
         Task task = taskService.getTaskById(id);
         if(task!=null){
             JSONObject response=JsonWrapper.wrapObject(task);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity(response, HttpStatus.OK);
         }else{
             JSONObject jsonError=JsonWrapper.jsonErrorObject("Task does not exist",ReplyCodes.NOT_EXIST_ERROR);
-            return new ResponseEntity<>(jsonError, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(jsonError, HttpStatus.NOT_FOUND);
         }
     }
 
     @CrossOrigin
     @GetMapping("taskPagination")
-    public ResponseEntity<?> getPaginationTasks(
+    public ResponseEntity getPaginationTasks(
             @RequestParam(required = true) String orderBy, @RequestParam(required = true) String sortBy,
             @RequestParam(required = true) int page, @RequestParam(required = true) int pageLimit){
         if(!COLUMNS.contains(orderBy)||!SORT_TYPE.contains(sortBy)||page<=0){
             JSONObject jsonError=JsonWrapper.jsonErrorObject("Not valid pagination params",ReplyCodes.NOT_VALID_PAGINATION_PARAMS_ERROR);
-            return new ResponseEntity<>(jsonError, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(jsonError, HttpStatus.BAD_REQUEST);
         }else{
             List<Task> paginationTasks = taskService.getPaginationTasks(orderBy, sortBy,page,pageLimit);
             JSONObject response=JsonWrapper.jsonSuccessObject(paginationTasks);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity(response, HttpStatus.OK);
         }
     }
 
@@ -132,12 +132,13 @@ public class RestTaskController {
     @GetMapping("taskCount")
     public JSONObject getTaskCount() {
         int taskCount = taskService.getTaskCount();
-        return JsonWrapper.wrapSuccessIntegerInData(taskCount);
+        return JsonWrapper.jsonSuccessObject(taskCount);
     }
 
     @CrossOrigin
     @PostMapping("task")
     public JSONObject addTask(@RequestBody Task task, UriComponentsBuilder builder) {
+      //          task.setTaskId(0);
         int i = taskService.addTask(task);
 
         JSONObject response = new JSONObject();
